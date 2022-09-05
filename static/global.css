@@ -1,0 +1,166 @@
+/*
+* @title: Main CSS file for the miventio projects
+* @author: Paul Opitz
+* @date: 2022-09-01
+* 
+*/
+
+/******************************* BASICS ********************************/
+
+@font-face {
+    font-family: Roboto;
+    src: url(fonts/Roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: Baskerville;
+    src: url(fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf);
+}
+
+
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    src: url(fonts/icons.ttf);
+}
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    vertical-align: bottom;
+}
+
+
+:root {
+    --unit: 30px;
+    --shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    --shadow-light: rgba(0, 0, 0, 0.05) 0px 4px 6px -1px, rgba(0, 0, 0, 0.03) 0px 2px 4px -1px;
+    --white: #FFF;
+    --black: #000;
+    --color-1: #37c0ae;
+    --color-1-light: #f0f8f7;
+    --color-1-dark: #1c766a;
+    --color-2: #c75399;
+    
+}
+
+* {
+    margin:0;
+    box-sizing: border-box;
+}
+
+body {
+    margin:0;
+    font-size: 14px;
+    font-family: "Roboto";
+    background-color: var(--color-1-light);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Baskerville";
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+    font-family: "Roboto";
+    font-weight: 300;
+}
+
+
+
+
+/******************************* BUTTONs & LINKs ********************************/
+
+button {
+    text-transform: uppercase;
+    padding:0.6rem 1.7rem;
+    color: var(--white);
+    border: none;
+    border-radius: 0.3rem;
+    transition: 0.2s;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-light);
+    background: linear-gradient(132deg, var(--color-1) 0%, var(--color-2) 100%);
+    background-position: 0%;
+    background-size: 200%;
+}
+button:hover {
+    cursor: pointer;
+    background-position: 100%;
+    box-shadow: var(--shadow); 
+}
+
+
+a {
+    color: var(--color-1);
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+    color: var(--color-1-dark);
+}
+
+
+/******************************* FORM STYLING ********************************/
+form .unit {
+    margin-top:1.5rem;
+}
+
+form .submit {
+    margin-top:3rem;;
+}
+
+form label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+form input {
+    padding:0.9rem 1rem;
+    border-radius: 0.2rem;
+    border:none;
+    box-shadow: var(--shadow-light); 
+    width: 100%;
+    outline: none;
+}
+
+form input:focus {
+    box-shadow: var(--shadow); 
+}
+
+form select, form select:active, form select:focus {
+    padding:0.9rem 2rem;
+    background-color: var(--white);
+    border:none;
+    box-shadow: var(--shadow-light); 
+    width: 100%;
+    border-radius: 0.3rem;
+    transition: 0.2s;
+    font-size: 1.2rem;
+    appearance: none;
+}
+
+form option {
+    padding:0.9rem 1rem;
+    border:none;
+    width: 100%;
+}
+
+
+
