@@ -1,45 +1,40 @@
+<script>
+        import Header from "$lib/blocks/header.svelte";
+        export let events = [
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
+        { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" }
+    ]
+</script>
+
 <main>
-    <header>
-        <h2>Veranstaltungen</h2>
+
+    <Header title={"Veranstaltungen"}>
         <button>Neu <span class="material-symbols-outlined">add_circle</span></button>
-    </header>
+    </Header>
+    
+
     <section>
-        <article>
-            <a href="/">
-            <div>
-                <h1>Kongress 1</h1>
-                <p>Beschreibung</p>
-            </div>
-            <div>
-                <p>21.3.22 - 23.3.22</p>
-                <p>328 Buchungen</p>
-            </div>
-            </a>
-        </article>
-        <article>
-            <a href="/">
-            <div>
-                <h1>Kongress 1</h1>
-                <p>Beschreibung</p>
-            </div>
-            <div>
-                <p>21.3.22 - 23.3.22</p>
-                <p>328 Buchungen</p>
-            </div>
-            </a>
-        </article>
-        <article>
-            <a href="/">
-            <div>
-                <h1>Kongress 1</h1>
-                <p>Beschreibung</p>
-            </div>
-            <div>
-                <p>21.3.22 - 23.3.22</p>
-                <p>328 Buchungen</p>
-            </div>
-            </a>
-        </article>
+
+        {#each events as event}
+            <article>
+                <a href="/organisations/1/events/1">
+                <div>
+                    <h1>{event.title}</h1>
+                    <p>{event.description}</p>
+                </div>
+                <div>
+                    <p>{event.date}</p>
+                    <p>{event.bookings}</p>
+                </div>
+                </a>
+            </article>
+        {/each}
+
 
     </section>
     
@@ -49,20 +44,14 @@
 
 <style>
     main {
-        padding: calc( var(--unit) * 2);
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    section {
-        padding: var(--unit) 0;
+        margin: calc( var(--unit) * 1);
+        padding: calc( var(--unit) * 1);
+        background-color: var(--white);
+        border-radius: var(--corner);
     }
 
     article a {
-        background-color: white;
+        background: linear-gradient(120deg, #81bdb53b 0%, #81bdb51c 100%);
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;

@@ -42,12 +42,14 @@
 
 :root {
     --unit: 30px;
+    --corner: 4px;
     --shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     --shadow-light: rgba(0, 0, 0, 0.05) 0px 4px 6px -1px, rgba(0, 0, 0, 0.03) 0px 2px 4px -1px;
     --white: #FFF;
     --black: #000;
     --color-1: #37c0ae;
     --color-1-light: #f0f8f7;
+    --color-1-superlight: #f0f8f7a7;
     --color-1-dark: #1c766a;
     --color-2: #c75399;
     
@@ -65,25 +67,18 @@ body {
     background-color: var(--color-1-light);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Baskerville";
-    font-weight: 600;
-}
-
 h1 {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 h2 {
     font-size: 2rem;
-    font-family: "Roboto";
-    font-weight: 300;
 }
 
 
 
 
-/******************************* BUTTONs & LINKs ********************************/
+/******************************* BUTTONS & LINKS ********************************/
 
 button {
     text-transform: uppercase;
@@ -118,8 +113,10 @@ a:hover {
 
 
 /******************************* FORM STYLING ********************************/
-form .unit {
+
+form .form-block {
     margin-top:1.5rem;
+    max-width: 450px;
 }
 
 form .submit {
@@ -136,9 +133,16 @@ form input {
     border-radius: 0.2rem;
     border:none;
     box-shadow: var(--shadow-light); 
+    display: block;
     width: 100%;
     outline: none;
+    background-color: white;
 }
+
+form input[type="color"] {
+    height:80px;
+}
+
 
 form input:focus {
     box-shadow: var(--shadow); 

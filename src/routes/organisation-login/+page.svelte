@@ -1,4 +1,6 @@
-
+<script>
+    import logo from '$lib/assets/logo.jpg';
+</script>
 <div class="page">
 
     <div class="left">
@@ -6,8 +8,9 @@
     </div>
 
     <div class="right">
-         <h1>Miventio</h1>
-         <h2>Event- und Organisationsverwaltung</h2>
+        <img src="{logo}" alt="Logo">
+         <h1>Gesellschaft für Parodontologie</h1>
+         <h2>Organisationsverwaltung</h2>
          <form action="">
             <div class="form-block">
                 <label for="email">Email</label>
@@ -36,7 +39,7 @@
     }
     .left {
         width:22%;
-        background: linear-gradient(-30deg, var(--color-1) 0%, var(--color-1-dark) 100%);
+        background: linear-gradient(-30deg, #2E6CB5 0%, rgba(227, 240, 255, 0.499) 100%);
     }
     .right {
         width:78%;
@@ -45,11 +48,25 @@
         align-items: flex-start;
         flex-direction: column;
         padding: calc( var(--unit) * 3);
+        background-color: rgba(227, 240, 255, 0.499);
     }
 
     form {
         margin-top:40px;
         min-width: 400px;
+    }
+    img {
+        width:100px;
+        margin-bottom:30px
+    }
+    h1 {
+        font-family: "Baskerville";
+    }
+    h2 {
+        font-weight: 300;
+    }
+    button {
+        background:#2E6CB5;
     }
 
 
