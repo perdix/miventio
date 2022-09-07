@@ -1,7 +1,7 @@
 <div class="page">
-
-    <div>
-       
+    <h1>Current Pages</h1>
+    <div class="wrapper">
+        
         <section>
         <h2>Event Manager</h2>
 
@@ -28,17 +28,20 @@
 
 <style>
     .page {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         min-height: 100vh;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap:60px;
     }
+
     a {
         display: block;
         font-size: 25px;
         margin-top: 20px;
     }
-    div {
+    .wrapper {
         width: 100%;
         display:flex;
         align-items: center;
