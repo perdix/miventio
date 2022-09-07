@@ -3,7 +3,7 @@
 <header>
     <div></div>
     <div>
-        <a href="/"><span class="material-symbols-outlined">account_circle</span></a>
+        <a href="/organisation/account"><span class="material-symbols-outlined">account_circle</span></a>
     </div>
     
 </header>

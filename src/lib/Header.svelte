@@ -4,7 +4,7 @@
         <h1><a href="/">Miventio</a></h1>
     </div>
     <div>
-        <a href="/"><span class="material-symbols-outlined">account_circle</span></a>
+        <a href="/account"><span class="material-symbols-outlined">account_circle</span></a>
     </div>
     
 </header>

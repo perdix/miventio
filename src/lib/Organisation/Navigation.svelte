@@ -2,8 +2,6 @@
 
     import {page} from "$app/stores";
 
-
-
     export let logo = "Logo einer Organisation";
     export let name = "Name einer Organisation";
 
@@ -83,7 +81,6 @@
 
     ul li a {
         text-decoration: none;
-        color:black;
         padding: 10px 20px;
         margin-left: 6px;
         border-radius: 10px 10px 0px 0;

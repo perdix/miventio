@@ -1,5 +1,5 @@
 <script>
-    import Events from "$lib/events.svelte";
+    import Events from "$lib/Events.svelte";
 </script>
 
 <div class="page">

@@ -1,5 +1,5 @@
 <script>
-        import Header from "$lib/blocks/header.svelte";
+        import Header from "$lib/blocks/Header.svelte";
         import Main from "$lib/blocks/Main.svelte";
         import Button from "$lib/blocks/Button.svelte";
 
