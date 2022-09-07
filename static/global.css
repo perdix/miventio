@@ -64,7 +64,6 @@ body {
     margin:0;
     font-size: 14px;
     font-family: "Roboto";
-    background-color: var(--color-1-light);
 }
 
 h1 {
@@ -74,7 +73,6 @@ h1 {
 h2 {
     font-size: 2rem;
 }
-
 
 
 
