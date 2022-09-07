@@ -4,9 +4,9 @@
     import Main from "$lib/blocks/Main.svelte";
 </script>
 
-<Main>    
+<Main>
 
-    <Header title={"Organisation-Settings"}></Header>
+    <Header title={"Organisations-Settings"}></Header>
 
     <Content>
 
@@ -42,6 +42,8 @@
 
 <style>
     form {
+        
+        /* max-width: 500px; */
         background-color: var(--color-1-light);
         border-radius: var(--corner);
     }

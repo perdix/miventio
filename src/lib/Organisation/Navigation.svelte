@@ -7,9 +7,10 @@
     export let logo = "Logo einer Organisation";
     export let name = "Name einer Organisation";
 
-    export let tabs     = [
-        { slug: 'contacts', title: 'Kontakte' },
-        { slug: 'events', title: 'Veranstaltungen' }
+    export let tabs = [
+        { slug: 'events', title: 'Veranstaltungen', icon: '' },
+        { slug: 'contacts', title: 'Kontakte', icon: '' },
+        { slug: 'settings', title: '', icon: 'settings' }
       ]
 </script>
   
@@ -24,10 +25,9 @@
     <ul>
 
     {#each tabs as tab}
-        <li><a href="/organisation/{tab.slug}" class:active={$page.url.pathname.includes(tab.slug)}>{tab.title}</a></li>
+        <li><a href="/organisation/{tab.slug}" class:active={$page.url.pathname.includes(tab.slug)} class:marked={tab.slug=="settings"} ><span class="material-symbols-outlined">{tab.icon}</span>{tab.title}</a></li>
     {/each}
  
-
     </ul>
 
 </nav>
@@ -83,16 +83,18 @@
 
     ul li a {
         text-decoration: none;
+        color:black;
         padding: 10px 20px;
-        margin-left:10px;
+        margin-left: 6px;
         border-radius: 10px 10px 0px 0;
-        background-color: var(--white);
+        background-color: var(--color-1-superlight);
+        color:var(--color-1-dark);
         display: block;
         font-size: 1.5rem;
     }
     ul li a:hover, ul li a.active {
         background-color: var(--color-1-light);
-        color: var(--color-1);
+        color:var(--color-1-dark);
     }
 
 

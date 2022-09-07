@@ -45,6 +45,7 @@
         align-items: flex-start;
         flex-direction: column;
         padding: calc( var(--unit) * 3);
+        background-color: var(--color-1-light);
     }
 
     form {

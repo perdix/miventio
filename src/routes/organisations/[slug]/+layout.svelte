@@ -14,7 +14,6 @@
         { slug: 'events', title: 'Veranstaltungen', icon: '' },
         { slug: 'contacts', title: 'Kontakte', icon: '' },
         { slug: 'settings', title: '', icon: 'settings' }
-
       ]
 </script>
 
@@ -92,7 +91,6 @@
 
     ul li a {
         text-decoration: none;
-        color:black;
         padding: 10px 20px;
         margin-left: 6px;
         border-radius: 10px 10px 0px 0;
@@ -103,7 +101,6 @@
     }
     ul li a:hover, ul li a.active {
         background-color: var(--color-1-light);
-        color:var(--color-1-dark);
     }
 
 

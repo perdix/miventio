@@ -3,7 +3,6 @@
     import Header from "$lib/Organisation/Header.svelte";
     import Navigation from "$lib/Organisation/Navigation.svelte";
     import logo from '$lib/assets/logo.jpg';
-    import { color, backgroundColor } from '../../stores.js';
     import { onMount } from 'svelte';
 
     // Set custom theme color
@@ -14,13 +13,16 @@
     onMount(async () => {
         templateRoot.style.setProperty('--color-1', '#2E6CB5');
         templateRoot.style.setProperty('--color-1-light', '#d5e1f0');
+        templateRoot.style.setProperty('--color-1-dark', '#163566');
+        templateRoot.style.setProperty('--color-1-superlight', '#f0f6ff');
+        templateRoot.style.setProperty('--color-2', '#163566');
+        templateRoot.style.opacity = "1";
     });
     
 
-
 </script>
 
-<div class="root" bind:this={templateRoot}>
+<div class="root" bind:this={templateRoot} style="opacity:0;">
 
  <Header></Header>
  <Navigation {logo} name="Gesellschaft für Parodontologie"></Navigation>
