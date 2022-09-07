@@ -3,6 +3,7 @@
     import logo from '$lib/assets/logo.jpg';
     import {page} from "$app/stores";
 
+
     export let organisations = [
         { slug: 'zahn', title: 'Gesellschaft für Parodontologie' },
         { slug: 'inner', title: 'Gesellschaft für Gesellschaft für Innere Medizin' },
@@ -21,7 +22,7 @@
 
   <nav>
     <div class="organisation">
-        <img src={logo} alt="Logo Orgnisation">
+        <img src={logo} alt="Logo Organisation">
         
         <select name="organisations" id="organisations">
             {#each organisations as organisation}

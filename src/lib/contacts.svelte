@@ -1,5 +1,8 @@
 <script>
     import Header from "$lib/blocks/header.svelte";
+    import Button from "$lib/blocks/Button.svelte";
+    import Main from "$lib/blocks/Main.svelte";
+
     export let contacts = [
     { name: 'Max Mustermann', address: "Musterstraße 34", email: "mail@mail.de", status: "Student" },
     { name: 'Max Mustermann', address: "Musterstraße 34", email: "mail@mail.de", status: "Besucher" },
@@ -17,49 +20,43 @@
 ]
 </script>
 
-<main>
+<Main>
 
     <Header title={"Kontakte"}>
-        <button>Neu <span class="material-symbols-outlined">add_circle</span></button>
+        <Button>
+            Neu <span class="material-symbols-outlined">add_circle</span>
+        </Button>
     </Header>
-    
-    <section>
-        <table>
-            <tr>
-              <th>Name</th>
-              <th>Adresse</th>
-              <th>E-Mail</th>
-              <th>Status</th>
-            </tr>
-        
-            {#each contacts as contact}
+
+
+
+            <table>
                 <tr>
-                    <td>{contact.name}</td>
-                    <td>{contact.address}</td>
-                    <td>{contact.email}</td>
-                    <td><span class:member={contact.status.toLowerCase() == "mitglied"} class:student={contact.status.toLowerCase() == "student"}>{contact.status}</span></td>
+                  <th>Name</th>
+                  <th>Adresse</th>
+                  <th>E-Mail</th>
+                  <th>Status</th>
                 </tr>
-            {/each}
-
             
-        </table>
- 
-
-
-    </section>
+                {#each contacts as contact}
+                    <tr>
+                        <td>{contact.name}</td>
+                        <td>{contact.address}</td>
+                        <td>{contact.email}</td>
+                        <td><span class:member={contact.status.toLowerCase() == "mitglied"} class:student={contact.status.toLowerCase() == "student"}>{contact.status}</span></td>
+                    </tr>
+                {/each}
     
-</main>
+                
+            </table>
+    
 
 
+</Main>
+    
 
 
 <style>
-    main {
-        margin: calc( var(--unit) * 1);
-        padding: calc( var(--unit) * 1);
-        background:var(--white);
-        border-radius: var(--corner);
-    }
     
     table {
         width: 100%;
@@ -85,8 +82,6 @@
     .student {
         background-color: lightcoral;
     }
-
-
 
 
 

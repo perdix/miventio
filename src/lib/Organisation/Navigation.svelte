@@ -2,9 +2,11 @@
 
     import {page} from "$app/stores";
 
+
+
     export let logo = "Logo einer Organisation";
     export let name = "Name einer Organisation";
-    export let color = "#2E6CB5";
+
     export let tabs     = [
         { slug: 'contacts', title: 'Kontakte' },
         { slug: 'events', title: 'Veranstaltungen' }
@@ -20,9 +22,12 @@
     </div>
 
     <ul>
-        {#each tabs as tab}
-            <li><a href="/organisation/{tab.slug}" class:active={$page.url.pathname.includes(tab.slug)} style="color: {color}">{tab.title}</a></li>
-        {/each}
+
+    {#each tabs as tab}
+        <li><a href="/organisation/{tab.slug}" class:active={$page.url.pathname.includes(tab.slug)}>{tab.title}</a></li>
+    {/each}
+ 
+
     </ul>
 
 </nav>
@@ -86,8 +91,8 @@
         font-size: 1.5rem;
     }
     ul li a:hover, ul li a.active {
-        background-color: rgba(227, 240, 255, 0.499);
-        color:#2E6CB5;
+        background-color: var(--color-1-light);
+        color: var(--color-1);
     }
 
 

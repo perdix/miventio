@@ -1,6 +1,6 @@
 <script>
    import Header from "$lib/blocks/header.svelte";
-   import Main from "$lib/blocks/main.svelte";
+   import Main from "$lib/blocks/Main.svelte";
 </script>
 
 <Main>

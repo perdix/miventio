@@ -1,5 +1,6 @@
 <script>
-    import {page} from "$app/stores";;
+    import {page} from "$app/stores";
+    import Main from "$lib/blocks/Main.svelte";
 
     export let sections = [
         { slug: 'info', title: 'Basis Info' },
@@ -10,7 +11,7 @@
       ]
 
 </script>
-<main>
+<div class="wrapper">
 
     <aside>
        <nav><a href="/organisations/1/events/1">
@@ -26,20 +27,20 @@
    
     <section>
       
-        <div>
+        <Main>
             <slot></slot>
-        </div>   
+        </Main>   
         
             
     
     </section>
     
-</main>
+</div>
 
 
 
 <style>
-    main {
+    .wrapper {
         display: flex;
         justify-content: center;
         align-items: stretch;
@@ -51,11 +52,6 @@
     }
     section {
         width: 70%;
-        padding: var(--unit);
-    }
-    section div {
-        background-color: var(--white);
-        padding: var(--unit);
     }
     nav a {
         display: block;

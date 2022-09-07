@@ -1,5 +1,8 @@
 <script>
         import Header from "$lib/blocks/header.svelte";
+        import Main from "$lib/blocks/Main.svelte";
+        import Button from "$lib/blocks/Button.svelte";
+
         export let events = [
         { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
         { title: 'Kongress für Zahnmedizin', description: "Das ist eine Beschreibung des Events", date: "21.3.22 - 23.3.22", bookings: "328 Buchungen" },
@@ -11,10 +14,12 @@
     ]
 </script>
 
-<main>
+<Main>
 
     <Header title={"Veranstaltungen"}>
-        <button>Neu <span class="material-symbols-outlined">add_circle</span></button>
+        <Button>
+            Neu <span class="material-symbols-outlined">add_circle</span>
+        </Button>
     </Header>
     
 
@@ -38,20 +43,15 @@
 
     </section>
     
-</main>
+</Main>
 
 
 
 <style>
-    main {
-        margin: calc( var(--unit) * 1);
-        padding: calc( var(--unit) * 1);
-        background-color: var(--white);
-        border-radius: var(--corner);
-    }
+
 
     article a {
-        background: linear-gradient(120deg, #81bdb53b 0%, #81bdb51c 100%);
+        background: linear-gradient(120deg, var(--color-1-light) 0%, var(--color-1-light) 100%);
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;

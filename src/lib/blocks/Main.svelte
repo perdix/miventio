@@ -1,22 +1,17 @@
-<script>
-    export let color = "#e6eef8";
-</script>
 
-
-
-
-<main style="background-color:{color}">
+<main>
     <div>
         <slot></slot>
     </div>
 </main>
-
-
+    
 
 
 <style>
     main {
        padding: calc( var(--unit) * 1);
+       background-color: var(--color-1-light);
+       height: 100%;
     }   
     div {
         padding: calc( var(--unit) * 1);

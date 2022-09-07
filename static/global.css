@@ -46,6 +46,7 @@
     --shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     --shadow-light: rgba(0, 0, 0, 0.05) 0px 4px 6px -1px, rgba(0, 0, 0, 0.03) 0px 2px 4px -1px;
     --white: #FFF;
+    --grey: #f6f6f6;
     --black: #000;
     --color-1: #37c0ae;
     --color-1-light: #f0f8f7;
