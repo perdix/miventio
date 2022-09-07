@@ -167,3 +167,25 @@ form option {
 
 
 
+/************************* TABLE Styling ************************/
+table {
+    width: 100%;
+    text-align: left;
+}
+table th {
+    font-weight: bold;
+}
+table td, table th {
+    padding: 10px;
+    
+}
+table tr:nth-child(even) {
+    background-color: var(--color-1-light);
+}
+table tr:nth-child(odd) {
+    background-color: var(--white);
+}
+table span {
+    border-radius: 10px;
+    padding: 3px 10px;
+}

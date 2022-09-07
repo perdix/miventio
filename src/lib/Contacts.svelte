@@ -16,7 +16,6 @@
     { name: 'Max Mustermann', address: "Musterstraße 34", email: "mail@mail.de", status: "Besucher" },
     { name: 'Max Mustermann', address: "Musterstraße 34", email: "mail@mail.de", status: "Student" },
     { name: 'Max Mustermann', address: "Musterstraße 34", email: "mail@mail.de", status: "Besucher" }
-  
 ]
 </script>
 
@@ -27,8 +26,6 @@
             Neu <span class="material-symbols-outlined">add_circle</span>
         </Button>
     </Header>
-
-
 
             <table>
                 <tr>
@@ -58,24 +55,6 @@
 
 <style>
     
-    table {
-        width: 100%;
-        text-align: left;
-    }
-    table th {
-        font-weight: bold;
-    }
-    table td, table th {
-        padding: 10px;
-        
-    }
-    table tr:nth-child(even) {
-        background-color: var(--color-1-light);
-    }
-    table span {
-        border-radius: 10px;
-        padding: 3px 10px;
-    }
     .member {
         background-color: lightgreen;
     }
