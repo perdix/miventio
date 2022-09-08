@@ -2,6 +2,7 @@
     import Header from "$lib/blocks/Header.svelte";
     import Content from "$lib/blocks/Content.svelte";
     import Ticket from "$lib/Ticket.svelte";
+    import Popup from "$lib/Popup.svelte";
 </script>
 
 
@@ -22,9 +23,9 @@
         <h3>Student</h3>
         <Ticket></Ticket>
         <Ticket></Ticket>
-
-        
     </Content>    
+
+   
 
 <style>
 

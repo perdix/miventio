@@ -8,7 +8,6 @@
     { title: 'Workshop 1', desc: "Ein ganz besonderer Workshop", start: "15:00", end: "16:00", price: "40€", limit: 40 },
     { title: 'Workshop 1', desc: "Ein ganz besonderer Workshop", start: "15:00", end: "16:00", price: "40€", limit: 40 },
     { title: 'Workshop 1', desc: "Ein ganz besonderer Workshop", start: "15:00", end: "16:00", price: "40€", limit: 40 }
-
 ]
 </script>
 
