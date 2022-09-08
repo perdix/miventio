@@ -1,5 +1,6 @@
 <div class="page">
-    <h1>Current Pages</h1>
+    <h1>Prototyp Miventio</h1>
+    <p>Die meisten Seiten sind klickbar, dennoch: Work in Progress!!</p>
     <div class="wrapper">
         
         <section>

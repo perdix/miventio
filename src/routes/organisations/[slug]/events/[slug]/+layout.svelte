@@ -6,7 +6,7 @@
         { slug: 'info', title: 'Basis Info', icon: "info" },
         { slug: 'activities', title: 'Aktivitäten', icon: "event" },
         { slug: 'tickets', title: 'Tickets', icon: 'confirmation_number' },
-        { slug: 'form', title: 'Registrierung', icon: "table" },
+        { slug: 'form', title: 'Anmeldung', icon: "table" },
         { slug: 'bookings', title: 'Buchungen', icon: "badge" }
       ]
 

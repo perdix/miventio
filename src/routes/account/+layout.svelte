@@ -1,6 +1,5 @@
 <script>
-    import Header from "$lib/blocks/Header.svelte";
-
+    import Header from "$lib/Header.svelte";
 </script>
 
 

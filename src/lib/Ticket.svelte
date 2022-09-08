@@ -4,6 +4,16 @@
         <p>50€</p>
     </div>
     <div class="right">
+        <div class="holes">
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+            <div class="hole"></div>
+        </div>
         <span class="cut"></span>
         <h3>Komplettpaket</h3>
         <p>Student</p>
@@ -19,15 +29,19 @@
     background-color: white;
     height: 120px;
     box-shadow: var(--shadow-light);
+    transition: all 0.5s;
 }
 .ticket:hover {
     box-shadow: var(--shadow);
     cursor: pointer;
+    transition: all 0.5s;
 }
 .ticket:hover .left {
     background-position: 100%;
+    transition: all 0.5s;
 }
 .left {
+    transition: all 0.5s;
     width: 160px;
     display: flex;
     justify-content: center;
@@ -70,6 +84,20 @@
     position: relative;
     width: 100%;
     padding: var(--unit);
+}
+
+.holes {
+    position: absolute;
+    top:-8px;
+    left: -10px
+}
+
+.hole {
+    background-color: var(--color-1-light);
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    margin:5px;
 }
 
 </style>
