@@ -3,11 +3,11 @@
     import Main from "$lib/blocks/Main.svelte";
 
     export let sections = [
-        { slug: 'info', title: 'Basis Info' },
-        { slug: 'activities', title: 'Aktivitäten' },
-        { slug: 'tickets', title: 'Tickets' },
-        { slug: 'form', title: 'Registrierung' },
-        { slug: 'bookings', title: 'Buchungen' }
+        { slug: 'info', title: 'Basis Info', icon: "info" },
+        { slug: 'activities', title: 'Aktivitäten', icon: "event" },
+        { slug: 'tickets', title: 'Tickets', icon: 'confirmation_number' },
+        { slug: 'form', title: 'Registrierung', icon: "table" },
+        { slug: 'bookings', title: 'Buchungen', icon: "badge" }
       ]
 
 </script>
@@ -18,7 +18,11 @@
            <div><h2>Zahnarzt-Kongress 2022</h2></div>
            <ul>
             {#each sections as section}
-            <li><a href="/organisations/1/events/1/{section.slug}" class:active={$page.url.pathname.includes(section.slug)}>{section.title}</a></li>
+            <li><a href="/organisations/1/events/1/{section.slug}" class:active={$page.url.pathname.includes(section.slug)}>
+                <span class="material-symbols-outlined">{section.icon}</span>
+                {section.title}
+                </a>
+            </li>
             {/each}
            </ul>
             </a>
@@ -76,6 +80,12 @@
         padding: var(--unit);
         font-size: 1.7em;
         color: var(--color-1-dark);
+    }
+    nav a span {
+        font-size: 24px;
+        margin-right: 5px;
+        vertical-align: middle;
+        display: inline-block;
     }
     nav ul li:nth-child(odd) a {
         background-color: var(--color-1-light);

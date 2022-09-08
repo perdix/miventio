@@ -12,6 +12,7 @@
         <a href="/organisations/1/settings">Einstellungen Organisation</a>
         <a href="/account">Event-Manager-Account</a>
         <a href="/organisations/1/events/1/activities">Aktivitäten/Workshops</a>
+        <a href="/organisations/1/events/1/tickets">Tickets</a>
     </section>
  
     <section>

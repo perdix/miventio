@@ -1,10 +1,13 @@
 <script>
     import Header from "$lib/blocks/Header.svelte";
     import Content from "$lib/blocks/Content.svelte";
+    import Ticket from "$lib/Ticket.svelte";
 </script>
 
 
-    <Header title={"Tickets"} />   
+<Header title={"Tickets"}>
+    <button>Neu <span class="material-symbols-outlined">add_circle</span></button>
+</Header>   
 
     <Content>
      <p>Hier erstellt man Tickets</p>
@@ -12,6 +15,18 @@
      <p>Beim Buchen/Registrieren wählt man dann das passende Ticket aus.</p>
     </Content>    
 
+    <Content>
+        <h3>Mitglied</h3>
+        <Ticket></Ticket>
+        <Ticket></Ticket>
+        <h3>Student</h3>
+        <Ticket></Ticket>
+        <Ticket></Ticket>
+
+        
+    </Content>    
+
 <style>
+
    
 </style>
