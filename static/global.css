@@ -49,7 +49,8 @@
     --grey: #f6f6f6;
     --black: #000;
     --color-1: #37c0ae;
-    --color-1-light: #f0f8f7;
+    /* --color-1-light: #f0f8f7; */
+    --color-1-light: #f3f7f6;
     --color-1-superlight: #f0f8f7a7;
     --color-1-dark: #1c766a;
     --color-2: #c75399;
