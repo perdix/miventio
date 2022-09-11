@@ -1,21 +1,24 @@
 <script>
-    const steps = [
-        { "id":1, "name": "Ticketauswahl"},
-        { "id":2, "name": "Buchungsdetails"},
-        { "id":3, "name": "Zahlungsvorgang"}
-    ]
+    export let steps = [];
+    import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+    const switchTo = (id, slug) => {
+		dispatch('step', {
+			id: id,
+            slug: slug
+		});
+	}
+
 </script>
 
 <div class="stepper">
     <hr>
     {#each steps as step, i}
-        <div class="step" class:first="{i==0}" class:last="{i==steps.length-1}">
+        <div class="step" class:first="{i==0}" class:last="{i==steps.length-1}" on:click={() => switchTo(step.id, step.slug)}>
             <span class="id">{step.id}</span><p class="label">{step.name}</p>
         </div>
     {/each}
 </div>
-
-
 
 
 <style>
@@ -55,6 +58,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
     .stepper .label {
         display: flex;
@@ -62,6 +66,7 @@
         align-items: center;
         padding: 0 10px;
         background-color: white;
+        cursor: pointer;
     }
     .stepper hr{
        position: absolute;
