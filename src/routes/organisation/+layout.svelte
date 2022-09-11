@@ -1,7 +1,7 @@
 <script>
 
-    import Header from "$lib/Organisation/Header.svelte";
-    import Navigation from "$lib/Organisation/Navigation.svelte";
+    import Header from "$lib/organisation/Header.svelte";
+    import Navigation from "$lib/organisation/Navigation.svelte";
     import logo from '$lib/assets/logo.jpg';
     import { onMount } from 'svelte';
 

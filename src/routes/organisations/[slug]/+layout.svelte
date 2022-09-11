@@ -1,5 +1,5 @@
 <script>
-    import Header from "$lib/Header.svelte";
+    import Header from "$lib/event/Header.svelte";
     import logo from '$lib/assets/logo.jpg';
     import {page} from "$app/stores";
 

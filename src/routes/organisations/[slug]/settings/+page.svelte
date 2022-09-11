@@ -6,28 +6,28 @@
 
 <Main>    
 
-    <Header title={"Organisation-Settings"}></Header>
+    <Header title={"Organisations-Settings"}></Header>
 
     <Content>
 
-        <form action="">
-            <div class="form-block">
+        <form action="" class="miventio row">
+            <div class="md-12">
                 <label for="Name">Organisationsname</label>
                 <input id="name" type="text">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="description">Beschreibung</label>
                 <input id="description" type="text">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="logo">Logo</label>
                 <input id="logo" type="file">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="color">Organisationsfarbe</label>
                 <input id="color" type="color" value="#eeeeee">
             </div>
-            <div class="form-block submit">
+            <div class="md-12 submit">
                 <button type="submit">Speichern</button>
             </div>
 

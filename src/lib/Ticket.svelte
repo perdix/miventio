@@ -22,14 +22,16 @@
 
 <style>
 .ticket {
-    margin: var(--unit);
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
     background-color: white;
-    height: 120px;
-    box-shadow: var(--shadow-light);
+    height: 80px;
+    /* box-shadow: var(--shadow-light); */
     transition: all 0.5s;
+    overflow: hidden;
+    margin: 10px;
 }
 .ticket:hover {
     box-shadow: var(--shadow);
@@ -42,19 +44,19 @@
 }
 .left {
     transition: all 0.5s;
-    width: 160px;
+    width: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--color-1);
     position: relative;
-    background: linear-gradient(132deg, var(--color-1) 0%, var(--color-2) 100%);
+    background: linear-gradient(132deg, rgba(159,163,194,1) 0%, rgba(56,83,128,1) 100%);
     background-position: 0%;
     background-size: 200%;
 }
 
 .left p{
-    font-size: 28px;
+    font-size: 20px;
     margin-left:10px;
     color: white;
 }
@@ -63,8 +65,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     background-color: var(--color-1-light);
     border-radius: 0% 50px 50px 0%;
     left:-30px;
@@ -74,8 +76,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
     background-color: var(--color-1-light);
     border-radius: 50px 0px 00px 50px;
     right:-30px;

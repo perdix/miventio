@@ -7,25 +7,25 @@
     <Header title={"Basis Info"} />   
 
     <Content>
-        <form action="">
-            <div class="form-block">
+        <form action="" class="miventio row">
+            <div class="md-12">
                 <label for="Name">Name der Veranstaltung</label>
                 <input id="name" type="text">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="description">Beschreibung</label>
                 <input id="description" type="text">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="von">Veranstaltungsstart</label>
                 <input id="von" type="date">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="bis">Veranstaltungsende</label>
                 <input id="bis" type="date">
             </div>
          
-            <div class="form-block submit">
+            <div class="md-12 submit">
                 <button type="submit">Speichern</button>
             </div>
     

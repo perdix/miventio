@@ -112,32 +112,181 @@ a:hover {
 }
 
 
+/******************************* LAYOUT ********************************/
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.md-12 {
+    width: calc( 100% );
+    padding: 5px;
+}
+
+.md-10 {
+    width: calc( (100% / 12) * 10);
+    padding: 5px;
+}
+
+.md-8 {
+    width: calc( (100% / 12) * 8);
+    padding: 5px;
+}
+
+.md-6 {
+    width: calc( 100% / 2);
+    padding: 5px;
+}
+
+.md-5 {
+    width: calc( (100% / 12) * 5);
+    padding: 5px;
+}
+
+.md-4 {
+    width: calc( 100% / 3);
+    padding: 5px;
+}
+
+.md-3 {
+    width: calc( (100% / 12) * 3);
+    padding: 5px;
+}
+
+.md-2 {
+    width: calc( 100% / 6);
+    padding: 5px;
+}
+
+.md-1 {
+    width: calc( 100% / 12);
+    padding: 5px;
+}
+
 /******************************* FORM STYLING ********************************/
 
-form .form-block {
-    margin-top:1.5rem;
-    max-width: 450px;
-}
 
-form .submit {
-    margin-top:3rem;;
-}
-
-form label {
-    display: block;
-    margin-bottom: 4px;
-}
-
-form input {
-    padding:0.9rem 1rem;
+form input[type="text"], form input[type="email"], form input[type="password"], form input[type="date"], form input[type="color"], form input[type="file"]  {
     border-radius: 0.2rem;
     border:none;
-    box-shadow: var(--shadow-light); 
     display: block;
     width: 100%;
     outline: none;
     background-color: white;
+    margin-top: 4px;
 }
+
+form input[type="radio"] {
+    display: inline-block;
+    margin:4px;
+}
+
+form select, form select:active, form select:focus {
+    background-color: var(--white);
+    margin-top: 4px;
+    border-radius: 0.2rem;
+    border:none;
+    width: 100%;
+    appearance: none;
+}
+
+form option {
+    border:none;
+    width: 100%;
+    appearance: none;
+}
+
+form fieldset {
+    border: none;
+    margin:0;
+    padding:0;
+}
+
+
+/******* Miventio ********/
+
+form.miventio {
+    max-width: 600px;
+}
+form.miventio input {
+    padding:0.9rem 1rem;
+    border-radius: 0.2rem;
+    box-shadow: var(--shadow-light); 
+}
+
+form.miventio label {
+    display: block;
+}
+
+form.miventio select, form.miventio select:active, form.miventio select:focus {
+    box-shadow: var(--shadow-light); 
+
+}
+
+form.miventio .submit {
+    margin-top:2rem;;
+}
+
+/******* Registration ********/
+
+form.register input {
+    border: 1px solid black;
+    padding:0.6rem 0.8rem;
+}
+
+form.register button {
+    background: #2062a8;
+    padding: 5px 12px;
+    font-size: 14px;
+    margin:0 5px;
+}
+
+
+form.register select, form.register select:active, form.register select:focus {
+    border: 1px solid black;
+    padding:0.6rem 0.8rem;
+}
+
+
+
+
+
+/****************** legacy ****************/
+
+form .form-block, form .block, fieldset {
+    margin-top:1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+
+
+
+
+
+
+
+form input[type="radio"] {
+    box-shadow: none;
+}
+
+form .radio label, form .radio input {
+    display: inline-block;
+    width: auto;
+}
+
+form .radio input {
+    margin: 7px;
+}
+
 
 form input[type="color"] {
     height:80px;
@@ -148,22 +297,17 @@ form input:focus {
     box-shadow: var(--shadow); 
 }
 
-form select, form select:active, form select:focus {
-    padding:0.9rem 2rem;
-    background-color: var(--white);
-    border:none;
-    box-shadow: var(--shadow-light); 
+
+
+
+/******* Registration ********/
+
+.register {
     width: 100%;
-    border-radius: 0.3rem;
-    transition: 0.2s;
-    font-size: 1.2rem;
-    appearance: none;
 }
 
-form option {
-    padding:0.9rem 1rem;
-    border:none;
-    width: 100%;
+.register input {
+   
 }
 
 
