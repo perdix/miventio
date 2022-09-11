@@ -76,6 +76,15 @@ h2 {
     font-size: 2rem;
 }
 
+/******************************* UTILITY ********************************/
+
+.padding {
+    padding: var(--unit);
+}
+
+.margin {
+    margin: var(--unit);
+}
 
 
 /******************************* BUTTONS & LINKS ********************************/
@@ -123,62 +132,58 @@ a:hover {
 }
 
 
+
 .md-12 {
     width: calc( 100% );
-    padding: 5px;
 }
 
 .md-10 {
     width: calc( (100% / 12) * 10);
-    padding: 5px;
 }
 
 .md-8 {
     width: calc( (100% / 12) * 8);
-    padding: 5px;
+}
+
+.md-7 {
+    width: calc( (100% / 12) * 7);
 }
 
 .md-6 {
     width: calc( 100% / 2);
-    padding: 5px;
 }
 
 .md-5 {
     width: calc( (100% / 12) * 5);
-    padding: 5px;
 }
 
 .md-4 {
     width: calc( 100% / 3);
-    padding: 5px;
 }
 
 .md-3 {
     width: calc( (100% / 12) * 3);
-    padding: 5px;
 }
 
 .md-2 {
     width: calc( 100% / 6);
-    padding: 5px;
 }
 
 .md-1 {
     width: calc( 100% / 12);
-    padding: 5px;
 }
 
-/******************************* FORM STYLING ********************************/
+/******************************* FORM ********************************/
 
 
 form input[type="text"], form input[type="email"], form input[type="password"], form input[type="date"], form input[type="color"], form input[type="file"]  {
     border-radius: 0.2rem;
     border:none;
     display: block;
-    width: 100%;
     outline: none;
     background-color: white;
-    margin-top: 4px;
+    margin: 4px;
+    width: calc(100% - 8px);
 }
 
 form input[type="radio"] {
@@ -188,10 +193,10 @@ form input[type="radio"] {
 
 form select, form select:active, form select:focus {
     background-color: var(--white);
-    margin-top: 4px;
     border-radius: 0.2rem;
     border:none;
-    width: 100%;
+    margin: 4px;
+    width: calc(100% - 8px);
     appearance: none;
 }
 
@@ -201,10 +206,27 @@ form option {
     appearance: none;
 }
 
+form input[type="radio"] ~ label, 
+form input[type="checkbox"] ~ label {
+    display: inline-block;
+    width: auto;
+}
+
+form label {
+    display: block;
+    margin:4px;
+    margin-bottom: 0;
+    width: calc(100% - 8px);
+}
+
 form fieldset {
     border: none;
     margin:0;
     padding:0;
+}
+
+form input:focus {
+    box-shadow: var(--shadow); 
 }
 
 
@@ -228,14 +250,19 @@ form.miventio select, form.miventio select:active, form.miventio select:focus {
 
 }
 
+form.miventio input[type="color"] {
+    height:80px;
+}
+
+
 form.miventio .submit {
-    margin-top:2rem;;
+    margin-top:2rem;
 }
 
 /******* Registration ********/
 
 form.register input {
-    border: 1px solid black;
+    border: 1px solid black ;
     padding:0.6rem 0.8rem;
 }
 
@@ -256,46 +283,6 @@ form.register select, form.register select:active, form.register select:focus {
 
 
 
-/****************** legacy ****************/
-
-form .form-block, form .block, fieldset {
-    margin-top:1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-
-}
-
-
-
-
-
-
-
-
-form input[type="radio"] {
-    box-shadow: none;
-}
-
-form .radio label, form .radio input {
-    display: inline-block;
-    width: auto;
-}
-
-form .radio input {
-    margin: 7px;
-}
-
-
-form input[type="color"] {
-    height:80px;
-}
-
-
-form input:focus {
-    box-shadow: var(--shadow); 
-}
 
 
 

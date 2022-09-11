@@ -50,7 +50,7 @@
     align-items: center;
     color: var(--color-1);
     position: relative;
-    background: linear-gradient(132deg, rgba(159,163,194,1) 0%, rgba(56,83,128,1) 100%);
+    background: linear-gradient(132deg, rgba(181,209,224,1) 0%, rgba(41,72,124,1) 100%);
     background-position: 0%;
     background-size: 200%;
 }
