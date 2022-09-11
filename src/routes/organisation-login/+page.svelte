@@ -11,16 +11,16 @@
         <img src="{logo}" alt="Logo">
          <h1>Gesellschaft für Parodontologie</h1>
          <h2>Organisationsverwaltung</h2>
-         <form action="">
-            <div class="form-block">
+         <form action="" class="row miventio">
+            <div class="md-12">
                 <label for="email">Email</label>
                 <input id="email" type="email">
             </div>
-            <div class="form-block">
+            <div class="md-12">
                 <label for="password">Password</label>
                 <input id="password" type="password">
             </div>
-            <div class="form-block submit">
+            <div class="md-12 submit">
                 <button type="submit">Einloggen</button>
             </div>
 

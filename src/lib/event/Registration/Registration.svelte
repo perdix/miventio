@@ -72,9 +72,7 @@
                 </div>
     
                 <div class="activities">
-
                     <Activities></Activities>
-    
                 </div>
         </div>
 
