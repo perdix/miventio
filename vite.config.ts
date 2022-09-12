@@ -5,8 +5,7 @@ const config: UserConfig = {
 	plugins: [sveltekit()],
 	ssr: {
 		noExternal: ['devalue']
-	},
-	
+	}
 };
 
 export default config;

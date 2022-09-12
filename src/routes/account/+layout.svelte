@@ -1,8 +1,7 @@
 <script>
-    import Header from "$lib/event/Header.svelte";
+	import Header from '$lib/event/Header.svelte';
 </script>
 
+<Header />
 
-<Header></Header>
-
-<slot></slot>
+<slot />

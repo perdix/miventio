@@ -1,7 +1,7 @@
 <script>
-    import Contacts from "$lib/Contacts.svelte";
+	import Contacts from '$lib/Contacts.svelte';
 </script>
 
 <div class="page">
- <Contacts />
+	<Contacts />
 </div>

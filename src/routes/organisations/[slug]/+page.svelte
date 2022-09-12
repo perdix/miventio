@@ -1,9 +1,7 @@
 <script>
-    import Events from "$lib/Events.svelte";
+	import Events from '$lib/Events.svelte';
 </script>
 
 <div class="page">
-
- <Events />
-
+	<Events />
 </div>
