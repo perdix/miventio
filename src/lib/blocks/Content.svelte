@@ -1,11 +1,19 @@
-<section>
+<script>
+	export let color = "transparent";
+</script>
+
+
+
+
+<section style="background-color:{color}">
 	<slot />
 </section>
 
 <style>
 	section {
-		background-color: var(--color-1-light);
-		padding: var(--unit);
+		/* background-color: var(--white); */
+		
 		margin-bottom: var(--unit);
+		min-height: 200px;
 	}
 </style>

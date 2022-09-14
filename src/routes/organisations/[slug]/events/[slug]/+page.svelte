@@ -6,9 +6,52 @@
 <Header title={'Gesamtübersicht'} />
 
 <Content>
-	<p>Hier gibt es einen Überblick über das Event</p>
-	<p>Momentane Buchungslage, etc.</p>
+	<div class="row">
+
+		<div class="md-6 col">
+
+			<div>
+				<h3>Anzahl der Anmeldungen</h3>
+			</div>
+			
+				
+			
+		</div>
+	
+		<div class="md-6 col">
+			<div>
+				<h3>Ein Diagramm?</h3>
+			</div>
+		
+		</div>
+	
+		<div class="md-12 col">
+			<div>
+				<h3>Die letzten 15 Anmeldungen</h3>
+			</div>
+		</div>
+	
+	</div>
+
 </Content>
 
+
+
+
+
+
+
 <style>
+	.row {
+
+	}
+	.row > div {
+		padding: 15px;
+	}
+
+	.row > div div{
+		background-color: white;
+		padding: 30px;
+		min-height: 300px;
+	}
 </style>

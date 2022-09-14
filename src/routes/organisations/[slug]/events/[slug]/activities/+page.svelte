@@ -39,15 +39,10 @@
 </script>
 
 <Header title={'Aktivitäten'}>
-	<button>Neu <span class="material-symbols-outlined">add_circle</span></button>
+	<button>Neue Aktivität <span class="material-symbols-outlined">add_circle</span></button>
 </Header>
 
-<Content>
-	<p>Hier kann man Workshops etc. erstellen und verwalten</p>
-	<p>Vielleicht kann man später auch eine Kalenderansicht programmieren.</p>
-</Content>
 
-<Content>
 	<h3>Tag 1: 21.3.2023</h3>
 	<table>
 		<tr>
@@ -70,7 +65,7 @@
 			</tr>
 		{/each}
 	</table>
-</Content>
+
 
 <Content>
 	<h3>Tag 2: 22.3.2023</h3>

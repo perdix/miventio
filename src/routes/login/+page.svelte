@@ -2,8 +2,8 @@
 	<div class="left" />
 
 	<div class="right">
-		<h1>Miventio</h1>
-		<h2>Event- und Organisationsverwaltung</h2>
+		<h1 class="logo">miventio</h1>
+		<h2>Event- und Organisationsplaner</h2>
 		<form class="miventio row">
 			<div class="md-12">
 				<label for="email">Email</label>
@@ -29,7 +29,7 @@
 	}
 	.left {
 		width: 22%;
-		background: linear-gradient(-30deg, var(--color-1) 0%, var(--color-1-dark) 100%);
+		background: linear-gradient(-60deg, var(--color-1) 0%, var(--color-1-dark) 100%);
 	}
 	.right {
 		width: 78%;
@@ -38,7 +38,7 @@
 		align-items: flex-start;
 		flex-direction: column;
 		padding: calc(var(--unit) * 3);
-		background-color: var(--color-1-light);
+		background-color: var(--lightgrey);
 	}
 
 	form {

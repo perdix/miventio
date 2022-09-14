@@ -1,59 +1,86 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
 	import Main from '$lib/blocks/Main.svelte';
-	import Button from '$lib/blocks/Button.svelte';
 
 	export let events = [
 		{
-			title: 'Kongress für Zahnmedizin',
+			title: 'Österreichischer Kongress für Zahnmedizin 2022',
 			description: 'Das ist eine Beschreibung des Events',
-			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			date: '21. - 23. März 2022',
+			location: 'Palais Epstein',
+			visible: true,
+			city: 'Wien',
+			status: 'Geöffnet',
+			bookings: '328'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			visible: true,
+			status: 'Geöffnet',
+			bookings: '328'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			visible: true,
+			status: 'Geöffnet',
+			bookings: '328'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			visible: true,
+			status: 'Geöffnet',
+			bookings: '328'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			visible: false,
+			status: 'Geöffnet',
+			bookings: '0'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			status: 'Geöffnet',
+			visible: true,
+			bookings: '328'
 		},
 		{
 			title: 'Kongress für Zahnmedizin',
 			description: 'Das ist eine Beschreibung des Events',
 			date: '21.3.22 - 23.3.22',
-			bookings: '328 Buchungen'
+			location: 'Palais Epstein',
+			city: 'Wien',
+			status: 'Geöffnet',
+			visible: true,
+			bookings: '328'
 		}
 	];
 </script>
 
 <Main>
-	<Header title={'Veranstaltungen'}>
-		<Button>
-			Neu <span class="material-symbols-outlined">add_circle</span>
-		</Button>
+	<Header title={'Veranstaltungen'} >
+		<button>
+			Neue Veranstaltung<span class="material-symbols-outlined">add_circle</span>
+		</button>
 	</Header>
 
 	<section>
@@ -62,11 +89,18 @@
 				<a href="/organisations/1/events/1">
 					<div>
 						<h1>{event.title}</h1>
-						<p>{event.description}</p>
+						<p class="date">{event.date}</p>
+						<p class="location">{event.location} in {event.city}</p>
+						
 					</div>
-					<div>
-						<p>{event.date}</p>
-						<p>{event.bookings}</p>
+					<div class="bottom">
+						<p class="count"> {event.bookings} Anmeldungen</p>
+						<p class="visibility">
+							{#if !event.visible}
+								<span class="material-symbols-outlined">visibility_off</span>
+							{/if}
+						</p>
+						
 					</div>
 				</a>
 			</article>
@@ -75,20 +109,64 @@
 </Main>
 
 <style>
+	section {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		gap: var(--unit);
+	}
 	article a {
-		background: linear-gradient(120deg, var(--color-1-light) 0%, var(--color-1-light) 100%);
-		margin-bottom: 10px;
+		background: white;
+		height: 300px;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		flex-direction: column;
+		padding: var(--unit);
+		color: black;
+		/* box-shadow: var(--shadow-light); */
+	}
+	article a:hover {
+		box-shadow: var(--shadow-light);
+	}
+	article h1 {
+		font-size: 1.5rem;
+	}
+	article h2 {
+		font-size: 1.2rem;
+	}
+	.date {
+		margin-top: 15px;
+		font-weight: 500;
+		font-size: 1.2rem;
+		color: var(--color-1-dark);
+	}
+	.location {
+		margin-top: 2px;
+		font-size: 1.1rem;
+		font-weight: 300;
+		color: var(--darkgrey);
+	}
+	.status {
+		background-color: var(--color-1);
+		padding: 5px 10px;
+		border-radius: 30px;
+		color: white;
+		display: inline-block;
+		margin-top: 10px;
+	}
+	.count {
+		background-color: var(--lightgrey);
+		padding: 5px 10px;
+		border-radius: 30px;
+		color: var(--darkgrey);
+	}
+	.bottom {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: var(--unit);
-		color: black;
-		box-shadow: var(--shadow-light);
+		width: 100%;
 	}
-	article a:hover {
-		box-shadow: var(--shadow);
-	}
-	article h1 {
-		font-size: 16px;
+	.visibility {
+		color: var(--darkgrey);
 	}
 </style>

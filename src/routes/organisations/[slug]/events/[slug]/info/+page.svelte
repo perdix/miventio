@@ -3,24 +3,32 @@
 	import Content from '$lib/blocks/Content.svelte';
 </script>
 
-<Header title={'Basis Info'} />
+<Header title={'Allgemeine Infos'} />
 
 <Content>
 	<form action="" class="miventio row">
 		<div class="md-12">
-			<label for="Name">Name der Veranstaltung</label>
+			<label for="Name">Veranstaltungstitel</label>
 			<input id="name" type="text" />
 		</div>
 		<div class="md-12">
 			<label for="description">Beschreibung</label>
 			<input id="description" type="text" />
 		</div>
+		<div class="md-6">
+			<label for="location">Location</label>
+			<input id="location" type="text" />
+		</div>
+		<div class="md-6">
+			<label for="city">Stadt</label>
+			<input id="city" type="text" />
+		</div>
 		<div class="md-12">
-			<label for="von">Veranstaltungsstart</label>
+			<label for="von">Start</label>
 			<input id="von" type="date" />
 		</div>
 		<div class="md-12">
-			<label for="bis">Veranstaltungsende</label>
+			<label for="bis">Ende</label>
 			<input id="bis" type="date" />
 		</div>
 
@@ -31,8 +39,5 @@
 </Content>
 
 <style>
-	form {
-		background-color: var(--color-1-light);
-		border-radius: var(--corner);
-	}
+
 </style>

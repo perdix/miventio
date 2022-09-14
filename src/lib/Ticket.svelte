@@ -28,13 +28,12 @@
 		align-items: stretch;
 		background-color: white;
 		height: 80px;
-		/* box-shadow: var(--shadow-light); */
 		transition: all 0.5s;
 		overflow: hidden;
 		margin: 10px;
 	}
 	.ticket:hover {
-		box-shadow: var(--shadow);
+		box-shadow: var(--shadow-light);
 		cursor: pointer;
 		transition: all 0.5s;
 	}
@@ -50,9 +49,10 @@
 		align-items: center;
 		color: var(--color-1);
 		position: relative;
-		background: linear-gradient(132deg, rgba(181, 209, 224, 1) 0%, rgba(41, 72, 124, 1) 100%);
+		/* background: linear-gradient(132deg, rgba(181, 209, 224, 1) 0%, rgba(41, 72, 124, 1) 100%); */
 		background-position: 0%;
 		background-size: 200%;
+		background-color: #ccc;
 	}
 
 	.left p {
@@ -67,7 +67,7 @@
 		transform: translateY(-50%);
 		height: 40px;
 		width: 40px;
-		background-color: var(--color-1-light);
+		background-color: var(--lightgrey);
 		border-radius: 0% 50px 50px 0%;
 		left: -30px;
 	}
@@ -78,7 +78,7 @@
 		transform: translateY(-50%);
 		height: 40px;
 		width: 40px;
-		background-color: var(--color-1-light);
+		background-color: var(--lightgrey);
 		border-radius: 50px 0px 00px 50px;
 		right: -30px;
 	}
@@ -95,7 +95,7 @@
 	}
 
 	.hole {
-		background-color: var(--color-1-light);
+		background-color: var(--lightgrey);
 		width: 12px;
 		height: 12px;
 		border-radius: 6px;

@@ -11,7 +11,6 @@
 		border-radius: 0.3rem;
 		transition: 0.2s;
 		font-size: 1.2rem;
-		box-shadow: var(--shadow-light);
 		background: linear-gradient(132deg, var(--color-1) 0%, var(--color-2) 100%);
 		background-position: 0%;
 		background-size: 200%;

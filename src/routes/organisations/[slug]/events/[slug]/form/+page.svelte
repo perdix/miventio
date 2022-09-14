@@ -6,14 +6,9 @@
 
 <Header title={'Anmeldungsformular'} />
 
-<Content>
-	<Registration />
-</Content>
-<Content>
-	Das Formular kann wie folgt eingebunden werden: Entweder als Embedde Page
-	<br />
-	Oder als Button mit Popup
-</Content>
+<Registration />
+
+
 
 <style>
 </style>

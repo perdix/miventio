@@ -81,19 +81,21 @@
 
 <Main>
 	<Header title={'Kontakte'}>
-		<Button>
-			Neu <span class="material-symbols-outlined">add_circle</span>
-		</Button>
+		<button>
+			Neuer Kontakt<span class="material-symbols-outlined">add_circle</span>
+		</button>
 	</Header>
 
 	<table>
+		<thead>
 		<tr>
 			<th>Name</th>
 			<th>Adresse</th>
 			<th>E-Mail</th>
 			<th>Status</th>
 		</tr>
-
+	</thead>
+		<tbody>	
 		{#each contacts as contact}
 			<tr>
 				<td>{contact.name}</td>
@@ -112,6 +114,7 @@
 				>
 			</tr>
 		{/each}
+		</tbody>		
 	</table>
 </Main>
 

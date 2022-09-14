@@ -90,13 +90,9 @@
 	];
 </script>
 
-<Header title={'Buchungen'}>
-	<button>Neu <span class="material-symbols-outlined">add_circle</span></button>
+<Header title={'Anmeldungen'}>
+	<button>Neue Anmeldung <span class="material-symbols-outlined">add_circle</span></button>
 </Header>
-
-<Content>
-	<p>Hier sieht man alle Buchungen und kann diese verwalten (auch händisch neu hinzugeben).</p>
-</Content>
 
 <Content>
 	<table>
