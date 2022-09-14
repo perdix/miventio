@@ -74,14 +74,5 @@
 		margin-bottom: 5px;
 		cursor: pointer;
 	}
-	.close {
-		display: block;
-		padding: 10px;
-		border-radius: var(--corner);
-		background-color: var(--grey);
-		
-	}
-	.close:hover {
-		box-shadow: var(--shadow-light);
-	}
+
 </style>

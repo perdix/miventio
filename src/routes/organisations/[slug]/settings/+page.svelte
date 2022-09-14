@@ -1,12 +1,13 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
-	import Box from '$lib/blocks/Box.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 </script>
 
 <Main>
-	<Header title={'Settings'} />
+	<Header title={'Settings'} >
+		<a href="/organisations/1" class="close"><span class="material-symbols-outlined">close</span></a>	
+	</Header>
 
 	<Content>
 

@@ -162,6 +162,17 @@ a:hover {
 	color: var(--color-1-dark);
 }
 
+.close {
+	display: block;
+	padding: 10px;
+	border-radius: var(--corner);
+	background-color: var(--grey);
+	
+}
+.close:hover {
+	box-shadow: var(--shadow-light);
+}
+
 /******************************* LAYOUT ********************************/
 
 .row {
