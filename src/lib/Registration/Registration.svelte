@@ -1,8 +1,8 @@
 <script>
-	import Stepper from '$lib/event/Registration/Stepper.svelte';
-	import TicketSelection from '$lib/event/Registration/TicketSelection.svelte';
-	import BookingDetails from '$lib/event/Registration/BookingDetails.svelte';
-	import PaymentDetails from '$lib/event/Registration/PaymentDetails.svelte';
+	import Stepper from '$lib/Registration/Stepper.svelte';
+	import TicketSelection from '$lib/Registration/TicketSelection.svelte';
+	import BookingDetails from '$lib/Registration/BookingDetails.svelte';
+	import PaymentDetails from '$lib/Registration/PaymentDetails.svelte';
 	import { onMount } from 'svelte';
 
 	const items = [

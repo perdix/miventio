@@ -1,15 +1,18 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
+	import Box from '$lib/blocks/Box.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 </script>
 
 <Main>
 	<Header title={'Settings'} />
 
+	<Content>
+
 	<div class="row">
 		<div class="md-6">
-			<Content>
+			
 				<h1>Allgemein</h1>
 				<form action="" class="miventio row">
 					<div class="md-12">
@@ -28,15 +31,29 @@
 						<button type="submit">Speichern</button>
 					</div>
 				</form>
-			</Content>
+		
 		</div>
 		<div class="md-6">
-			<Content>
-				<h1>Mitarbeiter</h1>
-				<p>Tabelle mit allen Mitgliedern, die Admin-Rechte haben </p>
-			</Content>
+
+			<h1>Subscription</h1>
+			<p>Welches Abo wurde gegewählt? </p>
+	
 		</div>
+
+		<div class="md-12 box">
+
+			<h1>Mitarbeiter</h1>
+			<p>Tabelle mit allen Mitgliedern, die Admin-Rechte haben </p>
+
 	</div>
+
+
+	</div>
+
+
+
+
+	</Content>
 
 
 
@@ -48,5 +65,8 @@
 		font-size: 1.5rem;
 		font-weight: 300px;
 		margin-bottom: calc (var(--unit) / 2);
+	}
+	.box {
+		margin-top: var(--unit);
 	}
 </style>

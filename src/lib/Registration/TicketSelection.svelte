@@ -1,6 +1,6 @@
 <script>
 	import Ticket from '$lib/Ticket.svelte';
-	import Activities from '$lib/event/Registration/Activities.svelte';
+	import Activities from '$lib/Registration/Activities.svelte';
 </script>
 
 <section>

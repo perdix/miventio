@@ -1,5 +1,5 @@
 <script>
-	import Cart from '$lib/event/Registration/Cart.svelte';
+	import Cart from '$lib/Registration/Cart.svelte';
 </script>
 
 <section>

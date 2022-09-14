@@ -1,7 +1,7 @@
 <script>
 	import Main from '$lib/blocks/Main.svelte';
 	import Header from '$lib/blocks/Header.svelte';
-	import Content from '$lib/blocks/Content.svelte';
+	import Box from '$lib/blocks/Box.svelte';
 
 	const organisations = [
 		{ name: 'Gesellschaft für Parodontologie' },
@@ -10,10 +10,13 @@
 </script>
 
 <Main>
-	<Header title="Account-Einstellungen" />
+	<Header title="Account-Einstellungen" >
+		<a href="/organisations/1" class="close"><span class="material-symbols-outlined">close</span></a>	
+	</Header>
+
 	<div class="row">
 		<div class="md-6 left">
-			<Content>
+			<Box>
 				<h2>Meine Daten</h2>
 				<form action="" class="miventio row">
 					<div class="md-12">
@@ -36,10 +39,10 @@
 						<button type="submit">Speichern</button>
 					</div>
 				</form>
-			</Content>
+			</Box>
 		</div>
 		<div class="md-6 right">
-			<Content>
+			<Box>
 				<h2>Meine Organisationen</h2>
 
 				{#each organisations as organisation}
@@ -48,19 +51,7 @@
 					</div>
 				{/each}
 
-				<br />
-				<br />
-				<br />
-
-				<h3>Users</h3>
-
-				<br />
-				<br />
-
-				<h3>Subscription</h3>
-				<br />
-				<br />
-			</Content>
+				</Box>
 		</div>
 	</div>
 </Main>
@@ -82,5 +73,15 @@
 		border-radius: var(--corner);
 		margin-bottom: 5px;
 		cursor: pointer;
+	}
+	.close {
+		display: block;
+		padding: 10px;
+		border-radius: var(--corner);
+		background-color: var(--grey);
+		
+	}
+	.close:hover {
+		box-shadow: var(--shadow-light);
 	}
 </style>

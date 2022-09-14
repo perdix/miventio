@@ -10,7 +10,9 @@
 		{/if}
 		{title}
 	</h1>
-	<slot />
+	<div>
+		<slot />
+	</div>
 </header>
 
 <style>
