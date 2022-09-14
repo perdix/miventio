@@ -1,82 +1,8 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
-	import Button from '$lib/blocks/Button.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 
-	export let contacts = [
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Besucher'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Mitglied'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Mitglied'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Mitglied'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Besucher'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Student'
-		},
-		{
-			name: 'Max Mustermann',
-			address: 'Musterstraße 34',
-			email: 'mail@mail.de',
-			status: 'Besucher'
-		}
-	];
+	export let contacts = [];
 </script>
 
 <Main>
