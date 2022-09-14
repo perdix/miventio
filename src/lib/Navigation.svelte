@@ -20,7 +20,7 @@ export let organisations = [
 
 <nav>
 	<div class="left">
-	<a class="settings" href="/organisations/1/settings"><span class="material-symbols-outlined">settings</span></a>
+	<a class="settings" href="/organisation/1/settings"><span class="material-symbols-outlined">settings</span></a>
 	<div class="organisation">
 		<!-- <img src={logo} alt="Logo Organisation" /> -->
 		<select name="organisations" id="organisations">
@@ -35,7 +35,7 @@ export let organisations = [
 		{#each tabs as tab}
 			<li>
 				<a
-					href="/organisations/1/{tab.slug}"
+					href="/organisation/1/{tab.slug}"
 					class:active={$page.url.pathname.includes(tab.slug)}
 					class:marked={tab.slug == 'settings'}
 					><span class="material-symbols-outlined">{tab.icon}</span><p>{tab.title}</p>

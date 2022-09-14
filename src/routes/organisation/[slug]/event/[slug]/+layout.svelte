@@ -25,7 +25,7 @@
 <div class="wrapper">
 	<aside>
 		<nav>
-			<a href="/organisations/1/events/1">
+			<a href="/organisation/1/event/1">
 				<div>
 					<h1>{event.title}</h1>
 					<p class="date">{event.date}</p>
@@ -35,7 +35,7 @@
 					{#each sections as section}
 						<li>
 							<a
-								href="/organisations/1/events/1/{section.slug}"
+								href="/organisation/1/event/1/{section.slug}"
 								class:active={$page.url.pathname.includes(section.slug)}
 							>
 								<span class="material-symbols-outlined">{section.icon}</span>

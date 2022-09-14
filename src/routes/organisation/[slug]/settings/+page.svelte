@@ -6,7 +6,7 @@
 
 <Main>
 	<Header title={'Settings'} >
-		<a href="/organisations/1" class="close"><span class="material-symbols-outlined">close</span></a>	
+		<a href="/organisation/1" class="close"><span class="material-symbols-outlined">close</span></a>	
 	</Header>
 
 	<Content>

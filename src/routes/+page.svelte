@@ -4,14 +4,14 @@
 	<section>
 		<h1>Prototyp Miventio</h1>
 		<a href="/login">Login-Seite</a>
-		<a href="/organisations/1/events">Veranstaltungen</a>
-		<a href="/organisations/1/events/1">Event Übersicht</a>
-		<a href="/organisations/1/contacts">Kontakte</a>
-		<a href="/organisations/1/settings">Einstellungen Organisation</a>
+		<a href="/organisation/1/events">Veranstaltungen</a>
+		<a href="/organisation/1/event/1">Event Übersicht</a>
+		<a href="/organisation/1/contacts">Kontakte</a>
+		<a href="/organisation/1/settings">Einstellungen Organisation</a>
 		<a href="/account">Event-Manager-Account</a>
-		<a href="/organisations/1/events/1/activities">Aktivitäten/Workshops</a>
-		<a href="/organisations/1/events/1/tickets">Tickets</a>
-		<a href="/organisations/1/events/1/form">Registrierung</a>
+		<a href="/organisation/1/event/1/activities">Aktivitäten/Workshops</a>
+		<a href="/organisation/1/event/1/tickets">Tickets</a>
+		<a href="/organisation/1/event/1/form">Registrierung</a>
 	</section>
 
 

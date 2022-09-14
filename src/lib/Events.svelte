@@ -86,7 +86,7 @@
 	<section>
 		{#each events as event}
 			<article>
-				<a href="/organisations/1/events/1">
+				<a href="/organisation/1/event/1">
 					<div>
 						<h1>{event.title}</h1>
 						<p class="date">{event.date}</p>

@@ -11,7 +11,7 @@
 
 <Main>
 	<Header title="Account-Einstellungen" >
-		<a href="/organisations/1" class="close"><span class="material-symbols-outlined">close</span></a>	
+		<a href="/organisation/1" class="close"><span class="material-symbols-outlined">close</span></a>	
 	</Header>
 
 	<div class="row">
