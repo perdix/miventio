@@ -1,16 +1,11 @@
 <script>
-    	import { page } from '$app/stores';
+    import { page } from '$app/stores';
 
-export let organisations = [
-		{ slug: 'zahn', title: 'Gesellschaft für Parodontologie' },
-		{ slug: 'inner', title: 'Gesellschaft für Gesellschaft für Innere Medizin' },
-		{ slug: 'herz', title: 'Gesellschaft für Kardiologie' }
-	];
-
+	export let organisations = []
+	
 	export let tabs = [
 		{ slug: 'events', title: 'Veranstaltungen', icon: 'event' },
 		{ slug: 'contacts', title: 'Kontakte', icon: 'group' },
-		// { slug: 'settings', title: '', icon: 'settings' }
 	];
 
 
@@ -25,7 +20,7 @@ export let organisations = [
 		<!-- <img src={logo} alt="Logo Organisation" /> -->
 		<select name="organisations" id="organisations">
 			{#each organisations as organisation}
-				<option value={organisation.slug}>{organisation.title}</option>
+				<option value={organisation.slug}>{organisation.name}</option>
 			{/each}
 		</select>
 	</div>

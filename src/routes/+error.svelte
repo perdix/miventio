@@ -4,7 +4,7 @@
 
 <main>
 
-    <div>
+    <div id="error">
         <h1>{$page.status}</h1>
         <h2>{$page.error.message}</h2>
         <br>
@@ -26,7 +26,7 @@
         align-items: center;
         min-height: 100vh;
     }
-    div {
+    #error {
         margin-top: -200px;
     }
 

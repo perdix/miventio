@@ -60,9 +60,7 @@
 	article h1 {
 		font-size: 1.5rem;
 	}
-	article h2 {
-		font-size: 1.2rem;
-	}
+	
 	.date {
 		margin-top: 15px;
 		font-weight: 500;
@@ -74,14 +72,6 @@
 		font-size: 1.1rem;
 		font-weight: 300;
 		color: var(--darkgrey);
-	}
-	.status {
-		background-color: var(--color-1);
-		padding: 5px 10px;
-		border-radius: 30px;
-		color: white;
-		display: inline-block;
-		margin-top: 10px;
 	}
 	.count {
 		background-color: var(--lightgrey);
