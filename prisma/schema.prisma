@@ -24,7 +24,7 @@ model User {
   address   String?
   postcode  String?
   city      String?
-  role      String
+  role      String?
   type    String?
   notes   String?
   roles Role[]
@@ -50,7 +50,7 @@ model Organisation {
   id        String  @id @default(cuid())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  name       String
+  name       String @unique
   slug       String?
   description String?
   color String?
