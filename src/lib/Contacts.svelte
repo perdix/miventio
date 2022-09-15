@@ -24,11 +24,10 @@
 		<tbody>	
 		{#each contacts as contact}
 			<tr>
-				<td>{contact.name}</td>
+				<td>{contact.first_name} {contact.last_name}</td>
 				<td
-					>{contact.address.street}
-					{contact.address.suite} <br />
-					{contact.address.zipcode}
+					>{contact.address} <br />
+					{contact.address.postcode}
 					{contact.address.city}</td
 				>
 				<td>{contact.email}</td>

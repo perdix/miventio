@@ -1,3 +1,7 @@
+<script>
+	export let ticket = {}
+</script>
+
 <article class="ticket">
 	<div class="left">
 		<span class="cut" />
@@ -15,7 +19,7 @@
 			<div class="hole" />
 		</div>
 		<span class="cut" />
-		<h3>Komplettpaket</h3>
+		<h3>{ticket.name}</h3>
 		<p>Student</p>
 	</div>
 </article>

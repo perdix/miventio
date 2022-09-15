@@ -10,6 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Superuser {
+  id        String  @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  last_login DateTime?
+  email      String @unique
+  password  String?
+  organisations Role[]
+}
+
 model User {
   id        String  @id @default(cuid())
   created_at DateTime @default(now())
@@ -24,10 +34,10 @@ model User {
   address   String?
   postcode  String?
   city      String?
-  role      String?
   type    String?
   notes   String?
-  roles Role[]
+  organisation_id String
+  organisation Organisation @relation(fields: [organisation_id], references: [id])
   tickets Ticket[]
   bookings Booking[]
   events Event[]
@@ -38,12 +48,11 @@ model Role {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   role String
-  user_id String
-  user User @relation(fields: [user_id], references: [id])
+  superuser_id String
+  user Superuser @relation(fields: [superuser_id], references: [id])
   organisation_id String
   organisation Organisation @relation(fields: [organisation_id], references: [id])
-
-  @@id([user_id, organisation_id])
+  @@id([superuser_id, organisation_id])
 }
 
 model Organisation {
@@ -55,7 +64,8 @@ model Organisation {
   description String?
   color String?
   events Event[]
-  roles Role[]
+  superusers Role[]
+  users User[]
 }
 
 
@@ -66,12 +76,13 @@ model Event {
   name       String
   slug       String?
   description String?
-  start DateTime
-  end DateTime
-  location String
-  city String
-  address String
-  postcode String
+  start DateTime?
+  end DateTime?
+  location String?
+  city String?
+  address String?
+  postcode String?
+  status String?
   activities Activity[]
   bookings Booking[]
   tickets Ticket[]
@@ -87,12 +98,12 @@ model Activity {
   updated_at DateTime @updatedAt
   name       String
   description String?
-  start DateTime
-  end DateTime
+  start DateTime?
+  end DateTime?
   limit Int?
   location String?
   leader String?
-  price Float
+  price Float?
   event_id String
   event Event @relation(fields: [event_id], references: [id])
   bookings Booking[]
@@ -104,14 +115,14 @@ model Booking {
   id        String  @id @default(cuid())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  name       String
-  billing_address String
-  billing_postcode String
-  billing_city String
-  billing_email String
-  billing_name String
-  total_price Float
-  cart Json
+  billing_address String?
+  billing_postcode String?
+  billing_city String?
+  billing_email String?
+  billing_name String?
+  total Float
+  status String
+  cart Json?
   event_id String
   event Event @relation(fields: [event_id], references: [id])
   users User[]
@@ -125,9 +136,9 @@ model Ticket {
   updated_at DateTime @updatedAt
   name       String
   description String?
-  price Float
-  type String // role
-  mode String // full day
+  price Float?
+  type String? // role
+  mode String? // full day
   event_id String
   event Event @relation(fields: [event_id], references: [id])
   users User[]

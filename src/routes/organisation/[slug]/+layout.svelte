@@ -5,9 +5,9 @@
 </script>
 
 <Header />
-<Navigation organisations={$page.data.organisations} />
+<Navigation organisations={$page.data.organisations} organisation={$page.data.organisation} />
 
-<slot />
+<slot/>
 
 <style>
 	

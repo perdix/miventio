@@ -14,8 +14,6 @@
 				<h3>Anzahl der Anmeldungen</h3>
 			</div>
 			
-				
-			
 		</div>
 	
 		<div class="md-6 col">

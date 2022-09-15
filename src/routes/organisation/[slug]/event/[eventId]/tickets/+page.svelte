@@ -1,6 +1,7 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
 	import Ticket from '$lib/Ticket.svelte';
+	import { page } from '$app/stores'
 </script>
 
 <Header title={'Tickets'}>
@@ -9,20 +10,11 @@
 
 <div>
 
-	<h3>Mitglied</h3>
-	<Ticket />
-	<Ticket />
-	<h3>Student</h3>
-	<Ticket />
-	<Ticket />
+	{#each $page.data.event.tickets as ticket}
+		<Ticket {ticket}/>
+	{/each}
 	
-	<h3>Sonstige Teilnahme</h3>
-	<Ticket />
-	<Ticket />
 	
-
-
-
 </div>
 
 

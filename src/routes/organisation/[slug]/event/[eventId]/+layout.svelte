@@ -1,17 +1,8 @@
 <script>
 	import { page } from '$app/stores';
 	import Main from '$lib/blocks/Main.svelte';
+	import Time from 'svelte-time';
 
-	export let event = {
-			title: 'Österreichischer Kongress für Zahnmedizin 2022',
-			description: 'Das ist eine Beschreibung des Events',
-			date: '21. - 23. März 2022',
-			location: 'Palais Epstein',
-			visible: true,
-			city: 'Wien',
-			status: 'Geöffnet',
-			bookings: '328'
-		}
 
 	export let sections = [
 		{ slug: 'info', title: 'Allgmeine Infos', icon: 'info' },
@@ -25,17 +16,17 @@
 <div class="wrapper">
 	<aside>
 		<nav>
-			<a href="/organisation/1/event/1">
+			<a href="/organisation/{$page.params.slug}/event/1{$page.params.eventId}">
 				<div>
-					<h1>{event.title}</h1>
-					<p class="date">{event.date}</p>
-					<p class="location">{event.location} in {event.city}</p>
+					<h1>{$page.data.event.name}</h1>
+					<p class="date"><Time timestamp={$page.data.event.start} format="DD.MM." /> - <Time timestamp={$page.data.event.end} format="DD.MM.YYYY" /></p>
+					<p class="location">{$page.data.event.location} in {$page.data.event.city}</p>
 				</div>
 				<ul>
 					{#each sections as section}
 						<li>
 							<a
-								href="/organisation/1/event/1/{section.slug}"
+								href="/organisation/{$page.params.slug}/event/{$page.params.eventId}/{section.slug}"
 								class:active={$page.url.pathname.includes(section.slug)}
 							>
 								<span class="material-symbols-outlined">{section.icon}</span>
