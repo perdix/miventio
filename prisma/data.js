@@ -32,12 +32,20 @@ export const users = [
     {
         first_name: "Max 1",
         last_name: "Mustermann",
-        email: 'max1@hallo.io'
+        status: "Student",
+        email: 'max1@hallo.io',
+        address: "musterplatz 2",
+        city: "Wien",
+        postcode: "1010"
     },
     {
         first_name: "Max 2",
         last_name: "Mustermann",
-        email: 'max2@hallo.io'
+        status: "Mitglied",
+        email: 'max2@hallo.io',
+        address: "musterplatz 2",
+        city: "Wien",
+        postcode: "1010"
     },
 ];
 

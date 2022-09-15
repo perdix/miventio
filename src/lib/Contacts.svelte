@@ -18,6 +18,7 @@
 			<th>Name</th>
 			<th>Adresse</th>
 			<th>E-Mail</th>
+			<th>Telefon</th>
 			<th>Status</th>
 		</tr>
 	</thead>
@@ -26,11 +27,12 @@
 			<tr>
 				<td>{contact.first_name} {contact.last_name}</td>
 				<td
-					>{contact.address} <br />
-					{contact.address.postcode}
-					{contact.address.city}</td
+					>{contact.address || ''} <br />
+					{contact.postcode || ''}
+					{contact.city || ''}</td
 				>
-				<td>{contact.email}</td>
+				<td>{contact.email || ''}</td>
+				<td>{contact.phone || ''}</td>
 				<td
 					><span
 						class:member={contact.status.toLowerCase() == 'mitglied'}

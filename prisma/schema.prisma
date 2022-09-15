@@ -36,6 +36,7 @@ model User {
   city      String?
   type    String?
   notes   String?
+  status String?
   organisation_id String
   organisation Organisation @relation(fields: [organisation_id], references: [id])
   tickets Ticket[]
