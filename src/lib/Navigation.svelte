@@ -8,9 +8,14 @@
 	
 	export let tabs = [
 		{ slug: 'events', title: 'Veranstaltungen', icon: 'event' },
-		{ slug: 'contacts', title: 'Kontakte', icon: 'group' },
-		{ slug: 'settings', title: '', icon: 'settings' },
+		{ slug: 'contacts', title: 'Kontakte', icon: 'group' }
+		,
 	];
+
+	// Show settings only for admin
+	if (organisation.role == 'ADMIN') {
+		tabs.push({ slug: 'settings', title: '', icon: 'settings' })
+	}
 
 	let isDropdownOpen = false;
 

@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 export const organisations = [
     {
         name: 'Gesellschaft für Parodontologie 1'
@@ -16,15 +18,25 @@ export const events = [
         start: new Date('2022-05-23'),
         end: new Date('2022-05-25')
     },
+    {
+        name: 'Österreichischer Kongress für HNO 2022',
+        description: 'Das ist eine Beschreibung des Events',
+        location: 'Goldenes Dachl',
+        city: 'Innsbruck',
+        start: new Date('2022-05-23'),
+        end: new Date('2022-05-25')
+    },
 ];
 
 
 export const superusers = [
     {
-        email: 'admin1@mivent.io'
+        email: 'admin@mivent.io',
+        password: await bcrypt.hash('admin', 10)
     },
     {
-        email: 'admin2@mivent.io'
+        email: 'admin2@mivent.io',
+        password: await bcrypt.hash('admin', 10)
     },
 ];
 

@@ -285,6 +285,14 @@ form input:focus {
 	box-shadow: var(--shadow);
 }
 
+.error-box {
+	padding: 20px;
+	display: inline-block;
+	border: 1px solid red;
+	background-color: lightpink;
+	margin-top: 20px;
+}
+
 /******* Miventio ********/
 
 form.miventio {

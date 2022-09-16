@@ -10,7 +10,11 @@ const config = {
 
 	kit: {
 		//adapter: adapter()
-		adapter: adapter({ out: 'build' })
+		adapter: adapter({ out: 'build' }),
+		env: {
+			dir: process.cwd(),
+			publicPrefix: 'PUBLIC_'
+		  },
 	}
 };
 

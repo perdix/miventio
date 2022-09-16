@@ -1,17 +1,25 @@
-
-
-
-
-
 export async function GET({ url, locals, params }) {
+
+    if (!locals.session) {
+		return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
+	}
 
     const { prisma } = locals;
 
-    const organisation_id = params.slug;
+    const role = await prisma.role.findFirst({
+        where: {
+            organisation_id: params.slug,
+            superuser_id: locals.session.id
+        }
+    });
+    
+    if (role === null) {
+        return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
+    }
 
     const users = await prisma.user.findMany({
         where: {
-            organisation_id: organisation_id
+            organisation_id: params.slug
           }
     }
     );

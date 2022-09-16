@@ -1,6 +1,3 @@
-import { organisation } from '$lib/stores.js';
-import { get } from 'svelte/store';
-
 
 export async function load( {fetch, params} ) {
 
