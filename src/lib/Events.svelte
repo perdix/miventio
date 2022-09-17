@@ -1,20 +1,12 @@
 <script>
-	import Header from '$lib/blocks/Header.svelte';
-	import Main from '$lib/blocks/Main.svelte';
+
 	import Time from "svelte-time";
 	import { page } from '$app/stores';
-
-
 	export let events = [];
 
 </script>
 
-<Main>
-	<Header title={'Veranstaltungen'} >
-		<button>
-			Neue Veranstaltung<span class="material-symbols-outlined">add_circle</span>
-		</button>
-	</Header>
+
 
 	<section>
 		{#each events as event}
@@ -38,7 +30,6 @@
 			</article>
 		{/each}
 	</section>
-</Main>
 
 <style>
 	section {

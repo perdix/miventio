@@ -8,7 +8,6 @@ export async function load(request) {
 		};
 	}
 
-
 	return {
         session: request.locals.session
     };

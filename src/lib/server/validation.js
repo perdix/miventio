@@ -4,7 +4,18 @@ import addFormats from "ajv-formats"
 const ajv = new Ajv()
 addFormats(ajv)
 
-const loginInputSchema = {
+
+
+
+
+export const validate = (data, schema) => {
+  const validate = ajv.compile(locals()[schema])
+  return validate(data);
+}
+
+
+
+const loginInput = {
   type: "object",
   properties: {
     email: {
@@ -17,12 +28,4 @@ const loginInputSchema = {
   },
   required: ["email", "password"],
   additionalProperties: false
-}
-
-
-export class InputValidator {
-  validateLoginInput = (data) => {
-    const validate = ajv.compile(loginInputSchema)
-    return validate(data);
-  }
 }

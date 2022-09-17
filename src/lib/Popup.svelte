@@ -2,22 +2,47 @@
 	import Main from './blocks/Main.svelte';
 	import Header from './blocks/Header.svelte';
 	import Content from './blocks/Content.svelte';
+	import { createEventDispatcher } from 'svelte';
+	export let title = "";
+	export let show = false;
+	const dispatch = createEventDispatcher();
 
-	let visible = true;
+	let close = () => {
+        dispatch('close', {
+            show: false
+        });
+	}
 </script>
 
-<div class="background">
+
+<div id="popup" class:visible={show} class:hidden={!show}>
+<div class="background" >
 	<div class="box">
 		<Main>
-			<Header title="Name" />
-			<Content />
+			<Header title="{title}">
+				<span class="material-symbols-outlined close" on:click={close}>close</span>
+			</Header>
+			<Content>
+				<slot></slot>
+			</Content>
 		</Main>
 	</div>
 </div>
+</div>
 
 <style>
+	.close {
+		cursor: pointer;
+	}
+	.hidden {
+		opacity: 0;
+	}
+	.visible {
+		opacity: 1;
+	}
 	.background {
 		position: absolute;
+		z-index: 150;
 		top: 0;
 		left: 0;
 		width: 100%;
@@ -26,7 +51,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: rgba(0, 0, 0, 0.2);
+		background-color: rgba(0, 0, 0, 0.6);
 	}
 	.box {
 		background-color: white;

@@ -1,17 +1,6 @@
 <script>
-	import Header from '$lib/blocks/Header.svelte';
-	import Main from '$lib/blocks/Main.svelte';
-
 	export let contacts = [];
 </script>
-
-<Main>
-	<Header title={'Kontakte'}>
-		<button>
-			Neuer Kontakt<span class="material-symbols-outlined">add_circle</span>
-		</button>
-	</Header>
-
 	<table>
 		<thead>
 		<tr>
@@ -43,7 +32,6 @@
 		{/each}
 		</tbody>		
 	</table>
-</Main>
 
 <style>
 	.member {

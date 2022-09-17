@@ -2,11 +2,8 @@
 	import Main from '$lib/blocks/Main.svelte';
 	import Header from '$lib/blocks/Header.svelte';
 	import Box from '$lib/blocks/Box.svelte';
+	import {page} from '$app/stores'
 
-	const organisations = [
-		{ name: 'Gesellschaft für Parodontologie' },
-		{ name: 'Gesellschaft für Kardiologie' }
-	];
 </script>
 
 <Main>
@@ -21,11 +18,7 @@
 				<form action="" class="miventio row">
 					<div class="md-12">
 						<label for="email">E-Mail</label>
-						<input id="email" type="email" disabled />
-					</div>
-					<div class="md-12">
-						<label for="username">Username</label>
-						<input id="username" type="text" />
+						<input id="email" type="email" disabled value="{$page.data.user.email}"/>
 					</div>
 					<div class="md-6">
 						<label for="password">Passwort</label>
@@ -45,7 +38,7 @@
 			<Box>
 				<h2>Meine Organisationen</h2>
 
-				{#each organisations as organisation}
+				{#each $page.data.user.organisations as organisation}
 					<div class="organisation">
 						{organisation.name}
 					</div>
