@@ -57,5 +57,7 @@
 		background-color: white;
 		box-shadow: var(--shadow);
 		min-width: 30vw;
+		border-radius: var(--corner);
+		overflow: hidden;
 	}
 </style>
