@@ -128,9 +128,10 @@ button, .button {
 	display: flex;
 	align-items: center;
 }
-button span {
+button span:nth-child(2) {
 	margin-left: 10px;
 }
+
 
 button:hover, .button:hover, .button:active {
 	cursor: pointer;
@@ -151,6 +152,7 @@ button.secondary:hover {
 	box-shadow: var(--shadow-light);
 }
 
+
 a {
 	color: var(--color-1);
 	transition: 0.2s;
@@ -162,14 +164,15 @@ a:hover {
 	color: var(--color-1-dark);
 }
 
-.close {
+.close, .delete {
 	display: block;
 	padding: 10px;
 	border-radius: var(--corner);
 	background-color: var(--grey);
+	cursor: pointer;
 	
 }
-.close:hover {
+.close:hover, .delete:hover {
 	box-shadow: var(--shadow-light);
 }
 
@@ -208,7 +211,7 @@ a:hover {
 }
 
 .md-4 {
-	width: calc(100% / 3);
+	width: calc((100% / 12) * 4);
 }
 
 .md-3 {
@@ -223,11 +226,18 @@ a:hover {
 	width: calc(100% / 12);
 }
 
+.right {
+	display: flex;
+	justify-content: flex-end;
+}
+
 /******************************* FORM ********************************/
 
 form input[type='text'],
 form input[type='email'],
 form input[type='password'],
+form input[type='time'],
+form input[type='number'],
 form input[type='date'],
 form input[type='color'],
 form input[type='file'] {

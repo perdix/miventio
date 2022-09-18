@@ -4,6 +4,7 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
+	import { goto } from '$app/navigation';
 
 	let event = {}
 	let showPopup = false;
@@ -11,9 +12,16 @@
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	}
-	const saveEvent = () => {
-		console.log(event);
-		togglePopup();
+	const saveEvent = async () => {
+		const res = await fetch(`/organisations/${$page.data.organisation.id}/events`, {
+			method: 'POST',
+			body: JSON.stringify(event)
+		});
+		if (res.status === 201) {
+			const newEvent = await res.json();
+			togglePopup();
+			goto(`/organisation/${$page.data.organisation.id}/event/${newEvent.id}`)
+		}
 	}
 </script>
 
@@ -59,7 +67,8 @@
 	<Main>
 		<Header title={'Veranstaltungen'} >
 			<button on:click={togglePopup}>
-				Neue Veranstaltung<span class="material-symbols-outlined">add_circle</span>
+				<span>Neue Veranstaltung</span>
+				<span class="material-symbols-outlined">add_circle</span>
 			</button>
 		</Header>
 

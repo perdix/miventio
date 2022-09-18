@@ -1,28 +1,35 @@
-export async function GET({ url, locals, params }) {
+import { toContactsJSON, toContactJSON } from '$lib/server/serialization'
+import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization'
 
-    if (!locals.session) {
-		return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
-	}
 
-    const { prisma } = locals;
+export async function GET({ locals, params }) {
 
-    const role = await prisma.role.findFirst({
-        where: {
-            organisation_id: params.slug,
-            superuser_id: locals.session.id
-        }
-    });
-    
-    if (role === null) {
+    if (!isOrganisationMember(locals, params.slug)) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
 
-    const users = await prisma.user.findMany({
+    const users = await locals.prisma.user.findMany({
         where: {
             organisation_id: params.slug
           }
     }
     );
     
-    return new Response( JSON.stringify(users));
+    return new Response(toContactsJSON(users));
+}
+
+
+export async function POST({ locals, params, request }) {
+
+    if (!isOrganisationAdmin(locals, params.slug)) {
+        return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
+    }
+
+    const data = await request.json();
+    data.organisation_id = params.slug;
+    const user = await locals.prisma.user.create({
+        data: data
+      })
+     
+      return new Response(toContactJSON(user), {status: 201});
 }

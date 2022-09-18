@@ -1,5 +1,14 @@
 <script>
 	export let contacts = [];
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
+
+	function edit(contact) {
+		dispatch('edit', {
+			contact: contact
+		});
+	}
 </script>
 	<table>
 		<thead>
@@ -13,7 +22,7 @@
 	</thead>
 		<tbody>	
 		{#each contacts as contact}
-			<tr>
+			<tr on:click={() => edit(contact)}>
 				<td>{contact.first_name} {contact.last_name}</td>
 				<td
 					>{contact.address || ''} <br />
@@ -22,11 +31,13 @@
 				>
 				<td>{contact.email || ''}</td>
 				<td>{contact.phone || ''}</td>
-				<td
-					><span
-						class:member={contact.status.toLowerCase() == 'mitglied'}
-						class:student={contact.status.toLowerCase() == 'student'}>{contact.status}</span
-					></td
+				<td>
+				{#if contact.status}
+				<span
+				class:member={contact.status.toLowerCase() == 'mitglied'}
+				class:student={contact.status.toLowerCase() == 'student'}>{contact.status}</span>
+				{/if}
+					</td
 				>
 			</tr>
 		{/each}

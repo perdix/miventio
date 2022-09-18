@@ -4,9 +4,6 @@
 	import Contacts from '$lib/Contacts.svelte';
 	import Events from '$lib/Events.svelte';
 	import  { page } from '$app/stores';
-	
-
-	console.log($page.data)
 </script>
 
 <div class="page">

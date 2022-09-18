@@ -1,6 +1,5 @@
-import { toEventJSON } from '$lib/server/serialization'
+import { toContactsJSON, toContactJSON } from '$lib/server/serialization'
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization'
-
 
 export async function GET({ locals, params }) {
 
@@ -8,21 +7,15 @@ export async function GET({ locals, params }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
 
-    const event = await locals.prisma.event.findFirst({
+    const event = await locals.prisma.user.findFirst({
         where: {
-          id: params.eventId,
+          id: params.contactId,
           organisation_id: params.slug
-        },
-        include: {
-            tickets: true,
-            bookings: true,
-            activities: true
-        },
+        }
       })
     
-    return new Response( toEventJSON(event));
+    return new Response(toContactJSON(event));
 }
-
 
 
 export async function PUT({ locals, params, request }) {
@@ -30,23 +23,17 @@ export async function PUT({ locals, params, request }) {
     if (!isOrganisationAdmin(locals, params.slug)) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
-   
-    // Prepare data
-    const data = await request.json();
-    delete data.tickets;
-    delete data.bookings;
-    delete data.activities;
-    data.start = new Date(data.start);
-    data.end = new Date(data.end);
 
-    const event = await locals.prisma.event.update({
+    const data = await request.json();
+    
+    const user = await locals.prisma.user.update({
         where: {
-            id: params.eventId,
+            id: params.contactId,
         },
         data: data
     })
-  
-    return new Response(toEventJSON(event), {status: 200});
+    
+    return new Response(toContactJSON(user));
 }
 
 
@@ -56,11 +43,11 @@ export async function DELETE({ locals, params }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
    
-    const deletedEvent = await locals.prisma.event.delete({
+    const deletedUser = await locals.prisma.user.delete({
         where: {
-            id: params.eventId,
+            id: params.contactId,
         },
       })
     
-    return new Response(JSON.stringify({message: "Event successfully deleted!"}), {status: 200});
+    return new Response(JSON.stringify({message: "Contact successfully deleted!"}), {status: 200});
 }

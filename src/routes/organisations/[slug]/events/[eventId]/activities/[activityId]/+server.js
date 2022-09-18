@@ -1,4 +1,4 @@
-import { toEventJSON } from '$lib/server/serialization'
+import { toActivityJSON } from '$lib/server/serialization'
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization'
 
 
@@ -8,19 +8,13 @@ export async function GET({ locals, params }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
 
-    const event = await locals.prisma.event.findFirst({
+    const activity = await locals.prisma.activity.findFirst({
         where: {
-          id: params.eventId,
+          id: params.activityId,
           organisation_id: params.slug
-        },
-        include: {
-            tickets: true,
-            bookings: true,
-            activities: true
-        },
+        }
       })
-    
-    return new Response( toEventJSON(event));
+    return new Response(toActivityJSON(activity));
 }
 
 
@@ -31,22 +25,15 @@ export async function PUT({ locals, params, request }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
    
-    // Prepare data
     const data = await request.json();
-    delete data.tickets;
-    delete data.bookings;
-    delete data.activities;
-    data.start = new Date(data.start);
-    data.end = new Date(data.end);
-
-    const event = await locals.prisma.event.update({
+    const activity = await locals.prisma.activity.update({
         where: {
-            id: params.eventId,
+            id: params.activityId,
         },
         data: data
     })
-  
-    return new Response(toEventJSON(event), {status: 200});
+    console.log(data);
+    return new Response(toActivityJSON(activity), {status: 200});
 }
 
 
@@ -56,11 +43,11 @@ export async function DELETE({ locals, params }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
    
-    const deletedEvent = await locals.prisma.event.delete({
+    const deletedActivity = await locals.prisma.activity.delete({
         where: {
-            id: params.eventId,
+            id: params.activityId,
         },
       })
     
-    return new Response(JSON.stringify({message: "Event successfully deleted!"}), {status: 200});
+    return new Response(JSON.stringify({message: "Activity successfully deleted!"}), {status: 200});
 }

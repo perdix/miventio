@@ -28,7 +28,7 @@ model User {
   first_name String?
   last_name  String?
   title     String?
-  email      String @unique
+  email      String? @unique
   password  String?
   phone      String?
   address   String?
@@ -79,6 +79,7 @@ model Event {
   description String?
   start DateTime?
   end DateTime?
+  date DateTime?
   location String?
   city String?
   address String?

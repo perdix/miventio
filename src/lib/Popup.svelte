@@ -35,13 +35,13 @@
 		cursor: pointer;
 	}
 	.hidden {
-		opacity: 0;
+		display: none;
 	}
 	.visible {
-		opacity: 1;
+		display: block;
 	}
 	.background {
-		position: absolute;
+		position: fixed;
 		z-index: 150;
 		top: 0;
 		left: 0;
