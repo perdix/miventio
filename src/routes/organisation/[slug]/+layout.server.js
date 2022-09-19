@@ -1,13 +1,10 @@
+import { redirect } from '@sveltejs/kit';
+
 export async function load(request) {
-
-	if (!request.locals.session) {
-		return {
-			status: 302,
-			message: 'You must be logged in to view this page',
-			redirect: '/login'
-		};
+	
+	if (!('session' in request.locals)) {
+		throw redirect(307, '/login');
 	}
-
 
 	return {
         session: request.locals.session

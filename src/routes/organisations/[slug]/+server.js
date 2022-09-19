@@ -1,15 +1,14 @@
 import { toOrganisationJSON } from '$lib/server/serialization';
+import { isOrganisationMember } from '$lib/server/authorization'
 
-/** @type {import('./$types').RequestHandler} */
-export async function GET({ url, locals, params }) {
 
-	if (!locals.session) {
+export async function GET({ locals, params }) {
+
+	if (!isOrganisationMember(locals)) {
 		return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
 	}
 
-    const { prisma } = locals;
-    // Get the of the given user
-    const organisation = await prisma.organisation.findFirst({
+    const organisation = await locals.prisma.organisation.findFirst({
         where: {
             id: params.slug,
             superusers: {  

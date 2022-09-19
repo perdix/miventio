@@ -1,3 +1,4 @@
+import { organisation } from "$lib/stores";
 
 
 export const toOrganisationJSON = (organisation) => {
@@ -11,10 +12,15 @@ export const toOrganisationJSON = (organisation) => {
         email: s.superuser.email,
       }
     });
-    
+  
   }
   return JSON.stringify(organisation);
 }
+
+export const toOrganisationsJSON = (organisations) => {
+  return JSON.stringify(organisations);
+}
+
 
 
 export const toSuperuserJSON = (superuser) => {
@@ -88,8 +94,22 @@ export const toActivitiesJSON = (activities) => {
   return JSON.stringify(cleanedActivities)
 }
 
+// Bookings
 
 
+const cleanBooking = (booking) => {
+  delete booking.updated_at;
+  delete booking.created_at;
+  return booking;
+}
 
+export const toBookingJSON = (booking) => {
+  return JSON.stringify(cleanBooking(booking))
+}
+
+export const toBookingsJSON = (bookings) => {
+  const cleanedBookings= bookings.map(b => cleanBooking(b));
+  return JSON.stringify(cleanedBookings)
+}
 
 

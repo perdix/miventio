@@ -1,14 +1,16 @@
+import { isLoggedIn } from '$lib/server/authorization'
+import { toOrganisationsJSON } from '$lib/server/serialization';
+
 
 /** @type {import('./$types').RequestHandler} */
-export async function GET({ url, locals }) {
+export async function GET({ locals }) {
 
-	if (!locals.session) {
+	if (!isLoggedIn(locals)) {
 		return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
 	}
 
-    const { prisma } = locals;
     // Get all organisations of the given user
-    const orgs = await prisma.organisation.findMany({
+    const organisations = await locals.prisma.organisation.findMany({
         where: {
           superusers: {  
             some: {
@@ -16,20 +18,7 @@ export async function GET({ url, locals }) {
             }
           },
         }, 
-        // include: { superusers: { include: { superuser: true } } },
       });
 
-      // Prepare the return objects
-      // orgs.forEach(o => {
-      //   o.superusers = o.superusers.map(s => { 
-      //     return {
-      //       role: s.role,
-      //       id: s.superuser_id,
-      //       email: s.superuser.email,
-      //     }
-      //   }); 
-      // });
- 
-      
-    return new Response( JSON.stringify(orgs));
+    return new Response( toOrganisationsJSON(organisations));
 }

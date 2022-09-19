@@ -26,14 +26,13 @@
 		togglePopup();
 	}
 
-	const deleteActivity = async (act) => {
+	const deleteActivity = async () => {
 		const res = await fetch(`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/activities/${activity.id}`, {
 				method: 'DELETE',
 			});
 			if (res.status === 200) {
 				const deletedActivity = await res.json();
 				$event.activities = $event.activities.filter(a => (a.id != activity.id));
-				// $event = $event;
 				togglePopup();
 			}
 	}
@@ -57,7 +56,7 @@
 			});
 			if (res.status === 201) {
 				const newActivity = await res.json();
-				$event.activities.push(newActivity)
+				$event.activities.push(newActivity);
 				$event = $event;
 				togglePopup();
 			}
@@ -122,7 +121,8 @@
 <Header title={'Aktivitäten'}>
 	<button on:click={newActivity}>
 		<span>Neue Aktivität</span> 
-		<span class="material-symbols-outlined">add_circle</span></button>
+		<span class="material-symbols-outlined">add_circle</span>
+	</button>
 </Header>
 
 <Content>

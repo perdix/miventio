@@ -1,5 +1,6 @@
-import { toContactJSON } from '$lib/server/serialization'
+import { toBookingJSON } from '$lib/server/serialization'
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization'
+
 
 export async function GET({ locals, params }) {
 
@@ -7,15 +8,15 @@ export async function GET({ locals, params }) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
 
-    const event = await locals.prisma.user.findFirst({
+    const booking = await locals.prisma.booking.findFirst({
         where: {
-          id: params.contactId,
+          id: params.bookingId,
           organisation_id: params.slug
         }
       })
-    
-    return new Response(toContactJSON(event));
+    return new Response(toBookingJSON(booking));
 }
+
 
 
 export async function PUT({ locals, params, request }) {
@@ -23,17 +24,16 @@ export async function PUT({ locals, params, request }) {
     if (!isOrganisationAdmin(locals, params.slug)) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
-
+   
     const data = await request.json();
-    
-    const user = await locals.prisma.user.update({
+    const booking = await locals.prisma.booking.update({
         where: {
-            id: params.contactId,
+            id: params.bookingId,
         },
         data: data
     })
-    
-    return new Response(toContactJSON(user));
+
+    return new Response(toBookingJSON(booking), {status: 200});
 }
 
 
@@ -42,12 +42,13 @@ export async function DELETE({ locals, params }) {
     if (!isOrganisationAdmin(locals, params.slug)) {
         return new Response(JSON.stringify({message: "Unauthorized"}), { status: 401 })
     }
-   
-    const deletedUser = await locals.prisma.user.delete({
+    
+    console.log(params);
+    const deletedBooking = await locals.prisma.booking.delete({
         where: {
-            id: params.contactId,
+            id: params.bookingId,
         },
       })
     
-    return new Response(JSON.stringify({message: "Contact successfully deleted!"}), {status: 200});
+    return new Response(JSON.stringify({message: "Booking successfully deleted!"}), {status: 200});
 }

@@ -1,3 +1,11 @@
+export const isLoggedIn = async (locals) => {
+
+    if (locals.session == undefined) {
+        return false;
+    }
+
+    return true
+}
 
 
 export const isOrganisationAdmin = async (locals, organisation_id) => {

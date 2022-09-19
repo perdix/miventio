@@ -32,7 +32,7 @@ export async function PUT({ locals, params, request }) {
         },
         data: data
     })
-    console.log(data);
+
     return new Response(toActivityJSON(activity), {status: 200});
 }
 
