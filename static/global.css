@@ -306,7 +306,7 @@ form input:focus {
 /******* Miventio ********/
 
 form.miventio {
-	max-width: 600px;
+	max-width: 800px;
 }
 form.miventio input {
 	padding: 0.9rem 1rem;

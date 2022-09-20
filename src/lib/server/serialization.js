@@ -113,3 +113,19 @@ export const toBookingsJSON = (bookings) => {
 }
 
 
+// Tickets
+
+const cleanTicket = (ticket) => {
+  delete ticket.updated_at;
+  delete ticket.created_at;
+  return ticket;
+}
+
+export const toTicketJSON = (ticket) => {
+  return JSON.stringify(cleanTicket(ticket))
+}
+
+export const toTicketsJSON = (tickets) => {
+  const cleanedTickets= tickets.map(t => cleanTicket(t));
+  return JSON.stringify(cleanedTickets)
+}

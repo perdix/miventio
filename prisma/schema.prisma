@@ -133,14 +133,14 @@ model Booking {
 
 
 model Ticket {
-  uid        String  @id @default(cuid())
+  id        String  @id @default(cuid())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   name       String
   description String?
   price Float?
-  type String? // role
-  mode String? // full day
+  category String?
+  date DateTime?
   event_id String
   event Event @relation(fields: [event_id], references: [id])
   users User[]
