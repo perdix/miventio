@@ -4,7 +4,6 @@ import { organisation } from "$lib/stores";
 export const toOrganisationJSON = (organisation) => {
 
   if ('superusers' in organisation) {
-    
     organisation.superusers = organisation.superusers.map(s => { 
       return {
         role: s.role,
@@ -95,7 +94,6 @@ export const toActivitiesJSON = (activities) => {
 }
 
 // Bookings
-
 
 const cleanBooking = (booking) => {
   delete booking.updated_at;

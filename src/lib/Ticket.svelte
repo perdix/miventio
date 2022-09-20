@@ -97,11 +97,7 @@
 		background-color: var(--color-1-light);
 	}
 
-	.left p {
-		font-size: 20px;
-		margin-left: 10px;
-		color: white;
-	}
+	
 	.left .cut {
 		font-size: 35px;
 		position: absolute;
@@ -161,13 +157,6 @@
 		font-size: 1.3rem;
 		font-weight: 400;
 		display: inline-block;
-	}
-
-	.main h2 {
-		font-size: 1.2rem;
-		font-weight: 300;
-		/* margin-top:10px; */
-		justify-self: flex-end;
 	}
 	.cat {
 		background-color: var(--color-1-light);

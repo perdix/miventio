@@ -156,7 +156,5 @@
 </div>
 
 <style>
-	h3 {
-		margin-bottom: var(--unit);
-	}
+	
 </style>

@@ -78,12 +78,14 @@
 		<div class="md-12">
 		<h3>Anmeldung für:</h3>
 		</div>
+
 		{#each booking.cart as item}
 			<div class="md-12">
 				<label for="name">Vor- und Nachname</label>
 				<input id="name" type="text" bind:value="{item.name}" required/>
 			</div>
 		{/each}
+		
 
 		<div class="md-6">
 			<label for="status">Status</label>
@@ -128,7 +130,6 @@
 				<span class="material-symbols-outlined">delete</span>
 			</button>
 		</div>
-
 	</form>
 </Popup>
 
