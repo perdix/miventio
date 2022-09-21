@@ -3,9 +3,10 @@
 
 	export let ticket = {}
 	export let event = {}
+	export let form = false;
 </script>
 
-<article class="ticket">
+<article class="ticket" class:form="{form}">
 	<div class="left">
 		<span class="cut" />
 	</div>
@@ -96,6 +97,10 @@
 		background-size: 200%;
 		background-color: var(--color-1-light);
 	}
+	.form .left {
+		background: #b9b9b9;
+		/* background: #262626; */
+	}
 
 	
 	.left .cut {
@@ -108,6 +113,12 @@
 		background-color: var(--lightgrey);
 		border-radius: 0% 50px 50px 0%;
 		left: -56px;
+	}
+	.form .left .cut, .form .right-box .cut, .form .hole {
+		background-color: white;
+	}
+	.form .right-box, .form .middle {
+		background-color:#f8f8f8;
 	}
 
 	.middle {
@@ -184,5 +195,8 @@
 		text-align: right;
 		flex-direction:column;
 		justify-content: center
+	}
+	.form .price, .form .cat {
+		background: #b9b9b9;
 	}
 </style>

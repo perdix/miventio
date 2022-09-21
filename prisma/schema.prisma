@@ -104,9 +104,10 @@ model Activity {
   end DateTime?
   limit Int?
   location String?
-  leader String?
+  author String?
   price Float?
   event_id String
+  category String?
   event Event @relation(fields: [event_id], references: [id])
   bookings Booking[]
   users User[]

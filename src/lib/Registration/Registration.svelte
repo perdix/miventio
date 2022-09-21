@@ -4,6 +4,11 @@
 	import BookingDetails from '$lib/Registration/BookingDetails.svelte';
 	import PaymentDetails from '$lib/Registration/PaymentDetails.svelte';
 	import { onMount } from 'svelte';
+	import {booking} from '$lib/store/booking';
+
+	export let event = {}
+
+	// $booking = {cart: [] }
 
 	const items = [
 		{ id: 1, name: 'Ticketauswahl', slug: 'selection', component: TicketSelection },
@@ -34,7 +39,7 @@
 			{#each items as item}
 				{#if activeTabValue == item.id}
 					<div>
-						<svelte:component this={item.component} />
+						<svelte:component this={item.component} {event}/>
 					</div>
 				{/if}
 			{/each}
@@ -45,8 +50,11 @@
 <style>
 	.registration {
 		background-color: transparent;
+		max-width: 800px;
+		margin: 0 auto;
 		opacity: 0;
 		display: none;
 		transition: opacity 1s;
+		color: #262626;
 	}
 </style>

@@ -1,53 +1,62 @@
 <script>
-	let cart = {};
-	cart.tickets = [
-		{ firstname: 'Paul', lastname: 'Opitz', total: 490 },
-		{ firstname: 'Max', lastname: 'Mustermann', total: 300 }
-	];
-	cart.address = { firstname: 'Paul Opitz' };
+	import {booking} from '$lib/store/booking';
 
-	$: sum = cart.tickets.map((i) => i.total).reduce((a, b) => a + b, 0);
+	$: sum = $booking.cart.map((i) => (i.ticket.price + i.activities.map(a => a.price).reduce((a, b) => a + b, 0))).reduce((a, b) => a + b, 0);
 </script>
 
 <div class="cart">
-	{#each cart.tickets as ticket}
-		<div class="person">
-			<div class="left">
-				<h3>Gesamte Tagung</h3>
-				<p>Teilnehmer: {ticket.firstname} {ticket.lastname}</p>
-				<p>Workshop 1, Workshop 3</p>
-			</div>
-			<div class="right">
-				<h3>{ticket.total}€</h3>
-			</div>
+	{#if $booking.cart.length > 0}
+
+	{#each $booking.cart as item}
+		<div class="item">
+
+		
+		<div class="subitem">
+			<div>
+			<h3>{item.firstname} {item.lastname} | {item.ticket.name}</h3>
+		    </div>
+			<h3>{item.ticket.price} €</h3>
 		</div>
+
+		{#each item.activities as a}
+			<div class="subitem">
+				<p>{a.name}</p>
+				<p>{a.price} €</p>
+			</div>
+		{/each}
+	 </div>
 	{/each}
+
 
 	<div class="sum">
 		<div class="left">
 			<h3>Gesamt</h3>
 		</div>
 		<div class="right">
-			<h3>{sum}€</h3>
+			<h3>{sum} €</h3>
 		</div>
 	</div>
+	{/if}
 </div>
 
 <style>
 	.cart {
+		width: 100%;
+		margin-top: 30px;
+		border-top: 1px solid black;
 	}
 
-	.person {
-		padding: 15px;
+	.item {
+		margin-top:15px;
 	}
-
-	.person {
+	.subitem {
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
 	}
 	.sum {
-		padding: 15px;
+		padding: 15px 0;
+		margin-top: 30px;
 		border-top: 1px solid black;
 		display: flex;
 		justify-content: space-between;

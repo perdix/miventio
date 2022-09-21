@@ -27,10 +27,11 @@
 
 <style>
 	.stepper {
+		color: #262626;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 30px;
+		margin-bottom: 10px;
 		position: relative;
 		z-index: 100;
 		background-color: white;
@@ -52,15 +53,16 @@
 	}
 
 	.stepper .id {
-		background-color: #2062a8;
+		background-color: #e6e6e6;
 		width: 30px;
 		height: 30px;
 		border-radius: 50%;
-		color: white;
+		color: #262626;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;
+		border: 1px solid #262626;
 	}
 	.stepper .label {
 		display: flex;
