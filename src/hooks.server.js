@@ -3,7 +3,6 @@ import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { env } from '$env/dynamic/private';
 
-
 export const handle = async ({ event, resolve }) => {
 	const prisma = new PrismaClient();
 
@@ -19,7 +18,8 @@ export const handle = async ({ event, resolve }) => {
 		// Remove Bearer prefix
 		const token = cookies.AuthorizationToken.split(' ')[1];
 		try {
-			const jwtUser = jwt.verify(token, env.AUTH_SECRET);
+			let auth_token = env.AUTH_SECRET ? env.AUTH_SECRET : process.env.AUTH_SECRET
+			const jwtUser = jwt.verify(token, auth_token);
 			if (typeof jwtUser === 'string') {
 				throw new Error('Something went wrong');
 			}

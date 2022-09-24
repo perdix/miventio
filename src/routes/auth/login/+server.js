@@ -33,7 +33,7 @@ export async function POST({ request, locals }) {
 		id: superuser.id,
 		email: superuser.email
 	};
-	const token = jwt.sign(jwtUser, env.AUTH_SECRET, {
+	const token = jwt.sign(jwtUser, env.AUTH_SECRET ? env.AUTH_SECRET : process.env.AUTH_SECRET, {
 		expiresIn: '1d'
 	});
 
