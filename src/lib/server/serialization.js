@@ -119,7 +119,6 @@ export const toTicketsJSON = (tickets) => {
 	return JSON.stringify(cleanedTickets);
 };
 
-
 // Visits
 
 const cleanVisit = (visit) => {
@@ -133,6 +132,6 @@ export const toVisitJSON = (visit) => {
 };
 
 export const toVisitsJSON = (visits) => {
-	const cleanedVisits= visits.map((v) => cleanVisit(v));
+	const cleanedVisits = visits.map((v) => cleanVisit(v));
 	return JSON.stringify(cleanedVisits);
 };

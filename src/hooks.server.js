@@ -29,7 +29,7 @@ export const handle = async ({ event, resolve }) => {
 				include: { organisations: { include: { organisation: true } } }
 			});
 			if (!user) {
-				throw new Error(`Superuser not found: ${jwtUser}` );
+				throw new Error(`Superuser not found: ${jwtUser}`);
 			}
 			const session = {
 				id: user.id,

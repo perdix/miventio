@@ -1,7 +1,6 @@
 import { toVisitJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
-
 export async function GET({ locals, params }) {
 	if (!isOrganisationMember(locals, params.slug)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
@@ -20,15 +19,13 @@ export async function GET({ locals, params }) {
 	return new Response(toVisitJSON(visit));
 }
 
-
-
 export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.slug)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
 	const data = await request.json();
-	
+
 	// Update status of visit
 	const visit = await locals.prisma.visit.update({
 		where: {
@@ -38,6 +35,6 @@ export async function PUT({ locals, params, request }) {
 			status: data.status
 		}
 	});
-	
+
 	return new Response(toVisitJSON(visit), { status: 200 });
 }

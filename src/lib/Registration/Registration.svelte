@@ -30,18 +30,17 @@
 </script>
 
 <div class="registration" bind:this={registration}>
-		<Stepper steps={items} on:step={handleStep} />
+	<Stepper steps={items} on:step={handleStep} />
 
-		<div class="sections">
-			{#each items as item}
-				{#if activeTabValue == item.id}
-					<div>
-						<svelte:component this={item.component} {event} on:next={handleStep}/>
-					</div>
-				{/if}
-			{/each}
-		</div>
-
+	<div class="sections">
+		{#each items as item}
+			{#if activeTabValue == item.id}
+				<div>
+					<svelte:component this={item.component} {event} on:next={handleStep} />
+				</div>
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style>

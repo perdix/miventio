@@ -21,39 +21,36 @@ export async function POST({ locals, params, request }) {
 	}
 	const data = await request.json();
 
-
-
 	// Create visits prisma query
 	let createVisits = [];
 	let price = 0;
 	for (const visit of data.visits) {
-
 		// Get ticket
 		const ticket = await locals.prisma.ticket.findUnique({
 			where: {
-				id:  visit.ticket_id
+				id: visit.ticket_id
 			}
 		});
 		// Get activities
 		const activities = await locals.prisma.activity.findMany({
 			where: {
-				id:  { in: visit.activities_ids },
+				id: { in: visit.activities_ids }
 			}
 		});
 
 		// Calculate prices and statuses
-		const visit_price = ticket.price + activities.map(a => a.price).reduce((a, b,) => a+b, 0);
+		const visit_price = ticket.price + activities.map((a) => a.price).reduce((a, b) => a + b, 0);
 		price += visit_price;
-		let visit_status = 'ANGEMELDET'
+		let visit_status = 'ANGEMELDET';
 		if (data.status == 'BEZAHLT') {
 			visit_status = 'BEZAHLT';
-		}	
+		}
 		const newVisit = {
 			status: visit_status,
 			activities: {
-				connect: activities.map(a => ({id: a.id}))
+				connect: activities.map((a) => ({ id: a.id }))
 			},
-			activities_prices: activities.map(a => ({id: a.id, price: a.price})),
+			activities_prices: activities.map((a) => ({ id: a.id, price: a.price })),
 			ticket: {
 				connect: {
 					id: ticket.id
@@ -62,21 +59,20 @@ export async function POST({ locals, params, request }) {
 			ticket_price: ticket.price,
 			price: visit_price,
 			event: {
-				connect: {	
+				connect: {
 					id: params.eventId
 				}
 			},
 			user: {
 				connectOrCreate: {
 					where: {
-						first_name_last_name_email:
-						{
-						first_name: visit.user.first_name,
-						last_name: visit.user.last_name,
-						email: visit.user.email
-					  }
+						first_name_last_name_email: {
+							first_name: visit.user.first_name,
+							last_name: visit.user.last_name,
+							email: visit.user.email
+						}
 					},
-					  create: {
+					create: {
 						email: visit.user.email,
 						first_name: visit.user.first_name,
 						last_name: visit.user.last_name,
@@ -85,12 +81,11 @@ export async function POST({ locals, params, request }) {
 							connect: {
 								id: params.slug
 							}
-						},
-					  }
+						}
+					}
 				}
 			}
-
-		}
+		};
 		createVisits.push(newVisit);
 	}
 
@@ -117,12 +112,12 @@ export async function POST({ locals, params, request }) {
 		include: {
 			visits: {
 				select: {
-					id:true,
+					id: true,
 					status: true,
-					ticket_id:true,
-					ticket:true,
+					ticket_id: true,
+					ticket: true,
 					ticket_price: true,
-					activities: true, 
+					activities: true,
 					price: true,
 					activities_prices: true,
 					user: {

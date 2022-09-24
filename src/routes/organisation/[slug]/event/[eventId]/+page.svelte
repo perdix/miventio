@@ -41,13 +41,13 @@
 						{#each $event.visits as visit}
 							<tr>
 								<td>
-									{visit.user.first_name} {visit.user.last_name}
+									{visit.user.first_name}
+									{visit.user.last_name}
 								</td>
 								<td>
 									{visit.user.email}
 								</td>
 								<td>{visit.status} </td>
-				
 							</tr>
 						{/each}
 					</tbody>

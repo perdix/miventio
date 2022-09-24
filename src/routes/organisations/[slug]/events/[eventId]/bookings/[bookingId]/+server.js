@@ -22,10 +22,10 @@ export async function PUT({ locals, params, request }) {
 	// Find booking
 	const booking = await locals.prisma.booking.findUnique({
 		where: {
-			id: params.bookingId,
+			id: params.bookingId
 		},
 		include: {
-			visits:true
+			visits: true
 		}
 	});
 	if (booking == null) {
@@ -35,66 +35,63 @@ export async function PUT({ locals, params, request }) {
 	// Get update data
 	const data = await request.json();
 
-
 	// Should be refactored to put everything into one transaction!
 
 	// Deletion of all visits which are not here anymore
 	const deleteVisits = await locals.prisma.visit.deleteMany({
 		where: {
-			id: { 
+			id: {
 				not: {
-					in: data.visits.map(v => v.id).filter(i => i != undefined) 
+					in: data.visits.map((v) => v.id).filter((i) => i != undefined)
 				}
-			},
+			}
 		}
-	})
+	});
 
 	// Update or Insert new visits
 	let price = 0;
 	for (const visit of data.visits) {
-
 		// Get Ticket and Activities
 		const ticket = await locals.prisma.ticket.findUnique({
 			where: {
-				id:  visit.ticket_id
+				id: visit.ticket_id
 			}
 		});
 		// Get activities
 		const activities = await locals.prisma.activity.findMany({
 			where: {
-				id:  { in: visit.activities_ids },
+				id: { in: visit.activities_ids }
 			}
 		});
 		// Calculate prices and statuses
-		const visit_price = ticket.price + activities.map(a => a.price).reduce((a, b,) => a+b, 0);
+		const visit_price = ticket.price + activities.map((a) => a.price).reduce((a, b) => a + b, 0);
 		price += visit_price;
-		let visit_status = visit.status
+		let visit_status = visit.status;
 		if (data.status == 'BEZAHLT') {
 			visit_status = 'BEZAHLT';
 		}
 		if (data.status == 'STORNIERT') {
 			visit_status = 'STORNIERT';
 		}
-		
+
 		const updatedVisit = await locals.prisma.visit.upsert({
-			where: { id: visit.id || "" },
-			update: { 
+			where: { id: visit.id || '' },
+			update: {
 				status: visit_status,
 				activities: {
 					set: [],
-					connect: visit.activities_ids.map(a => ({id: a}))
+					connect: visit.activities_ids.map((a) => ({ id: a }))
 				},
 				booking: {
-					connect: { id: params.bookingId}
+					connect: { id: params.bookingId }
 				},
 				user: {
 					connectOrCreate: {
 						where: {
-							first_name_last_name_email:
-							{
-							first_name: visit.user.first_name,
-							last_name: visit.user.last_name,
-							email: visit.user.email
+							first_name_last_name_email: {
+								first_name: visit.user.first_name,
+								last_name: visit.user.last_name,
+								email: visit.user.email
 							}
 						},
 						create: {
@@ -105,36 +102,35 @@ export async function PUT({ locals, params, request }) {
 								connect: {
 									id: params.slug
 								}
-							},
 							}
+						}
 					}
 				},
 				event: {
-					connect: {id: params.eventId}
+					connect: { id: params.eventId }
 				},
 				ticket: {
-					connect: {id: ticket.id}
+					connect: { id: ticket.id }
 				},
 				ticket_price: ticket.price,
 				price: visit_price,
-				activities_prices: activities.map(a => ({id: a.id, price: a.price}))
+				activities_prices: activities.map((a) => ({ id: a.id, price: a.price }))
 			},
-			create: { 
+			create: {
 				status: visit_status,
 				activities: {
-					connect: visit.activities_ids.map(a => ({id: a}))
+					connect: visit.activities_ids.map((a) => ({ id: a }))
 				},
 				booking: {
-					connect: { id: params.bookingId}
+					connect: { id: params.bookingId }
 				},
 				user: {
 					connectOrCreate: {
 						where: {
-							first_name_last_name_email:
-							{
-							first_name: visit.user.first_name,
-							last_name: visit.user.last_name,
-							email: visit.user.email
+							first_name_last_name_email: {
+								first_name: visit.user.first_name,
+								last_name: visit.user.last_name,
+								email: visit.user.email
 							}
 						},
 						create: {
@@ -145,21 +141,21 @@ export async function PUT({ locals, params, request }) {
 								connect: {
 									id: params.slug
 								}
-							},
 							}
+						}
 					}
 				},
 				event: {
-					connect: {id: params.eventId}
+					connect: { id: params.eventId }
 				},
 				ticket: {
-					connect: {id: ticket.id}
+					connect: { id: ticket.id }
 				},
 				ticket_price: ticket.price,
 				price: visit_price,
-				activities_prices: activities.map(a => ({id: a.id, price: a.price}))
+				activities_prices: activities.map((a) => ({ id: a.id, price: a.price }))
 			}
-		  })
+		});
 	}
 
 	// Update booking
@@ -181,16 +177,16 @@ export async function PUT({ locals, params, request }) {
 				connect: {
 					id: params.eventId
 				}
-			},
+			}
 		},
 		include: {
 			visits: {
 				select: {
-					id:true,
+					id: true,
 					status: true,
-					ticket:true,
-					ticket_id:true,
-					ticket_price:true,
+					ticket: true,
+					ticket_id: true,
+					ticket_price: true,
 					price: true,
 					activities: {
 						select: {

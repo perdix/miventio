@@ -20,7 +20,6 @@ export async function load(request) {
 		throw error(400, 'You need to give a valid eventId!');
 	}
 
-
 	return {
 		event
 	};

@@ -10,12 +10,9 @@
 	let showPopup = false;
 	let popupTitle = '';
 
-
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
-
-
 
 	const editVisit = (editVisit) => {
 		visit = editVisit;
@@ -23,7 +20,6 @@
 		togglePopup();
 	};
 
-	
 	const saveVisit = async () => {
 		if ('id' in visit) {
 			const res = await fetch(
@@ -45,8 +41,6 @@
 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
 	<form class="miventio row" on:submit|preventDefault={saveVisit}>
-		
-
 		<div class="md-6">
 			<label for="firstname">Vorname</label>
 			<input id="firstname" type="text" bind:value={visit.user.first_name} required />
@@ -63,7 +57,7 @@
 			<label for="status">Status</label>
 			<select name="Status" id="status" bind:value={visit.status}>
 				{#each $visitStatuses as status}
-					<option value="{status}">{status}</option>	
+					<option value={status}>{status}</option>
 				{/each}
 			</select>
 		</div>
@@ -73,8 +67,7 @@
 	</form>
 </Popup>
 
-<Header title={'Besucher'}>
-</Header>
+<Header title={'Besucher'} />
 
 <Content>
 	<table>
@@ -88,7 +81,6 @@
 		</thead>
 		<tbody>
 			{#each $event.visits as visit}
-			
 				<tr on:click={() => editVisit(visit)}>
 					<td>
 						{visit.user.first_name}
@@ -98,11 +90,8 @@
 					</td>
 					<td>
 						{visit.user.email}
-						</td>
-					<td
-						><span class:paid={visit.status.toUpperCase() == 'BEZAHLT'}>{visit.status}</span
-						></td
-					>
+					</td>
+					<td><span class:paid={visit.status.toUpperCase() == 'BEZAHLT'}>{visit.status}</span></td>
 				</tr>
 			{/each}
 		</tbody>

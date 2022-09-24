@@ -58,6 +58,5 @@
 		border-radius: var(--corner);
 		max-height: 100vh;
 		/* overflow: hidden; */
-
 	}
 </style>

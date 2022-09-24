@@ -26,7 +26,7 @@ export const zahn_events = [
 		start: new Date('2022-05-23'),
 		end: new Date('2022-05-25')
 	}
-]
+];
 
 export const hno_events = [
 	{
@@ -160,6 +160,6 @@ export const activities = [
 		price: 22.0,
 		start: new Date('2022-05-25Z20:00'),
 		end: new Date('2022-05-25Z23:00'),
-		category: 'Rahmenprogramm',
+		category: 'Rahmenprogramm'
 	}
 ];

@@ -24,7 +24,6 @@
 		isDropdownOpen = !isDropdownOpen;
 		// goto(`/organisation/${org.id}`);
 		document.location.href = `/organisation/${org.id}`;
-
 	};
 </script>
 

@@ -7,7 +7,7 @@
 </script>
 
 {#if $booking.cart.length > 0}
-<div class="cart">
+	<div class="cart">
 		{#each $booking.cart as item}
 			<div class="item">
 				<div class="subitem">
@@ -21,12 +21,11 @@
 					<div class="subitem">
 						<p>{a.name}</p>
 						{#if a.price > 0}
-						<p>{a.price} €</p>
+							<p>{a.price} €</p>
 						{/if}
 					</div>
 				{/each}
 			</div>
-	
 		{/each}
 
 		<div class="sum">
@@ -37,9 +36,9 @@
 				<h3>{sum} €</h3>
 			</div>
 		</div>
-	
-</div>
+	</div>
 {/if}
+
 <style>
 	.cart {
 		height: 100%;
@@ -50,7 +49,6 @@
 
 	.item {
 		margin-bottom: 15px;
-		
 	}
 	.item h3 {
 		font-weight: 400;

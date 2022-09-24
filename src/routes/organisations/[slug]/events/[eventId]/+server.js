@@ -17,14 +17,14 @@ export async function GET({ locals, params }) {
 				include: {
 					visits: {
 						select: {
-							id:true,
+							id: true,
 							status: true,
-							ticket:true,
-							ticket_id:true,
+							ticket: true,
+							ticket_id: true,
 							ticket_price: true,
 							activities_prices: true,
 							price: true,
-							activities:true,
+							activities: true,
 							user: {
 								select: {
 									id: true,
@@ -37,16 +37,16 @@ export async function GET({ locals, params }) {
 					}
 				}
 			},
-			activities: true, 
-			visits: { 
+			activities: true,
+			visits: {
 				select: {
-					id:true,
+					id: true,
 					status: true,
 					ticket_id: true,
 					ticket: true,
 					ticket_price: true,
 					price: true,
-					activities:true,
+					activities: true,
 					activities_prices: true,
 					user: {
 						select: {

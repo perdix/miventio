@@ -1,5 +1,13 @@
 import { PrismaClient } from '@prisma/client';
-import { zahn_events, hno_events, organisations, superusers, tickets, activities, users } from './data.js';
+import {
+	zahn_events,
+	hno_events,
+	organisations,
+	superusers,
+	tickets,
+	activities,
+	users
+} from './data.js';
 
 const prisma = new PrismaClient();
 
@@ -77,15 +85,11 @@ async function main() {
 		data: tickets_with_event_id
 	});
 
-
 	// Create some activities
 	const activities_with_event_id = activities.map((a) => ({ ...a, event_id: event.id }));
 	await prisma.activity.createMany({
 		data: activities_with_event_id
 	});
-
-
-	
 }
 
 main()

@@ -16,15 +16,12 @@
 <div id="popup" class:visible={show} class:hidden={!show}>
 	<div class="background">
 		<div class="box">
-	
-				<Header {title}>
-					<span class="material-symbols-outlined close" on:click={close}>close</span>
-				</Header>
-				<div>
-					<slot />
-				</div>
-				
-		
+			<Header {title}>
+				<span class="material-symbols-outlined close" on:click={close}>close</span>
+			</Header>
+			<div>
+				<slot />
+			</div>
 		</div>
 	</div>
 </div>

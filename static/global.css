@@ -57,7 +57,7 @@
 	--color-2-light: #deacca;
 	--color-2-dark: #81255c;
 	--color-warning: rgb(255, 163, 163);
-	--color-confirmation:rgb(207, 238, 213);
+	--color-confirmation: rgb(207, 238, 213);
 }
 
 * {
@@ -325,7 +325,6 @@ form.miventio label {
 	display: block;
 }
 
-
 form.miventio select {
 	padding: 0.9rem 1rem;
 	border-radius: var(--corner);
@@ -336,7 +335,6 @@ form.miventio select:focus {
 	box-shadow: var(--shadow-light);
 	border: none;
 	appearance: none;
-
 }
 
 form.miventio input[type='color'] {

@@ -3,39 +3,40 @@
 	import { booking } from '$lib/store/booking';
 	let item = { ticket: {}, activities: [], ticket_id: null, activities_ids: [] };
 	import { createEventDispatcher } from 'svelte';
-	import {page} from '$app/stores';
+	import { page } from '$app/stores';
 	const dispatch = createEventDispatcher();
-
 
 	const tickets = $page.data.event.tickets;
 	let activities = $page.data.event.activities;
 
-	$: item.ticket = tickets.find(t => t.id == item.ticket_id);
+	$: item.ticket = tickets.find((t) => t.id == item.ticket_id);
 
-	$: item.activities = $page.data.event.activities.filter(a => item.activities_ids.includes(a.id));
+	$: item.activities = $page.data.event.activities.filter((a) =>
+		item.activities_ids.includes(a.id)
+	);
 
 	$: if (item.ticket && item.ticket.date) {
-			activities = $page.data.event.activities.filter(a => a.start.getDate() == item.ticket.date.getDate())
+		activities = $page.data.event.activities.filter(
+			(a) => a.start.getDate() == item.ticket.date.getDate()
+		);
 	} else {
-		activities = $page.data.event.activities
+		activities = $page.data.event.activities;
 	}
-	$: activityCategories = [...new Set(activities.map(a => a.category))];
+	$: activityCategories = [...new Set(activities.map((a) => a.category))];
 
 	const submit = (e) => {
 		if (e.submitter.id == 'next') {
 			dispatch('addItem', {
-				item: {...item}, 
+				item: { ...item },
 				next: true
 			});
 		} else {
 			dispatch('addItem', {
-				item: {...item}, 
+				item: { ...item }
 			});
-			item = { ticket: {}, activities: [], ticket_id: null, activities_ids: [] }
+			item = { ticket: {}, activities: [], ticket_id: null, activities_ids: [] };
 		}
-		
-
-	} 
+	};
 
 	// const selectCategory = (category) => {
 	// 	if (category != "") {
@@ -71,85 +72,89 @@
 	// }
 </script>
 
-<form class="register" on:submit|preventDefault={submit} >
-<div>
-	<h3>Persönliche Details</h3>
-</div>
-<div class="row">
-	<div class="md-2">
-		<label for="title">Titel</label>
-		<input id="title" type="text" bind:value={item.title} />
+<form class="register" on:submit|preventDefault={submit}>
+	<div>
+		<h3>Persönliche Details</h3>
 	</div>
-	<div class="md-5">
-		<label for="firstname">Vorname</label>
-		<input id="firstname" type="text" bind:value={item.first_name} required />
+	<div class="row">
+		<div class="md-2">
+			<label for="title">Titel</label>
+			<input id="title" type="text" bind:value={item.title} />
+		</div>
+		<div class="md-5">
+			<label for="firstname">Vorname</label>
+			<input id="firstname" type="text" bind:value={item.first_name} required />
+		</div>
+		<div class="md-5">
+			<label for="lastname">Nachname</label>
+			<input id="lastname" type="text" bind:value={item.last_name} required />
+		</div>
+
+		<div class="md-12">
+			<label for="email">E-Mail</label>
+			<input id="email" type="email" bind:value={item.email} required />
+		</div>
 	</div>
-	<div class="md-5">
-		<label for="lastname">Nachname</label>
-		<input id="lastname" type="text" bind:value={item.last_name} required />
+	<div>
+		<h3>Wählen Sie Ihr Ticket</h3>
 	</div>
 
 	<div class="md-12">
-		<label for="email">E-Mail</label>
-		<input id="email" type="email" bind:value={item.email} required />
+		<select id="ticket" bind:value={item.ticket_id} required>
+			{#each tickets as ticket}
+				<option value={ticket.id}
+					>{ticket.category}:{ticket.name} ({ticket.price}€)
+					{#if ticket.date}
+						- <Time timestamp={ticket.date} format="DD.MM." />
+					{/if}
+				</option>
+			{/each}
+		</select>
 	</div>
-</div>
-<div>
-	<h3>Wählen Sie Ihr Ticket</h3>
-</div>
 
-<div class="md-12">
-	<select id="ticket" bind:value={item.ticket_id} required>
-		{#each tickets as ticket}
-			<option value="{ticket.id}">{ticket.category}:{ticket.name} ({ticket.price}€)
-				{#if ticket.date}
-				- <Time timestamp={ticket.date} format="DD.MM." />
-				{/if}
-			</option>	
-		{/each}
-	</select>
-</div>
+	<div class="activities">
+		<h3>Wählen Sie Ihr Programm</h3>
 
-<div class="activities">
-	<h3>Wählen Sie Ihr Programm</h3>
+		<fieldset>
+			{#each activityCategories as cat}
+				<h4>{cat}</h4>
 
-	<fieldset>
-		{#each activityCategories as cat}
-			<h4>{cat}</h4>
+				<div class="checkbox">
+					{#each activities.filter((a) => a.category == cat) as activity}
+						<label class:hidden={activity.hidden}>
+							<p class="name">
+								<input
+									type="checkbox"
+									bind:group={item.activities_ids}
+									name="activities"
+									value={activity.id}
+								/>
+								<b>{activity.name}</b>
+								{#if activity.author}
+									| {activity.author}
+								{/if}
+								{#if activity.price > 0}
+									| {activity.price} €
+								{/if}
+							</p>
+							<p>
+								am <Time timestamp={activity.start} format="DD.MM." /> von
+								<b>
+									<Time timestamp={activity.start} format="HH:mm" />
+									- <Time timestamp={activity.end} format="HH:mm" />
+								</b>
+							</p>
+						</label>
+					{/each}
+				</div>
+			{/each}
+		</fieldset>
+	</div>
 
-			<div class="checkbox">
-				{#each activities.filter((a) => a.category == cat) as activity}
-					<label class:hidden={activity.hidden}>
-						<p class="name">
-				
-							<input type="checkbox" bind:group={item.activities_ids} name="activities" value={activity.id} />
-							<b>{activity.name}</b> 
-							{#if activity.author}
-							| {activity.author}
-							{/if}
-							{#if activity.price > 0}
-							| {activity.price} €
-							{/if}
-						</p>
-						<p>
-							am <Time timestamp={activity.start} format="DD.MM." /> von
-							<b>
-								<Time timestamp={activity.start} format="HH:mm" />
-								- <Time timestamp={activity.end} format="HH:mm" />
-							</b>
-						</p>
-					</label>
-				{/each}
-			</div>
-		{/each}
-	</fieldset>
-</div>
-
-<div class="footer">
-	<button id="add">Zusätzliche Person </button>
-	<button id="next"> Weiter </button>
-</div>
-
+	<div class="footer">
+		<button id="add">Zusätzliche Person </button>
+		<button id="next"> Weiter </button>
+	</div>
 </form>
 
 <style>
@@ -185,7 +190,6 @@
 		margin-bottom: 5px;
 	}
 
-
 	.activities {
 		width: 100%;
 	}
@@ -220,5 +224,4 @@
 	.name b {
 		margin-right: 5px;
 	}
-
 </style>
