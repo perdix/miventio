@@ -14,7 +14,6 @@ const config = {
 		env: {
 			dir: process.cwd(),
 			publicPrefix: 'PUBLIC_',
-			envPrefix: ''
 		}
 	}
 };
