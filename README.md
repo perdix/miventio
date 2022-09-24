@@ -46,18 +46,3 @@ npx prisma studio
 
 ## Notes
 
-### n-2-m
-
-    const users = await prisma.user.findMany({
-        where: {
-            organisations: {
-              some: {
-                organisation: {
-                  id: organisation_id,
-                },
-              },
-            },
-          },
-        include: { organisations: { include: { organisation: true } } },
-    }
-    );
