@@ -3,6 +3,7 @@ import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import { env } from '$env/dynamic/private';
 
+
 export const handle = async ({ event, resolve }) => {
 	const prisma = new PrismaClient();
 
