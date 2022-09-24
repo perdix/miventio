@@ -18,8 +18,7 @@ export const handle = async ({ event, resolve }) => {
 		// Remove Bearer prefix
 		const token = cookies.AuthorizationToken.split(' ')[1];
 		try {
-			let auth_token = env.AUTH_SECRET ? env.AUTH_SECRET : process.env.AUTH_SECRET
-			const jwtUser = jwt.verify(token, auth_token);
+			const jwtUser = jwt.verify(token, env.AUTH_SECRET ? env.AUTH_SECRET : process.env.AUTH_SECRET);
 			if (typeof jwtUser === 'string') {
 				throw new Error('Something went wrong');
 			}
