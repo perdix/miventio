@@ -3,15 +3,17 @@
 	import { booking } from '$lib/store/booking';
 
 	export let event = {}
+	let success = false;
 
 	const saveBooking = async () => {
 
-		const res = await fetch(`/organisations/${event.organisation_id}/events/${event.id}/bookings`, {
+		const res = await fetch(`/form/${event.id}/register`, {
 				method: 'POST',
 				body: JSON.stringify($booking)
 			});
 			if (res.status === 201) {
-				alert("fasdf")
+				success = true;
+				$booking = { cart: []};
 			}
 	}
 
@@ -19,7 +21,10 @@
 </script>
 
 <section>
-	<form class="register" on:submit|preventDefault="{saveBooking}">
+	<div class="message" class:hidden={!success} >
+		<h1>Vielen Dank für die Registrierung!</h1>
+	</div>
+	<form class="register" on:submit|preventDefault="{saveBooking}" class:hidden={success}>
 
 	<div class="box">
 		<div class="payment">
@@ -38,6 +43,17 @@
 </section>
 
 <style>
+	.hidden {
+		display: none;
+	}
+	h1 {
+		text-align: center;
+	}
+	section {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 	.box {
 		display: flex;
 		justify-content: space-between;

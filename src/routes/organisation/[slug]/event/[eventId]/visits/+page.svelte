@@ -112,7 +112,7 @@
 <style>
 	.paid {
 		border-radius: 15px;
-		background-color: lightgreen;
+		background-color: var(--color-confirmation);
 		padding: 5px 10px;
 	}
 </style>

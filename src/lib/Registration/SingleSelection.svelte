@@ -1,61 +1,74 @@
 <script>
 	import Time from 'svelte-time';
-	import SmallTicket from '$lib/SmallTicket.svelte';
 	import { booking } from '$lib/store/booking';
-	export let item = { ticket: {}, activities: [] };
+	let item = { ticket: {}, activities: [], ticket_id: null, activities_ids: [] };
 	import { createEventDispatcher } from 'svelte';
+	import {page} from '$app/stores';
 	const dispatch = createEventDispatcher();
 
 
-	$: activityCategories = [...new Set(item.activities.map((a) => a.category))];
+	const tickets = $page.data.event.tickets;
+	let activities = $page.data.event.activities;
+
+	$: item.ticket = tickets.find(t => t.id == item.ticket_id);
+
+	$: item.activities = $page.data.event.activities.filter(a => item.activities_ids.includes(a.id));
+
+	$: if (item.ticket && item.ticket.date) {
+			activities = $page.data.event.activities.filter(a => a.start.getDate() == item.ticket.date.getDate())
+	} else {
+		activities = $page.data.event.activities
+	}
+	$: activityCategories = [...new Set(activities.map(a => a.category))];
 
 	const submit = (e) => {
 		if (e.submitter.id == 'next') {
 			dispatch('addItem', {
-				item: item, 
+				item: {...item}, 
 				next: true
 			});
 		} else {
 			dispatch('addItem', {
-				item: item, 
+				item: {...item}, 
 			});
+			item = { ticket: {}, activities: [], ticket_id: null, activities_ids: [] }
 		}
 		
 
 	} 
 
-	const selectCategory = (category) => {
-		if (category != "") {
-			item.tickets.forEach(t => {
-				if (t.category != category) {
-					t.hidden = true;
-				} else {
-					t.hidden = false;
-				}
-			});
-		} else {
-			item.tickets.forEach(t => t.hidden = false);
-		}
-		$booking = $booking;
-	}
+	// const selectCategory = (category) => {
+	// 	if (category != "") {
+	// 		item.tickets.forEach(t => {
+	// 			if (t.category != category) {
+	// 				t.hidden = true;
+	// 			} else {
+	// 				t.hidden = false;
+	// 			}
+	// 		});
+	// 	} else {
+	// 		item.tickets.forEach(t => t.hidden = false);
+	// 	}
+	// 	$booking = $booking;
+	// }
 
-	const selectTicket = (ticket) => {
-		item.tickets.forEach(t => t.selected = false)
-		ticket.selected = true;
-		item.ticket = ticket;
-		if (ticket.date != null) {
-			item.activities.forEach(a => {
-				if (a.start.getDate() != ticket.date.getDate()) {
-					a.hidden = true;
-				} else {
-					a.hidden = false;
-				}
-			});
-		} else {
-			item.activities.forEach(a => a.hidden = false);
-		}
-		$booking = $booking;
-	}
+	// const selectTicket = (ticket) => {
+	// 	item.tickets.forEach(t => t.selected = false)
+	// 	ticket.selected = true;
+	// 	item.ticket = ticket;
+	// 	if (ticket.date != null) {
+	// 		item.activities.forEach(a => {
+	// 			if (a.start.getDate() != ticket.date.getDate()) {
+	// 				a.hidden = true;
+	// 			} else {
+	// 				a.hidden = false;
+	// 			}
+	// 		});
+	// 	} else {
+	// 		item.activities.forEach(a => a.hidden = false);
+	// 	}
+	// 	$booking = $booking;
+	// }
 </script>
 
 <form class="register" on:submit|preventDefault={submit} >
@@ -69,38 +82,32 @@
 	</div>
 	<div class="md-5">
 		<label for="firstname">Vorname</label>
-		<input id="firstname" type="text" bind:value={item.firstname} required />
+		<input id="firstname" type="text" bind:value={item.first_name} required />
 	</div>
 	<div class="md-5">
 		<label for="lastname">Nachname</label>
-		<input id="lastname" type="text" bind:value={item.lastname} required />
+		<input id="lastname" type="text" bind:value={item.last_name} required />
 	</div>
 
-	<div class="md-6">
+	<div class="md-12">
 		<label for="email">E-Mail</label>
 		<input id="email" type="email" bind:value={item.email} required />
-	</div>
-
-	<div class="md-6">
-		<label for="category">Teilnahme-Kategorie</label>
-		<select name="" id="category" bind:value={item.category} on:change="{() => selectCategory(item.category)}">
-			<option value=""></option>
-			<option value="ALLGEMEIN">Allgemein</option>
-			<option value="STUDENT">Student</option>
-			<option value="MITGLIED">Mitglied</option>
-		</select>
 	</div>
 </div>
 <div>
 	<h3>Wählen Sie Ihr Ticket</h3>
 </div>
 
-<div class="tickets">
-	{#each item.tickets as ticket}
-		<div on:click="{() => selectTicket(ticket)}" class:hidden={ticket.hidden}>
-			<SmallTicket {ticket} />
-	    </div>	
-	{/each}
+<div class="md-12">
+	<select id="ticket" bind:value={item.ticket_id} required>
+		{#each tickets as ticket}
+			<option value="{ticket.id}">{ticket.category}:{ticket.name} ({ticket.price}€)
+				{#if ticket.date}
+				- <Time timestamp={ticket.date} format="DD.MM." />
+				{/if}
+			</option>	
+		{/each}
+	</select>
 </div>
 
 <div class="activities">
@@ -111,11 +118,18 @@
 			<h4>{cat}</h4>
 
 			<div class="checkbox">
-				{#each item.activities.filter((a) => a.category == cat) as activity}
+				{#each activities.filter((a) => a.category == cat) as activity}
 					<label class:hidden={activity.hidden}>
 						<p class="name">
-							<input type="checkbox" bind:checked={activity.selected} />
-							<b>{activity.name}</b> | {activity.author}
+				
+							<input type="checkbox" bind:group={item.activities_ids} name="activities" value={activity.id} />
+							<b>{activity.name}</b> 
+							{#if activity.author}
+							| {activity.author}
+							{/if}
+							{#if activity.price > 0}
+							| {activity.price} €
+							{/if}
 						</p>
 						<p>
 							am <Time timestamp={activity.start} format="DD.MM." /> von
@@ -167,7 +181,7 @@
 	}
 
 	h3 {
-		margin-top: 30px;
+		margin-top: 15px;
 		margin-bottom: 5px;
 	}
 
@@ -176,8 +190,8 @@
 		width: 100%;
 	}
 	h4 {
-		margin-top: 20px;
-		margin-bottom: 10px;
+		margin-top: 10px;
+		margin-bottom: 5px;
 		font-weight: 300;
 	}
 

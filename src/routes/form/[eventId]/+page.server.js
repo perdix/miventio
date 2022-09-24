@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit';
 
 export async function load(request) {
-	const eventId = request.url.searchParams.get('eventId');
-
+	const eventId = request.params.eventId;
 	if (eventId === undefined) {
 		throw error(400, 'You need to give a valid Id!');
 	}
@@ -21,7 +20,8 @@ export async function load(request) {
 		throw error(400, 'You need to give a valid eventId!');
 	}
 
+
 	return {
-		event: event
+		event
 	};
 }

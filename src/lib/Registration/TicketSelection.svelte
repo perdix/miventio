@@ -14,17 +14,10 @@
 		});
 	};
 
-	const freshItem = () => {
-		let item = {tickets: JSON.parse(JSON.stringify(event.tickets)), activities: JSON.parse(JSON.stringify(event.activities)), ticket: {}}
-		return item;
-	}
-	let item = freshItem();	
-
 	const addItem = (e) => {
 		$booking.cart.push(e.detail.item)
-		// Reset item
-		item = freshItem();
 		$booking = $booking;
+		console.log($booking);
 		if (e.detail.next == true) {
 			switchTo(2,"#booking")
 		}
@@ -34,7 +27,7 @@
 
 <section>
 	<div>
-		<SingleSelection item={item}  on:addItem={addItem} />
+		<SingleSelection  on:addItem={addItem} />
 	</div>
 
 	<div class="cart">

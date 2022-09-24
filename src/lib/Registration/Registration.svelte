@@ -8,8 +8,6 @@
 
 	export let event = {};
 
-	// $booking = {cart: [] }
-
 	const items = [
 		{ id: 1, name: 'Ticketauswahl', slug: 'selection', component: TicketSelection },
 		{ id: 2, name: 'Buchungsdetails', slug: 'booking', component: BookingDetails },

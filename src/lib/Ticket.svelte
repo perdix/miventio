@@ -2,7 +2,6 @@
 	import Time from 'svelte-time';
 
 	export let ticket = {};
-	export let event = {};
 	export let form = false;
 </script>
 

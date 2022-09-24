@@ -22,11 +22,13 @@ export async function GET({ locals, params }) {
 
 
 
-export async function PUT({ locals, params }) {
+export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.slug)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
+	const data = await request.json();
+	
 	// Update status of visit
 	const visit = await locals.prisma.visit.update({
 		where: {

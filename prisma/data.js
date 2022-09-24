@@ -2,14 +2,14 @@ import bcrypt from 'bcryptjs';
 
 export const organisations = [
 	{
-		name: 'Gesellschaft für Parodontologie 1'
+		name: 'Gesellschaft für Parodontologie'
 	},
 	{
-		name: 'Gesellschaft für Parodontologie 2'
+		name: 'Gesellschaft für HNO-Medizin'
 	}
 ];
 
-export const events = [
+export const zahn_events = [
 	{
 		name: 'Österreichischer Kongress für Zahnmedizin 2022',
 		description: 'Das ist eine Beschreibung des Events',
@@ -19,7 +19,26 @@ export const events = [
 		end: new Date('2022-05-25')
 	},
 	{
+		name: 'Ungarischer Kongress für Zahnmedizin 2023',
+		description: 'Das ist eine Beschreibung des Events',
+		location: 'Palais Epstein',
+		city: 'Wien',
+		start: new Date('2022-05-23'),
+		end: new Date('2022-05-25')
+	}
+]
+
+export const hno_events = [
+	{
 		name: 'Österreichischer Kongress für HNO 2022',
+		description: 'Das ist eine Beschreibung des Events',
+		location: 'Goldenes Dachl',
+		city: 'Innsbruck',
+		start: new Date('2022-05-23'),
+		end: new Date('2022-05-25')
+	},
+	{
+		name: 'Tiroler Mini-Workshop für HNO 2023',
 		description: 'Das ist eine Beschreibung des Events',
 		location: 'Goldenes Dachl',
 		city: 'Innsbruck',
@@ -31,10 +50,6 @@ export const events = [
 export const superusers = [
 	{
 		email: 'admin@mivent.io',
-		password: await bcrypt.hash('admin', 10)
-	},
-	{
-		email: 'admin2@mivent.io',
 		password: await bcrypt.hash('admin', 10)
 	}
 ];

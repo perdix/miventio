@@ -80,6 +80,7 @@ export async function POST({ locals, params, request }) {
 						email: visit.user.email,
 						first_name: visit.user.first_name,
 						last_name: visit.user.last_name,
+						title: visit.user.title,
 						organisation: {
 							connect: {
 								id: params.slug

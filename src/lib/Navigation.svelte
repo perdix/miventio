@@ -22,13 +22,14 @@
 	};
 	const changeOrganisation = (org) => {
 		isDropdownOpen = !isDropdownOpen;
-		goto(`/organisation/${org.id}`);
+		// goto(`/organisation/${org.id}`);
+		document.location.href = `/organisation/${org.id}`;
+
 	};
 </script>
 
 <nav>
 	<div class="left">
-		<!-- <img src={logo} alt="Logo Organisation" /> -->
 		<a href="/organisation/{organisation.id}" class="organisation">
 			<h1>{organisation.name}</h1>
 

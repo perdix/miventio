@@ -2,9 +2,8 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
 	import { page } from '$app/stores';
-	console.log($page)
 
-	const url = `${$page.url.origin}/form?eventId=${$page.params.eventId}`;
+	const url = `${$page.url.origin}/form/${$page.params.eventId}`;
 </script>
 
 <Header title={'Anmeldeformular'} />
@@ -41,6 +40,7 @@
 		background-color: white;
 		padding:30px;
 		display: block;
+		font-size: 1rem;
 	}
 
 </style>

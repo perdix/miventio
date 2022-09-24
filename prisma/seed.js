@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { events, organisations, superusers, tickets, activities, users } from './data.js';
+import { zahn_events, hno_events, organisations, superusers, tickets, activities, users } from './data.js';
 
 const prisma = new PrismaClient();
 
@@ -22,19 +22,29 @@ async function main() {
 	});
 
 	// Add some events
-	const organisation = await prisma.organisation.update({
+	const zahn_orga = await prisma.organisation.update({
 		where: {
-			name: 'Gesellschaft für Parodontologie 1'
+			name: 'Gesellschaft für Parodontologie'
 		},
 		data: {
 			events: {
-				create: events
+				create: zahn_events
+			}
+		}
+	});
+	const hno_orga = await prisma.organisation.update({
+		where: {
+			name: 'Gesellschaft für HNO-Medizin'
+		},
+		data: {
+			events: {
+				create: hno_events
 			}
 		}
 	});
 
 	// Create some users
-	const users_with_organisation_id = users.map((u) => ({ ...u, organisation_id: organisation.id }));
+	const users_with_organisation_id = users.map((u) => ({ ...u, organisation_id: zahn_orga.id }));
 	await prisma.user.createMany({
 		data: users_with_organisation_id
 	});
@@ -49,7 +59,14 @@ async function main() {
 		data: {
 			role: 'ADMIN',
 			superuser_id: superuser.id,
-			organisation_id: organisation.id
+			organisation_id: zahn_orga.id
+		}
+	});
+	await prisma.role.create({
+		data: {
+			role: 'ADMIN',
+			superuser_id: superuser.id,
+			organisation_id: hno_orga.id
 		}
 	});
 
@@ -66,11 +83,6 @@ async function main() {
 	await prisma.activity.createMany({
 		data: activities_with_event_id
 	});
-
-
-	// Create some bookings
-
-
 
 
 	
