@@ -2,7 +2,7 @@
 	import Header from '$lib/Header.svelte';
 	import Navigation from '$lib/Navigation.svelte';
 	import { page } from '$app/stores';
-	import { organisation } from '$lib/store/organisation'
+	import { organisation } from '$lib/store/organisation';
 	$organisation = { ...$page.data.organisation };
 </script>
 
@@ -11,10 +11,11 @@
 	<Navigation organisations={$page.data.session.organisations} organisation={$organisation} />
 </div>
 
-<div class="placeholder">
+<div class="placeholder" />
 
+<div class="content">
+<slot />
 </div>
-<slot/>
 
 <style>
 	.main-nav {
@@ -23,6 +24,10 @@
 		z-index: 100;
 	}
 	.placeholder {
-		height:175px;
+		height: 175px;
+	}
+	.content {
+		min-height: calc(100vh - 175px);
+		background-color: var(--lightgrey);
 	}
 </style>

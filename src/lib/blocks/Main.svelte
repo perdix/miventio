@@ -11,7 +11,7 @@
 		padding-top: 0;
 		background-color: var(--lightgrey);
 		height: 100%;
-		position: relative;
+		/* position: relative; */
 		/* border-top: 1px solid white; */
 	}
 	/* hr {
@@ -26,6 +26,5 @@
 		/* background-color: white; */
 		min-height: 500px;
 		border-radius: var(--corner);
-		
 	}
 </style>

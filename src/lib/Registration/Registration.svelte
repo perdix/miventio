@@ -4,9 +4,9 @@
 	import BookingDetails from '$lib/Registration/BookingDetails.svelte';
 	import PaymentDetails from '$lib/Registration/PaymentDetails.svelte';
 	import { onMount } from 'svelte';
-	import {booking} from '$lib/store/booking';
+	import { booking } from '$lib/store/booking';
 
-	export let event = {}
+	export let event = {};
 
 	// $booking = {cart: [] }
 
@@ -32,19 +32,18 @@
 </script>
 
 <div class="registration" bind:this={registration}>
-	<form class="register">
 		<Stepper steps={items} on:step={handleStep} />
 
 		<div class="sections">
 			{#each items as item}
 				{#if activeTabValue == item.id}
 					<div>
-						<svelte:component this={item.component} {event}/>
+						<svelte:component this={item.component} {event} on:next={handleStep}/>
 					</div>
 				{/if}
 			{/each}
 		</div>
-	</form>
+
 </div>
 
 <style>

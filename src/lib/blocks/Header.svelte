@@ -1,6 +1,6 @@
 <script>
 	export let title = 'Header Title';
-	export let icon = ''
+	export let icon = '';
 </script>
 
 <header>
@@ -26,12 +26,12 @@
 
 	h1 {
 		font-weight: 400;
-		font-size:2.6em;
+		font-size: 2.6em;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		color: var(--color-1-dark);
-		font-family: "Roboto";
+		font-family: 'Roboto';
 	}
 	h1 span {
 		display: block;

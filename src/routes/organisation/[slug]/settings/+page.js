@@ -1,9 +1,3 @@
-import { organisation } from '$lib/store/organisation'
+import { organisation } from '$lib/store/organisation';
 
-export async function load( {fetch, params} ) {
-
-
-
-
-    
-}
+export async function load({ fetch, params }) {}

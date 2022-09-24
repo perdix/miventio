@@ -10,8 +10,9 @@
 		});
 	}
 </script>
-	<table>
-		<thead>
+
+<table>
+	<thead>
 		<tr>
 			<th>Name</th>
 			<th>Adresse</th>
@@ -20,7 +21,7 @@
 			<th>Status</th>
 		</tr>
 	</thead>
-		<tbody>	
+	<tbody>
 		{#each contacts as contact}
 			<tr on:click={() => edit(contact)}>
 				<td>{contact.first_name} {contact.last_name}</td>
@@ -32,17 +33,17 @@
 				<td>{contact.email || ''}</td>
 				<td>{contact.phone || ''}</td>
 				<td>
-				{#if contact.status}
-				<span
-				class:member={contact.status.toLowerCase() == 'mitglied'}
-				class:student={contact.status.toLowerCase() == 'student'}>{contact.status}</span>
-				{/if}
-					</td
-				>
+					{#if contact.status}
+						<span
+							class:member={contact.status.toLowerCase() == 'mitglied'}
+							class:student={contact.status.toLowerCase() == 'student'}>{contact.status}</span
+						>
+					{/if}
+				</td>
 			</tr>
 		{/each}
-		</tbody>		
-	</table>
+	</tbody>
+</table>
 
 <style>
 	.member {

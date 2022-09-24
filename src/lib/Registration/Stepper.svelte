@@ -34,8 +34,8 @@
 		margin-bottom: 10px;
 		position: relative;
 		z-index: 100;
-		background-color: white;
-		border-radius: 5px;
+		background-color: #e6e6e6;
+		/* border-radius: 5px; */
 		padding: 10px;
 		overflow: hidden;
 	}
@@ -53,7 +53,7 @@
 	}
 
 	.stepper .id {
-		background-color: #e6e6e6;
+		background-color: white;
 		width: 30px;
 		height: 30px;
 		border-radius: 50%;
@@ -69,7 +69,7 @@
 		justify-content: flex-start;
 		align-items: center;
 		padding: 0 10px;
-		background-color: white;
+		background-color: #e6e6e6;
 		cursor: pointer;
 	}
 	.stepper hr {

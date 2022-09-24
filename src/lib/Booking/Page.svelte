@@ -1,7 +1,6 @@
 <script>
-	import Main from './blocks/Main.svelte';
-	import Header from './blocks/Header.svelte';
-	import Content from './blocks/Content.svelte';
+	import Header from '$lib/blocks/Header.svelte';
+	import Content from '$lib/blocks/Content.svelte';
 	import { createEventDispatcher } from 'svelte';
 	export let title = '';
 	export let show = false;
@@ -17,14 +16,15 @@
 <div id="popup" class:visible={show} class:hidden={!show}>
 	<div class="background">
 		<div class="box">
-			<Main>
+	
 				<Header {title}>
 					<span class="material-symbols-outlined close" on:click={close}>close</span>
 				</Header>
-				<Content>
+				<div>
 					<slot />
-				</Content>
-			</Main>
+				</div>
+				
+		
 		</div>
 	</div>
 </div>
@@ -40,12 +40,13 @@
 		display: block;
 	}
 	.background {
-		position: absolute;
+		position: fixed;
 		z-index: 150;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
+		overflow: hidden;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -56,8 +57,6 @@
 		box-shadow: var(--shadow);
 		min-width: 30vw;
 		border-radius: var(--corner);
-		max-height: 100vh;
-		/* overflow: hidden; */
-
+		overflow: hidden;
 	}
 </style>

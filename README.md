@@ -35,26 +35,19 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-
-
-
-
 Adapt DB Structure to models
 npx prisma db push
-
 
 Load Seed from File
 npx prisma db seed
 
-
 // Start Prisma Studio
 npx prisma studio
-
-
 
 ## Notes
 
 ### n-2-m
+
     const users = await prisma.user.findMany({
         where: {
             organisations: {

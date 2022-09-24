@@ -1,7 +1,6 @@
 <script>
-	export let color = "transparent";
+	export let color = 'transparent';
 </script>
-
 
 <section style="background-color:{color}">
 	<slot />

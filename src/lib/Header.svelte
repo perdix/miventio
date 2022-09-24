@@ -1,7 +1,5 @@
 <header>
-	<div>
-		
-	</div>
+	<div />
 	<div>
 		<a href="/account"><span class="material-symbols-outlined">account_circle</span></a>
 	</div>

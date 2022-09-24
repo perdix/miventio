@@ -48,14 +48,16 @@
 	--grey: #f6f6f6;
 	--black: #000;
 	--darkgrey: rgb(69, 69, 69);
-	--grey: #E1EDEC;
-	--lightgrey: #F0F5F4;
+	--grey: #e1edec;
+	--lightgrey: #f0f5f4;
 	--color-1: #37c0ae;
 	--color-1-light: #b0e2d5;
 	--color-1-dark: #17665b;
 	--color-2: #c75399;
 	--color-2-light: #deacca;
 	--color-2-dark: #81255c;
+	--color-warning: rgb(255, 163, 163);
+	--color-confirmation:rgb(207, 238, 213);
 }
 
 * {
@@ -68,12 +70,11 @@ body {
 	font-size: 14px;
 	font-family: 'Roboto';
 	/* background-color: var(--lightgrey); */
-
 }
 
 h1 {
 	font-size: 3rem;
-	font-family: "Roboto Slab";
+	font-family: 'Roboto Slab';
 	font-weight: 300;
 }
 
@@ -86,20 +87,20 @@ h2 {
 .logo {
 	background: linear-gradient(132deg, var(--color-1) 0%, var(--color-2) 100%);
 	background-clip: text;
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    text-fill-color: transparent;
-    -webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
 	-moz-text-fill-color: transparent;
 	font-weight: 500;
 	font-size: 4rem;
-	font-family: "Roboto";
+	font-family: 'Roboto';
 }
 
 .logo-white {
 	font-weight: 900;
 	font-size: 4rem;
-	color:white;
+	color: white;
 }
 
 /******************************* UTILITY ********************************/
@@ -114,7 +115,8 @@ h2 {
 
 /******************************* BUTTONS & LINKS ********************************/
 
-button, .button {
+button,
+.button {
 	text-transform: uppercase;
 	padding: 0.6rem 1.7rem;
 	color: var(--white);
@@ -132,13 +134,13 @@ button span:nth-child(2) {
 	margin-left: 10px;
 }
 
-
-button:hover, .button:hover, .button:active {
+button:hover,
+.button:hover,
+.button:active {
 	cursor: pointer;
 	background-position: 100%;
 	box-shadow: var(--shadow-light);
 }
-
 
 button.secondary {
 	background: linear-gradient(132deg, var(--color-2) 0%, var(--color-1) 100%);
@@ -152,7 +154,6 @@ button.secondary:hover {
 	box-shadow: var(--shadow-light);
 }
 
-
 a {
 	color: var(--color-1);
 	transition: 0.2s;
@@ -164,15 +165,16 @@ a:hover {
 	color: var(--color-1-dark);
 }
 
-.close, .delete {
+.close,
+.delete {
 	display: block;
 	padding: 10px;
 	border-radius: var(--corner);
 	background-color: var(--grey);
 	cursor: pointer;
-	
 }
-.close:hover, .delete:hover {
+.close:hover,
+.delete:hover {
 	box-shadow: var(--shadow-light);
 }
 
@@ -264,6 +266,7 @@ form select:focus {
 	margin: 4px;
 	width: calc(100% - 8px);
 	appearance: none;
+	outline: none;
 }
 
 form option {
@@ -306,7 +309,7 @@ form input:focus {
 /******* Miventio ********/
 
 form.miventio {
-	max-width: 800px;
+	/* max-width: 800px; */
 }
 form.miventio input {
 	padding: 0.9rem 1rem;
@@ -322,10 +325,18 @@ form.miventio label {
 	display: block;
 }
 
-form.miventio select,
+
+form.miventio select {
+	padding: 0.9rem 1rem;
+	border-radius: var(--corner);
+}
+
 form.miventio select:active,
 form.miventio select:focus {
 	box-shadow: var(--shadow-light);
+	border: none;
+	appearance: none;
+
 }
 
 form.miventio input[type='color'] {
@@ -344,10 +355,12 @@ form.register input {
 }
 
 form.register button {
-	background: #2062a8;
-	padding: 5px 12px;
 	font-size: 14px;
 	margin: 0 5px;
+	background: #e6e6e6;
+	color: #262626;
+	border: 1px solid #262626;
+	border-radius: 2px;
 }
 
 form.register select,
@@ -370,10 +383,9 @@ form.register select:focus {
 table {
 	width: 100%;
 	text-align: left;
-	border:none;	
-	border-collapse:separate;
+	border: none;
+	border-collapse: separate;
 	border-spacing: 0 2px;
-
 }
 
 table th {

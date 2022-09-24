@@ -1,17 +1,31 @@
 <script>
 	import Cart from '$lib/Registration/Cart.svelte';
+	import { booking } from '$lib/store/booking';
+
+	export let event = {}
+
+	const saveBooking = async () => {
+
+		const res = await fetch(`/organisations/${event.organisation_id}/events/${event.id}/bookings`, {
+				method: 'POST',
+				body: JSON.stringify($booking)
+			});
+			if (res.status === 201) {
+				alert("fasdf")
+			}
+	}
+
+
 </script>
 
 <section>
-	<div class="header">
-		<h2>Zahlungsvorgang</h2>
-	</div>
+	<form class="register" on:submit|preventDefault="{saveBooking}">
 
-	<div class="row">
-		<div class="md-7">
+	<div class="box">
+		<div class="payment">
 			<h3>zB. Stripe</h3>
 		</div>
-		<div class="md-5 bg">
+		<div class="cart">
 			<Cart />
 		</div>
 	</div>
@@ -19,23 +33,23 @@
 	<div class="footer">
 		<button> Bestellen </button>
 	</div>
+
+	</form>
 </section>
 
 <style>
-	section {
-		background-color: white;
-		border-radius: 5px;
-		padding: 30px;
-		margin-bottom: 20px;
+	.box {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
 	}
-	section h3 {
-		margin-top: 30px;
-		margin-bottom: 15px;
+	.payment {
+		width: 60%;
 	}
-	.header h2 {
-		font-size: 24px;
-		font-weight: 300;
+	.cart {
+		width: 35%;
 	}
+
 	.footer {
 		display: flex;
 		width: 100%;
@@ -44,13 +58,5 @@
 		padding-top: 30px;
 	}
 
-	.bg {
-		background: linear-gradient(
-			132deg,
-			rgba(181, 209, 224, 0.11528361344537819) 0%,
-			rgba(41, 72, 124, 0.08167016806722693) 100%
-		);
-		padding: 10px;
-		border-radius: 5px;
-	}
+	
 </style>

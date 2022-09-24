@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const booking = writable({cart: []});
+export const booking = writable({ cart: [] });

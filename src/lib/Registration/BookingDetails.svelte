@@ -1,71 +1,89 @@
 <script>
 	import Cart from '$lib/Registration/Cart.svelte';
+	import { createEventDispatcher } from 'svelte';
+	import { booking } from '$lib/store/booking';
+
+	const dispatch = createEventDispatcher();
+
+	const saveAndNext = () => {
+		dispatch('next', {
+			id: 3,
+			slug: "payment"
+		});
+	}
 </script>
 
 <section>
-	<div class="header">
-		<h2>Buchungsdetails</h2>
-	</div>
-
-	<div class="row">
-		<div class="md-7 padding">
+	<form class="register" on:submit|preventDefault="{saveAndNext}">
+		<div class="wrapper">
+		<div class="infos">
 			<div class="row">
 				<div class="md-6">
 					<label for="firstname">Vorname</label>
-					<input id="firstname" type="text" placeholder="Vorname" />
+					<input id="firstname" type="text" placeholder="Vorname" required bind:value={$booking.first_name}/>
 				</div>
 				<div class="md-6">
 					<label for="lastname">Nachname</label>
-					<input id="lastname" type="text" placeholder="Nachname" />
+					<input id="lastname" type="text" placeholder="Nachname" required bind:value={$booking.last_name}/>
 				</div>
 
 				<div class="md-8">
 					<label for="email">E-Mail</label>
-					<input id="email" type="email" placeholder="E-Mail" />
+					<input id="email" type="email" placeholder="E-Mail" required bind:value={$booking.email}/>
 				</div>
 
 				<div class="md-4">
 					<label for="phone">Telefon</label>
-					<input id="phone" type="text" placeholder="Telefon" />
+					<input id="phone" type="text" placeholder="Telefon" bind:value={$booking.phone}/>
 				</div>
 
 				<div class="md-12">
 					<label for="street">Straße</label>
-					<input id="street" type="text" placeholder="Straße" />
+					<input id="street" type="text" placeholder="Straße" required bind:value={$booking.address}/>
 				</div>
 
 				<div class="md-4">
 					<label for="postcode">Postleitzahl</label>
-					<input id="postcode" type="text" placeholder="Postleitzahl" />
+					<input id="postcode" type="text" placeholder="Postleitzahl" required bind:value={$booking.postcode}/>
 				</div>
 				<div class="md-8">
 					<label for="city">Stadt</label>
-					<input id="city" type="text" placeholder="Stadt" />
+					<input id="city" type="text" placeholder="Stadt" required bind:value={$booking.city}/>
 				</div>
 			</div>
 		</div>
 
-		<div class="md-5 bg">
+		<div class="cart">
 			<Cart />
 		</div>
+
 	</div>
+
+
 
 	<div class="footer">
 		<button> Weiter </button>
 	</div>
+</form>
 </section>
 
 <style>
 	section {
-		background-color: white;
-		border-radius: 5px;
-		padding: 30px;
-		margin-bottom: 20px;
+
 	}
-	.header h2 {
-		font-size: 24px;
-		font-weight: 300;
+	.wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+	
 	}
+	.infos {
+		width: 60%;
+	}
+	.cart {
+		width: 35%;
+	}
+	
 	.footer {
 		display: flex;
 		width: 100%;
@@ -74,13 +92,4 @@
 		padding-top: 30px;
 	}
 
-	.bg {
-		background: linear-gradient(
-			132deg,
-			rgba(181, 209, 224, 0.11528361344537819) 0%,
-			rgba(41, 72, 124, 0.08167016806722693) 100%
-		);
-		padding: 10px;
-		border-radius: 5px;
-	}
 </style>

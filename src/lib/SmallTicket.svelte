@@ -1,40 +1,30 @@
 <script>
 	import Time from 'svelte-time';
-	export let ticket = {}
-	export let event = {}
-	export let active = false;
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-	function selectTicket() {
-		dispatch('select', {
-			ticket: ticket
-		});
-	}
+	export let ticket = {};	
 </script>
 
-<article class="ticket" on:click={selectTicket} class:active={active}>
+<article class="ticket" class:selected="{ticket.selected}">
 	<div style="display:flex;">
-	<h1>{ticket.name || ''}</h1> |
-	<p>{ticket.category || ''}</p>
+		<h1>{ticket.name || ''}</h1>
+		|
+		<p>{ticket.category || ''}</p>
 
 		{#if ticket.date}
-		<p> | Gültig am: <Time timestamp={ticket.date} format="DD.MM.YYYY" /></p>
+			<p>| Gültig am: <Time timestamp={ticket.date} format="DD.MM.YYYY" /></p>
 		{:else}
-		<p> </p>
+			<p />
 		{/if}
 	</div>
 
-
-	<p><b>{ticket.price || ''} €</b>	</p>
+	<p><b>{ticket.price || ''} €</b></p>
 </article>
-
 
 <style>
 	.ticket {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		
+
 		padding: 7px;
 		text-align: left;
 		border: 1px solid #262626;
@@ -42,18 +32,19 @@
 		margin-bottom: 2px;
 		cursor: pointer;
 	}
-	.ticket:hover, .ticket.active {
-		background-color: #f7f7f7;
+	.ticket:hover,
+	.ticket.selected {
+		background-color: #e9e9e9;
 	}
 
 	h1 {
 		font-size: 14px;
 		font-weight: 600;
 		font-family: 'Roboto';
-		margin-right:5px;
+		margin-right: 5px;
 	}
 	p {
 		font-size: 14px;
-		margin-left:5px;
+		margin-left: 5px;
 	}
 </style>

@@ -1,10 +1,5 @@
-
-
 export async function load({ data }) {
-
-    return {
-        event: data.event
-    }
-
-
+	return {
+		event: data.event
+	};
 }

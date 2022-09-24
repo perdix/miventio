@@ -5,19 +5,22 @@
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
 
-	let contact = {}
+	let contact = {};
 	let showPopup = false;
-	let popupTitle = "Neuer Kontakt"
+	let popupTitle = 'Neuer Kontakt';
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
-	}
+	};
 	const saveContact = async () => {
 		if ('id' in contact) {
-			const res = await fetch(`/organisations/${$page.data.organisation.id}/contacts/${contact.id}`, {
-				method: 'PUT',
-				body: JSON.stringify(contact)
-			});
+			const res = await fetch(
+				`/organisations/${$page.data.organisation.id}/contacts/${contact.id}`,
+				{
+					method: 'PUT',
+					body: JSON.stringify(contact)
+				}
+			);
 			if (res.status === 200) {
 				togglePopup();
 			}
@@ -30,65 +33,62 @@
 				togglePopup();
 			}
 		}
-	}
+	};
 
 	const openContact = (event) => {
 		contact = event.detail.contact;
-		popupTitle = "Kontakt editieren";
+		popupTitle = 'Kontakt editieren';
 		togglePopup();
-	}
+	};
 
 	const deleteContact = async () => {
 		const res = await fetch(`/organisations/${$page.data.organisation.id}/contacts/${contact.id}`, {
-				method: 'DELETE',
-				body: JSON.stringify(contact)
-			});
-			if (res.status === 200) {
-				togglePopup();
-				location.reload();
-			}
-	}
-
+			method: 'DELETE',
+			body: JSON.stringify(contact)
+		});
+		if (res.status === 200) {
+			togglePopup();
+			location.reload();
+		}
+	};
 </script>
 
 <div class="page">
-	
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
-		
 		<form class="miventio row" on:submit={saveContact}>
 			<div class="md-2">
 				<label for="title">Titel</label>
-				<input id="title" type="text" bind:value="{contact.title}" />
+				<input id="title" type="text" bind:value={contact.title} />
 			</div>
 			<div class="md-5">
 				<label for="firstname">Vorname</label>
-				<input id="firstname" type="text" bind:value="{contact.first_name}" />
+				<input id="firstname" type="text" bind:value={contact.first_name} />
 			</div>
 			<div class="md-5">
 				<label for="lastname">Nachname</label>
-				<input id="lastname" type="text" bind:value="{contact.last_name}" />
+				<input id="lastname" type="text" bind:value={contact.last_name} />
 			</div>
 			<div class="md-6">
 				<label for="email">E-Mail</label>
-				<input id="email" type="email" bind:value="{contact.email}" />
+				<input id="email" type="email" bind:value={contact.email} />
 			</div>
 			<div class="md-6">
 				<label for="phone">Telefon</label>
-				<input id="phone" type="text" bind:value="{contact.phone}" />
+				<input id="phone" type="text" bind:value={contact.phone} />
 			</div>
 			<div class="md-12">
 				<label for="address">Adresse</label>
-				<input id="address" type="text" bind:value="{contact.address}" />
+				<input id="address" type="text" bind:value={contact.address} />
 			</div>
 			<div class="md-6">
 				<label for="postcode">Postleitzahl</label>
-				<input id="postcode" type="text" bind:value="{contact.postcode}" />
+				<input id="postcode" type="text" bind:value={contact.postcode} />
 			</div>
 			<div class="md-6">
 				<label for="city">Stadt</label>
-				<input id="city" type="text" bind:value="{contact.city}" />
+				<input id="city" type="text" bind:value={contact.city} />
 			</div>
-	
+
 			<div class="md-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
@@ -99,7 +99,7 @@
 			</div>
 		</form>
 	</Popup>
-	
+
 	<Main>
 		<Header title={'Kontakte'}>
 			<button on:click={togglePopup}>
@@ -107,8 +107,7 @@
 				<span class="material-symbols-outlined">add_circle</span>
 			</button>
 		</Header>
-	
-	<Contacts contacts={$page.data.contacts} on:edit={openContact}/>
 
+		<Contacts contacts={$page.data.contacts} on:edit={openContact} />
 	</Main>
 </div>

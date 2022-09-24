@@ -2,16 +2,16 @@
 	import { page } from '$app/stores';
 	import Main from '$lib/blocks/Main.svelte';
 	import Time from 'svelte-time';
-	import { event } from '$lib/store/event'
+	import { event } from '$lib/store/event';
 	$event = { ...$page.data.event };
-
 
 	export let sections = [
 		{ slug: 'info', title: 'Allgemeine Daten', icon: 'info' },
 		{ slug: 'activities', title: 'Aktivitäten', icon: 'calendar_view_week' },
 		{ slug: 'tickets', title: 'Tickets', icon: 'confirmation_number' },
 		{ slug: 'form', title: 'Formular', icon: 'table' },
-		{ slug: 'bookings', title: 'Anmeldungen', icon: 'badge' }
+		{ slug: 'bookings', title: 'Buchungen', icon: 'payments' },
+		{ slug: 'visits', title: 'Besucher', icon: 'badge' }
 	];
 </script>
 
@@ -21,7 +21,12 @@
 			<a href="/organisation/{$page.params.slug}/event/1{$page.params.eventId}">
 				<div>
 					<h1>{$event.name}</h1>
-					<p class="date"><Time timestamp={$event.start} format="DD.MM." /> - <Time timestamp={$event.end} format="DD.MM.YYYY" /></p>
+					<p class="date">
+						<Time timestamp={$event.start} format="DD.MM." /> - <Time
+							timestamp={$event.end}
+							format="DD.MM.YYYY"
+						/>
+					</p>
 					<p class="location">{$event.location} in {$event.city}</p>
 				</div>
 				<ul>
@@ -55,7 +60,7 @@
 		align-items: stretch;
 	}
 	aside {
-		width: 24%;	
+		width: 24%;
 		min-width: 400px;
 	}
 	section {

@@ -1,16 +1,14 @@
 <script>
 	import Main from '$lib/blocks/Main.svelte';
-	import Content from '$lib/blocks/Content.svelte';	
+	import Content from '$lib/blocks/Content.svelte';
 	import Contacts from '$lib/Contacts.svelte';
 	import Events from '$lib/Events.svelte';
-	import  { page } from '$app/stores';
+	import { page } from '$app/stores';
 </script>
 
 <div class="page">
-	
 	<Main>
 		<Content>
-
 			<div class="block">
 				<h2>Überblick</h2>
 				<div class="row">
@@ -19,39 +17,28 @@
 							<h3># Veranstaltungen</h3>
 							<h4>{$page.data.organisation.events.length}</h4>
 						</section>
-
 					</div>
 					<div class="md-6 count">
 						<section>
 							<h3># Kontakte</h3>
 							<h4>{$page.data.organisation.users.length}</h4>
 						</section>
-
 					</div>
 				</div>
 			</div>
 
-
-
 			<div class="block">
 				<h2>Baldige Events</h2>
-				<Events events={$page.data.organisation.events}/>	
+				<Events events={$page.data.organisation.events} />
 			</div>
 
 			<div class="block">
 				<h2>Neueste Kontakte</h2>
 				<Contacts contacts={$page.data.organisation.users} />
 			</div>
-
-
 		</Content>
-
-
-
-
 	</Main>
 </div>
-
 
 <style>
 	h2 {
@@ -60,7 +47,7 @@
 	.block {
 		/* background-color: rgba(255,255,255,1); */
 		margin-bottom: 30px;
-		padding: 30px;	
+		padding: 30px;
 		min-height: 300px;
 	}
 	.count {
@@ -79,7 +66,6 @@
 		text-align: center;
 		font-size: 60px;
 		font-weight: 300;
-		color:var(--color-1-dark);
+		color: var(--color-1-dark);
 	}
-
 </style>

@@ -1,12 +1,12 @@
 <script>
 	import Time from 'svelte-time';
 
-	export let ticket = {}
-	export let event = {}
+	export let ticket = {};
+	export let event = {};
 	export let form = false;
 </script>
 
-<article class="ticket" class:form="{form}">
+<article class="ticket" class:form>
 	<div class="left">
 		<span class="cut" />
 	</div>
@@ -31,34 +31,25 @@
 		<div class="main">
 			<div>
 				<div>
-	
 					<h1>{ticket.name}</h1>
-				
 				</div>
-				
+
 				{#if ticket.date}
-				<p>Gültig am: <Time timestamp={ticket.date} format="DD.MM.YYYY" /></p>
+					<p>Gültig am: <Time timestamp={ticket.date} format="DD.MM.YYYY" /></p>
 				{:else}
-				<p> </p>
+					<p />
 				{/if}
 				<div>
 					{#if ticket.category}
-					<p class="cat">{ticket.category}</p>
+						<p class="cat">{ticket.category}</p>
 					{/if}
 					<p class="price">{ticket.price} €</p>
 				</div>
-				
 			</div>
-			
-		
+
 			<!-- <h2>{event.name}</h2> -->
-			
-			
 		</div>
-		<div class="desc">
-			
-			
-		</div>
+		<div class="desc" />
 	</div>
 </article>
 
@@ -102,7 +93,6 @@
 		/* background: #262626; */
 	}
 
-	
 	.left .cut {
 		font-size: 35px;
 		position: absolute;
@@ -114,11 +104,14 @@
 		border-radius: 0% 50px 50px 0%;
 		left: -56px;
 	}
-	.form .left .cut, .form .right-box .cut, .form .hole {
+	.form .left .cut,
+	.form .right-box .cut,
+	.form .hole {
 		background-color: white;
 	}
-	.form .right-box, .form .middle {
-		background-color:#f8f8f8;
+	.form .right-box,
+	.form .middle {
+		background-color: #f8f8f8;
 	}
 
 	.middle {
@@ -152,11 +145,10 @@
 		position: relative;
 		width: 100%;
 		padding: 15px;
-		padding-right:30px;
+		padding-right: 30px;
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
-		
 	}
 	.main {
 		display: flex;
@@ -171,7 +163,7 @@
 	}
 	.cat {
 		background-color: var(--color-1-light);
-		color:white;
+		color: white;
 		display: inline-block;
 		padding: 2px 8px;
 		margin-top: 5px;
@@ -184,7 +176,7 @@
 		font-size: 1.2rem;
 		font-weight: 400;
 		color: var(--white);
-		margin-top:5px;
+		margin-top: 5px;
 		padding: 2px 8px;
 		display: inline-block;
 		border-radius: var(--corner);
@@ -193,10 +185,11 @@
 	.desc {
 		display: flex;
 		text-align: right;
-		flex-direction:column;
-		justify-content: center
+		flex-direction: column;
+		justify-content: center;
 	}
-	.form .price, .form .cat {
+	.form .price,
+	.form .cat {
 		background: #b9b9b9;
 	}
 </style>

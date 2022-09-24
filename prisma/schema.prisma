@@ -28,7 +28,7 @@ model User {
   first_name String?
   last_name  String?
   title     String?
-  email      String? @unique
+  email      String
   password  String?
   phone      String?
   address   String?
@@ -39,10 +39,8 @@ model User {
   status String?
   organisation_id String
   organisation Organisation @relation(fields: [organisation_id], references: [id])
-  tickets Ticket[]
-  bookings Booking[]
-  events Event[]
-  activities Activity[]
+  visits Visit[]
+  @@unique([first_name, last_name, email])
 }
 
 model Role {
@@ -88,7 +86,7 @@ model Event {
   activities Activity[]
   bookings Booking[]
   tickets Ticket[]
-  users User[]
+  visits Visit[]
   organisation_id String
   organisation Organisation @relation(fields: [organisation_id], references: [id])
 }
@@ -105,33 +103,50 @@ model Activity {
   limit Int?
   location String?
   author String?
-  price Float?
+  price Float? @default(0)
   event_id String
   category String?
   event Event @relation(fields: [event_id], references: [id])
-  bookings Booking[]
-  users User[]
-
+  visits Visit[]
 }
 
+// Order:
 model Booking {
   id        String  @id @default(cuid())
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  billing_address String?
-  billing_postcode String?
-  billing_city String?
-  billing_email String?
-  billing_name String?
-  total Float
+  first_name String
+  last_name String
+  address String
+  postcode String
+  city String
+  email String
+  phone String?
   status String
-  cart Json?
+  price Float
   event_id String
   event Event @relation(fields: [event_id], references: [id])
-  users User[]
-  activities Activity[]
+  visits Visit[]
 }
 
+model Visit {
+  id  String  @id @default(cuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  status String? @default("ANGEMELDET")
+  price Float
+  ticket_price Float
+  activities_prices Json
+  booking_id String
+  booking Booking @relation(fields: [booking_id], references: [id], onDelete: Cascade)
+  user_id String
+  user User @relation(fields: [user_id], references: [id])
+  event_id String
+  event Event @relation(fields: [event_id], references: [id])
+  ticket_id String?
+  ticket Ticket? @relation(fields: [ticket_id], references: [id])
+  activities Activity[]
+}
 
 model Ticket {
   id        String  @id @default(cuid())
@@ -139,10 +154,10 @@ model Ticket {
   updated_at DateTime @updatedAt
   name       String
   description String?
-  price Float?
+  price Float? @default(0)
   category String?
   date DateTime?
   event_id String
   event Event @relation(fields: [event_id], references: [id])
-  users User[]
+  visits Visit[]
 }

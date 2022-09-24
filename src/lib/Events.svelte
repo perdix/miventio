@@ -1,35 +1,35 @@
 <script>
-
-	import Time from "svelte-time";
+	import Time from 'svelte-time';
 	import { page } from '$app/stores';
 	export let events = [];
-
 </script>
 
-
-
-	<section>
-		{#each events as event}
-			<article>
-				<a href="/organisation/{$page.params.slug}/event/{event.id}">
-					<div>
-						<h1>{event.name}</h1>
-						<p class="date"><Time timestamp={event.start} format="DD.MM." /> - <Time timestamp={event.end} format="DD.MM.YYYY" /></p>
-						<p class="location">{event.location} in {event.city}</p>
-					</div>
-					<div class="bottom">
-						<p class="count"> 300 Anmeldungen</p>
-						<p class="visibility">
-							{#if !(event.status == 'OPEN')}
-								<span class="material-symbols-outlined">visibility_off</span>
-							{/if}
-						</p>
-						
-					</div>
-				</a>
-			</article>
-		{/each}
-	</section>
+<section>
+	{#each events as event}
+		<article>
+			<a href="/organisation/{$page.params.slug}/event/{event.id}">
+				<div>
+					<h1>{event.name}</h1>
+					<p class="date">
+						<Time timestamp={event.start} format="DD.MM." /> - <Time
+							timestamp={event.end}
+							format="DD.MM.YYYY"
+						/>
+					</p>
+					<p class="location">{event.location} in {event.city}</p>
+				</div>
+				<div class="bottom">
+					<p class="count">300 Anmeldungen</p>
+					<p class="visibility">
+						{#if !(event.status == 'OPEN')}
+							<span class="material-symbols-outlined">visibility_off</span>
+						{/if}
+					</p>
+				</div>
+			</a>
+		</article>
+	{/each}
+</section>
 
 <style>
 	section {
@@ -54,7 +54,7 @@
 	article h1 {
 		font-size: 1.5rem;
 	}
-	
+
 	.date {
 		margin-top: 15px;
 		font-weight: 500;
