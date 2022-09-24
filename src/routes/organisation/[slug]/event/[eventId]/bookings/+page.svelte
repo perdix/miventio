@@ -7,7 +7,7 @@
 	import Time from 'svelte-time';
 	import { bookingStatuses } from '$lib/store/constants';
 
-	$: activityCategories = [...new Set($page.data.activities.map((a) => a.category))];
+	$: activityCategories = [...new Set($event.activities.map((a) => a.category))];
 
 	let booking = {
 		visits: [
@@ -159,7 +159,7 @@
 							<div class="md-12">
 								<label for="ticket">Ticket</label>
 								<select id="ticket" bind:value={item.ticket_id} required>
-									{#each $page.data.tickets as ticket}
+									{#each $event.tickets as ticket}
 										<option value={ticket.id}
 											>{ticket.category} - {ticket.name} ({ticket.price}€)</option
 										>
@@ -172,7 +172,7 @@
 										<h4>{cat}</h4>
 
 										<div class="checkbox">
-											{#each $page.data.activities.filter((a) => a.category == cat) as activity}
+											{#each $event.activities.filter((a) => a.category == cat) as activity}
 												<label>
 													<p class="name">
 														<input
