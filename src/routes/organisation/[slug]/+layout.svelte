@@ -6,15 +6,19 @@
 	$organisation = { ...$page.data.organisation };
 </script>
 
-<div class="main-nav">
-	<Header />
-	<Navigation organisations={$page.data.session.organisations} organisation={$organisation} />
-</div>
+<div data-sveltekit-prefetch>
+	<div class="main-nav">
+		<Header />
+		<Navigation organisations={$page.data.session.organisations} organisation={$organisation} />
+	</div>
 
-<div class="placeholder" />
+	<div class="placeholder" />
 
-<div class="content">
-	<slot />
+	<div class="content">
+		<slot />
+	</div>
+
+
 </div>
 
 <style>
