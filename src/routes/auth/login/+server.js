@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
 import { env } from '$env/dynamic/private';
 
+export const prerender = true;
+
 export async function POST({ request, locals }) {
 	const { prisma } = locals;
 

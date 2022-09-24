@@ -1,5 +1,7 @@
 import { error } from '@sveltejs/kit';
 
+export const prerender = true;
+
 export async function load(request) {
 	const eventId = request.params.eventId;
 	if (eventId === undefined) {
