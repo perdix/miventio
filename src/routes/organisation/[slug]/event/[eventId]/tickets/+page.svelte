@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="md-6">
-			<label for="price">Preis</label>
+			<label for="price">Preis in Euro</label>
 			<input id="price" type="number" step="0.01" bind:value={ticket.price} />
 		</div>
 
@@ -90,13 +90,13 @@
 		</div>
 
 		<div class="md-6">
-			<label for="date">Tagesticket</label>
+			<label for="date">Datum, wenn es ein Tagesticket ist!</label>
 			<input id="date" type="date" bind:value={ticket.date} />
 		</div>
 
 		<div class="md-6">
 			<label for="mode">Kategorie</label>
-			<input id="mode" type="text" bind:value={ticket.category} />
+			<input id="mode" type="text" bind:value={ticket.category} placeholder="Student / Mitglied / ..."/>
 		</div>
 
 		<div class="md-6 submit">
