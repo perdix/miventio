@@ -19,13 +19,32 @@ export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.slug)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-
+	
 	const data = await request.json();
+
+	console.log(data)
+
+	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start
+	data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end
+	
+	console.log(data);
+
 	const activity = await locals.prisma.activity.update({
 		where: {
 			id: params.activityId
 		},
-		data: data
+		data: {
+			name: data.name,
+			start: new Date(Date.parse(data.start)),
+			end: new Date(Date.parse(data.end)),
+			date: new Date(Date.parse(data.date)),
+			description: data.description,
+			limit: data.limit,
+			price: data.price || 0,
+			author: data.author,
+			category: data.category,
+			location: data.location,
+		}
 	});
 
 	return new Response(toActivityJSON(activity), { status: 200 });

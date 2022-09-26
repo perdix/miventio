@@ -21,7 +21,7 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	data.date = new Date(data.date);
+	data.date = new Date(Date.parse(data.date));
 	const ticket = await locals.prisma.ticket.update({
 		where: {
 			id: params.ticketId

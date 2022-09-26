@@ -54,23 +54,23 @@
 </script>
 
 <div class="page">
-	<Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
-		<form class="miventio row" on:submit={saveContact}>
+	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
+		<form class="miventio row" on:submit|preventDefault={saveContact}>
 			<div class="md-2">
 				<label for="title">Titel</label>
 				<input id="title" type="text" bind:value={contact.title} />
 			</div>
 			<div class="md-5">
 				<label for="firstname">Vorname</label>
-				<input id="firstname" type="text" bind:value={contact.first_name} />
+				<input id="firstname" type="text" bind:value={contact.first_name} required />
 			</div>
 			<div class="md-5">
 				<label for="lastname">Nachname</label>
-				<input id="lastname" type="text" bind:value={contact.last_name} />
+				<input id="lastname" type="text" bind:value={contact.last_name} required />
 			</div>
 			<div class="md-6">
 				<label for="email">E-Mail</label>
-				<input id="email" type="email" bind:value={contact.email} />
+				<input id="email" type="email" bind:value={contact.email} required/>
 			</div>
 			<div class="md-6">
 				<label for="phone">Telefon</label>
@@ -87,6 +87,10 @@
 			<div class="md-6">
 				<label for="city">Stadt</label>
 				<input id="city" type="text" bind:value={contact.city} />
+			</div>
+			<div class="md-12">
+				<label for="category">Kategorie</label>
+				<input id="category" type="text" bind:value={contact.category} />
 			</div>
 
 			<div class="md-6 submit">

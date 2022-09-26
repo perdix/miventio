@@ -21,6 +21,9 @@
 
 	const editActivity = (act) => {
 		activity = act;
+		activity.date = activity.date.length > 10 ? activity.date.substring(0,10) : activity.date;
+		activity.start = activity.start.length > 5 ? activity.start.substring(11,16) : activity.start;
+		activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
 		popupTitle = 'Aktivität bearbeiten';
 		togglePopup();
 	};
@@ -73,7 +76,7 @@
 </script>
 
 <div class="page">
-	<Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
+	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
 			<div class="md-12">
 				<label for="Name">Name</label>
@@ -85,25 +88,33 @@
 			</div>
 			<div class="md-4">
 				<label for="start">Datum</label>
-				<input id="start" type="date" bind:value={activity.date} />
+				<input id="start" type="date" bind:value={activity.date} required/>
 			</div>
 			<div class="md-4">
 				<label for="start">Start</label>
-				<input id="start" type="time" bind:value={activity.start} />
+				<input id="start" type="time" bind:value={activity.start} required/>
 			</div>
 			<div class="md-4">
 				<label for="end">Ende</label>
-				<input id="end" type="time" bind:value={activity.end} />
-			</div>
-			<div class="md-12">
-				<label for="location">Location</label>
-				<input id="location" type="text" bind:value={activity.location} />
+				<input id="end" type="time" bind:value={activity.end} required/>
 			</div>
 			<div class="md-6">
+				<label for="author">Verantwortlicher</label>
+				<input id="author" type="text" bind:value={activity.author} />
+			</div>
+			<div class="md-6">
+				<label for="location">Ort</label>
+				<input id="location" type="text" bind:value={activity.location} placeholder="Saal 1" />
+			</div>
+			<div class="md-4">
+				<label for="category">Kategorie</label>
+				<input id="category" type="text" bind:value={activity.category} placeholder="Workshop" />
+			</div>
+			<div class="md-4">
 				<label for="limit">Limit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
-			<div class="md-6">
+			<div class="md-4">
 				<label for="price">Preis</label>
 				<input id="price" type="number" step="0.01" bind:value={activity.price} />
 			</div>
@@ -131,21 +142,26 @@
 			<thead>
 				<tr>
 					<th>Title</th>
-					<th>Beschreibung</th>
-					<th>Start</th>
-					<th>Ende</th>
+					<th>Kategorie</th>
+					<th>Datum</th>
+					<th>Zeit</th>
 					<th>Preis</th>
 					<th>Besucher-Limit</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody>	
 				{#each $event.activities as activity}
 					<tr on:click={() => editActivity(activity)}>
 						<td>{activity.name}</td>
-						<td>{activity.description || ''}</td>
-						<td>{activity.start || ''}</td>
-						<td>{activity.end || ''}</td>
-						<td>{activity.price || '-'}</td>
+						<td>{activity.category || ''}</td>
+						<td>{activity.date.substring(0,10)}</td>
+						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
+							{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}</td>
+						<td>
+							{#if activity.price}
+							{activity.price} €
+							{/if}
+						</td>
 						<td>{activity.limit || '-'}</td>
 					</tr>
 				{/each}

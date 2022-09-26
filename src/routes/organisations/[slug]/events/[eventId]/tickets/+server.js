@@ -22,7 +22,7 @@ export async function POST({ locals, params, request }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 	const data = await request.json();
-	data.date = new Date(data.date);
+	data.date = new Date(Date.parse(data.date));
 	data.event_id = params.eventId;
 	const ticket = await locals.prisma.ticket.create({
 		data: data

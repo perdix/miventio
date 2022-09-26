@@ -5,6 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
 	export let title = '';
 	export let show = false;
+	export let maxWidth = '100%';
 	const dispatch = createEventDispatcher();
 
 	let close = () => {
@@ -14,9 +15,9 @@
 	};
 </script>
 
-<div id="popup" class:visible={show} class:hidden={!show}>
-	<div class="background">
-		<div class="box">
+<div id="popup" class:visible={show} class:hidden={!show} >
+	<div class="background">"
+		<div class="box" style="max-width:{maxWidth}">
 			<Main>
 				<Header {title}>
 					<span class="material-symbols-outlined close" on:click={close}>close</span>

@@ -18,7 +18,7 @@
 			<th>Adresse</th>
 			<th>E-Mail</th>
 			<th>Telefon</th>
-			<th>Status</th>
+			<th>Kategorie</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,11 +33,9 @@
 				<td>{contact.email || ''}</td>
 				<td>{contact.phone || ''}</td>
 				<td>
-					{#if contact.status}
-						<span
-							class:member={contact.status.toLowerCase() == 'mitglied'}
-							class:student={contact.status.toLowerCase() == 'student'}>{contact.status}</span
-						>
+					{#if contact.category}
+						{contact.category}
+						
 					{/if}
 				</td>
 			</tr>
@@ -46,10 +44,5 @@
 </table>
 
 <style>
-	.member {
-		background-color: lightgreen;
-	}
-	.student {
-		background-color: lightcoral;
-	}
+	
 </style>

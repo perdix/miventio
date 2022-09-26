@@ -72,7 +72,7 @@
 	};
 </script>
 
-<Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
+<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 	<form class="miventio row" on:submit|preventDefault={saveTicket}>
 		<div class="md-6">
 			<label for="name">Ticketname</label>

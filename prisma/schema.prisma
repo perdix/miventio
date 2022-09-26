@@ -25,8 +25,8 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   last_login DateTime?
-  first_name String?
-  last_name  String?
+  first_name String
+  last_name  String
   title     String?
   email      String
   password  String?
@@ -36,7 +36,7 @@ model User {
   city      String?
   type    String?
   notes   String?
-  status String?
+  category String?
   organisation_id String
   organisation Organisation @relation(fields: [organisation_id], references: [id])
   visits Visit[]
@@ -77,7 +77,6 @@ model Event {
   description String?
   start DateTime?
   end DateTime?
-  date DateTime?
   location String?
   city String?
   address String?
@@ -98,6 +97,7 @@ model Activity {
   updated_at DateTime @updatedAt
   name       String
   description String?
+  date DateTime
   start DateTime?
   end DateTime?
   limit Int?
