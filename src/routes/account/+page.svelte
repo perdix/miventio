@@ -23,7 +23,7 @@
 
 <Main>
 	<Header title="Account-Einstellungen">
-		<a href={`/organisation/${$organisation.id}`} class="close"
+		<a href="javascript:history.back()" class="close"
 			><span class="material-symbols-outlined">close</span></a
 		>
 	</Header>
@@ -38,11 +38,11 @@
 						<input id="email" type="email" disabled value={$page.data.user.email} />
 					</div>
 					<div class="md-6">
-						<label for="password">Passwort</label>
+						<label for="password">Altes Passwort</label>
 						<input id="password" type="password" bind:value={user.password} />
 					</div>
 					<div class="md-6">
-						<label for="password-repeat">Passwort Wiederholung</label>
+						<label for="password-repeat">Neues Passwort</label>
 						<input id="password-repeat" type="password" bind:value={user.passwordRepeat} />
 					</div>
 					<div class="md-12 submit">

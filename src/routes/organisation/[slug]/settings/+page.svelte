@@ -2,8 +2,10 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
 	import Main from '$lib/blocks/Main.svelte';
+	import { page } from '$app/stores';
 	import { organisation } from '$lib/store/organisation';
 	import { goto } from '$app/navigation';
+	import Popup from '$lib/Popup.svelte';
 
 	if ($organisation.role != 'ADMIN') {
 		goto(`/organisation/${$organisation.id}`);
@@ -24,8 +26,96 @@
 		}
 	};
 
-	const editSuperuser = () => {};
+	let superuser = {};
+	let showPopup = false;
+	let popupTitle = 'Neuer Mitarbeiter';
+
+	const togglePopup = () => {
+		showPopup = !showPopup;
+	};
+
+	const newSuperuser = (event) => {
+		popupTitle = 'Neuer Mitarbeiter';
+		superuser = {};
+		togglePopup();
+	};
+
+	const editSuperuser = (su) => {
+		superuser = su;
+		popupTitle = 'Mitarbeiter editieren';
+		togglePopup();
+	};
+	const deleteSuperuser = async () => {
+		const res = await fetch(
+			`/organisations/${$page.data.organisation.id}/users/${superuser.id}`,
+			{
+				method: 'DELETE'
+			}
+		);
+		if (res.status === 200) {
+			const deletedSuperuser = await res.json();
+			togglePopup();
+		}
+	};
+	const saveSuperuser = async () => {
+		if ('id' in superuser) {
+			const res = await fetch(
+				`/organisations/${$page.data.organisation.id}/users/${superuser.id}`,
+				{
+					method: 'PUT',
+					body: JSON.stringify(superuser)
+				}
+			);
+			if (res.status === 200) {
+				const updatedSuperuser = await res.json();
+				togglePopup();
+			}
+		} else {
+			const res = await fetch(
+				`/organisations/${$page.data.organisation.id}/users`,
+				{
+					method: 'POST',
+					body: JSON.stringify(superuser)
+				}
+			);
+			if (res.status === 201) {
+				const newSuperuser = await res.json();
+				togglePopup();
+			}
+		}
+	};
+
 </script>
+
+<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
+	<form class="miventio row" on:submit|preventDefault={saveSuperuser}>
+		<div class="md-6">
+			<label for="email">E-Mail</label>
+			<input id="email" type="email" bind:value={superuser.email} required/>
+		</div>
+		<div class="md-6">
+			<label for="role">Rolle</label>
+			<input id="role" type="text" bind:value={superuser.role} required />
+		</div>
+		<div class="md-6">
+			<label for="password1">Passwort</label>
+			<input id="password1" type="password" bind:value={superuser.password} required/>
+		</div>
+		<div class="md-6">
+			<label for="password2">Wiederholung Passwort</label>
+			<input id="password2" type="password" bind:value={superuser.passwordConfirmation} required/>
+		</div>
+		
+		<div class="md-6 submit">
+			<button type="submit">Speichern</button>
+		</div>
+		<div class="md-6 submit right">
+			<button class="secondary" type="button" on:click={deleteSuperuser}>
+				<span class="material-symbols-outlined">delete</span>
+			</button>
+		</div>
+	</form>
+</Popup>
 
 <Main>
 	<Header title={'Settings'}>
@@ -62,9 +152,17 @@
 			</div>
 
 			<div class="md-12 col">
-				<h1>Mitarbeiter</h1>
+				
+				
 
 				<div class="users">
+					<div class="flex">
+						<h1>Mitarbeiter</h1>
+						<button on:click={togglePopup}>
+							<span>Mitarbeiter</span>
+							<span class="material-symbols-outlined">add_circle</span>
+						</button>
+					</div>
 					<table>
 						<thead>
 							<tr>
@@ -112,5 +210,13 @@
 	.users {
 		background-color: var(--grey);
 		padding: 30px;
+	}
+	.flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.flex button {
+		margin-bottom: 20px;
 	}
 </style>

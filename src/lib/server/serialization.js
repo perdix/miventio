@@ -40,6 +40,10 @@ const cleanEvent = (event) => {
 	delete event.created_at;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
+	if (('_count' in event) && ('visits' in event._count)) {
+		event.number_of_visits = event._count.visits;
+	}
+	delete event._count;
 	return event;
 };
 
