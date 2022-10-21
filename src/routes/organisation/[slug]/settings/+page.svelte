@@ -2,7 +2,6 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
 	import Main from '$lib/blocks/Main.svelte';
-	import { page } from '$app/stores';
 	import { organisation } from '$lib/store/organisation';
 	import { goto } from '$app/navigation';
 
@@ -19,7 +18,9 @@
 		});
 		if (res.status === 200) {
 			const updatedOrganisation = await res.json();
-			$organisation = updatedOrganisation;
+			// Merge updated organisation into old one, keeping the role attribute!
+		    $organisation = { ...$organisation, ...updatedOrganisation};
+			goto(`/organisation/${$organisation.id}`);
 		}
 	};
 
@@ -35,7 +36,7 @@
 		<div class="row">
 			<div class="md-6 col">
 				<h1>Allgemein</h1>
-				<form action="" class="miventio row" on:submit|preventDefault={saveOrganisation}>
+				<form class="miventio row" on:submit|preventDefault={saveOrganisation} data-sveltekit-prefetch="off">
 					<div class="md-12">
 						<label for="Name">Organisationsname</label>
 						<input id="name" type="text" bind:value={editOrganisation.name} />

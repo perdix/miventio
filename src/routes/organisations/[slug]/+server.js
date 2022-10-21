@@ -35,7 +35,6 @@ export async function PUT({ locals, params, request }) {
 	if ('role' in data) {
 		delete data.role;
 	}
-
 	if ('superusers' in data) {
 		delete data.superusers;
 	}
@@ -45,7 +44,6 @@ export async function PUT({ locals, params, request }) {
 	if ('users' in data) {
 		delete data.users;
 	}
-	console.log(data);
 	const organisation = await locals.prisma.organisation.update({
 		where: {
 			id: params.slug
@@ -57,6 +55,5 @@ export async function PUT({ locals, params, request }) {
 			users: true
 		}
 	});
-
 	return new Response(toOrganisationJSON(organisation));
 }
