@@ -1,16 +1,20 @@
-import { USER } from '$env/static/private';
-import { organisation } from '$lib/stores';
 
 export const toOrganisationJSON = (organisation) => {
-	if ('superusers' in organisation) {
-		organisation.superusers = organisation.superusers.map((s) => {
+	if ('users' in organisation) {
+		organisation.users = organisation.users.map((s) => {
 			return {
 				role: s.role,
-				id: s.superuser_id,
-				email: s.superuser.email
+				id: s.userId,
+				email: s.user.email
 			};
 		});
 	}
+	if ('events' in organisation) {
+		organisation.events = organisation.events.map(e => cleanEvent(e))
+	}
+
+
+
 	return JSON.stringify(organisation);
 };
 
@@ -18,26 +22,26 @@ export const toOrganisationsJSON = (organisations) => {
 	return JSON.stringify(organisations);
 };
 
-export const toSuperuserJSON = (superuser) => {
-	if ('password' in superuser) {
-		delete superuser.password;
+export const toUserJSON = (user) => {
+	if ('password' in user) {
+		delete user.password;
 	}
 
-	superuser.organisations = superuser.organisations.map((o) => {
+	user.organisations = user.organisations.map((o) => {
 		return {
 			role: o.role,
 			id: o.organisation_id,
 			name: o.organisation.name
 		};
 	});
-	return JSON.stringify(superuser);
+	return JSON.stringify(user);
 };
 
 // Event
 
 const cleanEvent = (event) => {
-	delete event.updated_at;
-	delete event.created_at;
+	delete event.updatedAt;
+	delete event.createdAt;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
 	if (('_count' in event) && ('visits' in event._count)) {
@@ -73,7 +77,6 @@ export const toContactsJSON = (contacts) => {
 };
 
 // Activities
-
 const cleanActivity = (activity) => {
 	delete activity.updated_at;
 	delete activity.created_at;
@@ -90,7 +93,6 @@ export const toActivitiesJSON = (activities) => {
 };
 
 // Bookings
-
 const cleanBooking = (booking) => {
 	delete booking.updated_at;
 	delete booking.created_at;
@@ -106,8 +108,7 @@ export const toBookingsJSON = (bookings) => {
 	return JSON.stringify(cleanedBookings);
 };
 
-// Tickets
-
+// EventTickets
 const cleanTicket = (ticket) => {
 	delete ticket.updated_at;
 	delete ticket.created_at;
@@ -123,8 +124,7 @@ export const toTicketsJSON = (tickets) => {
 	return JSON.stringify(cleanedTickets);
 };
 
-// Visits
-
+// Visitors
 const cleanVisit = (visit) => {
 	delete visit.updated_at;
 	delete visit.created_at;

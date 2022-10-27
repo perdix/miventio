@@ -10,70 +10,112 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Superuser {
+// Organisation users that manage the organisation
+model User {
   id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  last_login DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
   email      String @unique
   password  String?
   organisations Role[]
 }
 
-model User {
+// Depending on the role, the users have different rights/roles
+model Role {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role String
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  organisationId String
+  organisation Organisation @relation(fields: [organisationId], references: [id])
+  @@id([userId, organisationId])
+}
+
+// Central entity of the platform. An organisation might have contacts and events
+model Organisation {
   id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  last_login DateTime?
-  first_name String
-  last_name  String
-  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name       String @unique
+  description String?
+  color String?
+  events Event[]
+  users Role[]
+  contacts Contact[]
+}
+
+// Contacts/members of the organisation
+model Contact {
+  id        String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
+  oegbId String?
+  efpId String?
+  zaekId String?
+  firstName String
+  lastName  String
+  gender String?
+  prefix  String?
+  postfix String?
   email      String
   password  String?
   phone      String?
   address   String?
   postcode  String?
   city      String?
-  type    String?
+  website String?
+  company String?
   notes   String?
-  category String?
-  organisation_id String
-  organisation Organisation @relation(fields: [organisation_id], references: [id])
-  visits Visit[]
-  @@unique([first_name, last_name, email])
+  newsletterConfirmation DateTime?
+  retiredAt DateTime?
+  membershipStartedAt DateTime?
+  membershipEndedAt DateTime?
+  role String? // like a special title, internal role. Is not related to the user's role
+  gdprConfirmation DateTime?
+  organisationId String
+  organisation Organisation @relation(fields: [organisationId], references: [id])
+  visitors Visitor[]
+  membershipTickets MembershipTicket[]
+  membershipId String?
+  membership Membership? @relation(fields: [membershipId], references: [id])
+  @@unique([firstName, lastName, email])
 }
 
-model Role {
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  role String
-  superuser_id String
-  superuser Superuser @relation(fields: [superuser_id], references: [id])
-  organisation_id String
-  organisation Organisation @relation(fields: [organisation_id], references: [id])
-  @@id([superuser_id, organisation_id])
-}
-
-model Organisation {
-  id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  name       String @unique
-  slug       String?
+model Membership{
+  id  String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String
   description String?
-  color String?
-  events Event[]
-  superusers Role[]
-  users User[]
+  price Float @default(0)
+  membershipTickets MembershipTicket[]
+  contacts Contact[]
 }
 
+// A membership ticket is valid for a given year
+model MembershipTicket {
+  id  String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  year String?
+  membershipId String
+  membership Membership @relation(fields: [membershipId], references: [id])
+  price Float @default(0)
+  prescribedAt DateTime?
+  paidAt DateTime?
+  contactId String
+  contact Contact @relation(fields: [contactId], references: [id])
+}
 
 model Event {
   id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name       String
-  slug       String?
+  shortName String?
   description String?
   start DateTime?
   end DateTime?
@@ -81,20 +123,40 @@ model Event {
   city String?
   address String?
   postcode String?
-  status String?
+  website String?
+  bookingStart DateTime?
+  bookingEnd DateTime?
+  visitorCategories VisitorCategory[]
   activities Activity[]
   bookings Booking[]
-  tickets Ticket[]
-  visits Visit[]
-  organisation_id String
-  organisation Organisation @relation(fields: [organisation_id], references: [id])
+  eventTickets EventTicket[]
+  visitors Visitor[]
+  organisationId String
+  organisation Organisation @relation(fields: [organisationId], references: [id])
 }
 
+// To book
+model EventTicket {
+  id        String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name  String
+  price Float? @default(0)
+  validFrom DateTime
+  validTo DateTime
+  visitorCategoryId String?
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
+  date DateTime?
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  visitors Visitor[]
+}
 
+// Each event can have several activities/subevents
 model Activity {
   id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   name       String
   description String?
   date DateTime
@@ -102,62 +164,87 @@ model Activity {
   end DateTime?
   limit Int?
   location String?
-  author String?
-  price Float? @default(0)
-  event_id String
-  category String?
-  event Event @relation(fields: [event_id], references: [id])
-  visits Visit[]
+  room String?
+  speaker String?
+  abstract String?
+  sponsor String?
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  credits Float?
+  logo String?
+  type String? // Can be choosen freely. E.g. workshop, lecture, party, ...
+  activityTickets ActivityTicket[]
+  visitors Visitor[]
 }
 
-// Order:
+model ActivityTicket {
+  id  String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String?
+  description String?
+  visitorCategoryId String
+  visitorCategory VisitorCategory @relation(fields: [visitorCategoryId], references: [id])
+  activityId String
+  activity Activity @relation(fields: [activityId], references: [id])
+  visitors Visitor[]
+  price Float @default(0)
+}
+
+// A booking is a complete order to access an event with one or several visitors
 model Booking {
   id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  first_name String
-  last_name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstName String
+  lastName String
+  email String
   address String
   postcode String
   city String
-  email String
   phone String?
-  status String
+  status String @default("CREATED")
   price Float
-  event_id String
-  event Event @relation(fields: [event_id], references: [id])
-  visits Visit[]
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  visitors Visitor[]
 }
 
-model Visit {
+// The booking contains one or many visitors. A visitor is like an item of the booking.
+model Visitor {
   id  String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  status String? @default("ANGEMELDET")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  status String? @default("RESERVED")
   price Float
-  ticket_price Float
-  activities_prices Json
-  booking_id String
-  booking Booking @relation(fields: [booking_id], references: [id], onDelete: Cascade)
-  user_id String
-  user User @relation(fields: [user_id], references: [id])
-  event_id String
-  event Event @relation(fields: [event_id], references: [id])
-  ticket_id String?
-  ticket Ticket? @relation(fields: [ticket_id], references: [id])
+  eventTicketPrice Float
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
+  eventTicketId String?
+  eventTicket EventTicket? @relation(fields: [eventTicketId], references: [id])
+  activitiesTicketsPrices Json // A list of all ticket prices of the selected activity tickets
   activities Activity[]
+  activitiesTickets ActivityTicket[]
+  bookingId String
+  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  firstName String
+  lastName  String
+  email String
+  contactId String?
+  contact Contact? @relation(fields: [contactId], references: [id])
+  categoryId String
+  category VisitorCategory @relation(fields: [categoryId], references: [id])
 }
 
-model Ticket {
-  id        String  @id @default(cuid())
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  name       String
-  description String?
-  price Float? @default(0)
-  category String?
-  date DateTime?
-  event_id String
-  event Event @relation(fields: [event_id], references: [id])
-  visits Visit[]
+model VisitorCategory {
+  id  String  @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name String
+  isContact Boolean @default(false)
+  visitors Visitor[]
+  eventTickets EventTicket[]
+  activityTickets ActivityTicket[]
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
 }

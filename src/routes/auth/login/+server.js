@@ -8,31 +8,31 @@ export async function POST({ request, locals }) {
 	const { prisma } = locals;
 
 	// Check input
-	const login_data = await request.json();
+	const loginData = await request.json();
 	// if (!validator.validateLoginInput(login_data)) {
 	//     return new Response("JSON body is not matching the requirements", { status: 422 });
 	// }
 	// Find user
-	const superuser = await prisma.superuser.findUnique({
+	const user = await prisma.user.findUnique({
 		where: {
-			email: login_data.email
+			email: loginData.email
 		},
 		include: {
 			organisations: true
 		}
 	});
-	if (!superuser) {
+	if (!user) {
 		return new Response(JSON.stringify({ message: 'Invalid credientials' }), { status: 401 });
 	}
 	// Verify password
-	const passwordIsValid = await bcrypt.compare(login_data.password, superuser.password);
+	const passwordIsValid = await bcrypt.compare(loginData.password, user.password);
 	if (!passwordIsValid) {
 		return new Response(JSON.stringify({ message: 'Invalid credientials' }), { status: 401 });
 	}
 	// Create token
 	const jwtUser = {
-		id: superuser.id,
-		email: superuser.email
+		id: user.id,
+		email: user.email
 	};
 	const token = jwt.sign(jwtUser, env.AUTH_SECRET ? env.AUTH_SECRET : process.env.AUTH_SECRET, {
 		expiresIn: '1d'
@@ -56,9 +56,9 @@ export async function POST({ request, locals }) {
 	const info = {
 		token: token,
 		user: {
-			id: superuser.id,
-			email: superuser.email,
-			organisations: superuser.organisations
+			id: user.id,
+			email: user.email,
+			organisations: user.organisations
 		}
 	};
 

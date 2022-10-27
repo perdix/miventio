@@ -8,7 +8,7 @@
 <style>
 	main {
 		padding: calc(var(--unit) * 1);
-		padding-top: 0;
+		/* padding-top: 0; */
 		background-color: var(--lightgrey);
 		height: 100%;
 		/* position: relative; */
@@ -22,7 +22,7 @@
 		height: 2px;
 	} */
 	div {
-		padding: calc(var(--unit) * 1);
+		/* padding: calc(var(--unit) * 1); */
 		/* background-color: white; */
 		min-height: 500px;
 		border-radius: var(--corner);

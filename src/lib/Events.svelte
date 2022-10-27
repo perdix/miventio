@@ -2,13 +2,12 @@
 	import Time from 'svelte-time';
 	import { page } from '$app/stores';
 	export let events = [];
-	console.log(events);
 </script>
 
 <section>
 	{#each events as event}
 		<article>
-			<a href="/organisation/{$page.params.slug}/event/{event.id}">
+			<a href="/organisation/{$page.params.organisationId}/event/{event.id}">
 				<div>
 					<h1>{event.name}</h1>
 					<p class="date">
@@ -20,15 +19,13 @@
 					<p class="location">{event.location} in {event.city}</p>
 				</div>
 				<div class="bottom">
-					{#if event.number_of_visits == 1}
-						<p class="count">{event.number_of_visits} Anmeldung</p>
-					{:else}
-						<p class="count">{event.number_of_visits} Anmeldungen</p>
-					{/if}
+			
+					<p class="count">{event.number_of_visits} Besucher</p>
+				
 					<p class="visibility">
-						{#if !(event.status == 'OPEN')}
+						<!-- {#if !(event.status == 'OPEN')}
 							<span class="material-symbols-outlined">visibility_off</span>
-						{/if}
+						{/if} -->
 					</p>
 				</div>
 			</a>

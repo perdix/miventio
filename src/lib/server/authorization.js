@@ -6,15 +6,15 @@ export const isLoggedIn = async (locals) => {
 	return true;
 };
 
-export const isOrganisationAdmin = async (locals, organisation_id) => {
+export const isOrganisationAdmin = async (locals, organisationId) => {
 	if (locals.session == undefined) {
 		return false;
 	}
 
 	const role = await locals.prisma.role.findFirst({
 		where: {
-			organisation_id: organisation_id,
-			superuser_id: locals.session.id
+			organisationId: organisationId,
+			userId: locals.session.id
 		}
 	});
 
@@ -25,15 +25,15 @@ export const isOrganisationAdmin = async (locals, organisation_id) => {
 	return true;
 };
 
-export const isOrganisationMember = async (locals, organisation_id) => {
+export const isOrganisationMember = async (locals, organisationId) => {
 	if (locals.session == undefined) {
 		return false;
 	}
 
 	const role = await locals.prisma.role.findFirst({
 		where: {
-			organisation_id: organisation_id,
-			superuser_id: locals.session.id
+			organisationId: organisationId,
+			userId: locals.session.id
 		}
 	});
 

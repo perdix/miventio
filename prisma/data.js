@@ -47,36 +47,33 @@ export const hno_events = [
 	}
 ];
 
-export const superusers = [
+export const users = [
 	{
 		email: 'admin@mivent.io',
 		password: await bcrypt.hash('admin', 10)
 	}
 ];
 
-export const users = [
+export const contacts = [
 	{
-		first_name: 'Max 1',
-		last_name: 'Mustermann',
-		category: 'Student',
+		firstName: 'Max 1',
+		lastName: 'Mustermann',
 		email: 'max1@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
 		postcode: '1010'
 	},
 	{
-		first_name: 'Max 2',
-		last_name: 'Mustermann',
-		category: 'Mitglied',
+		firstName: 'Max 2',
+		lastName: 'Mustermann',
 		email: 'max2@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
 		postcode: '1010'
 	},
 	{
-		first_name: 'Max 3',
-		last_name: 'Mustermann',
-		category: 'Contact',
+		firstName: 'Max 3',
+		lastName: 'Mustermann',
 		email: 'max3@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
@@ -84,27 +81,31 @@ export const users = [
 	}
 ];
 
-export const tickets = [
+export const eventTickets = [
 	{
 		name: 'Ticket 1',
 		price: 32.5,
-		category: 'MITGLIED'
+		validFrom: new Date('2022-05-20'),
+		validTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 2',
 		price: 50,
-		category: 'STUDENT'
+		validFrom: new Date('2022-05-20'),
+		validTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 3',
 		price: 50,
-		category: 'STUDENT',
+		validFrom: new Date('2022-05-20'),
+		validTo: new Date('2022-05-24'),
 		date: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 4',
 		price: 150,
-		category: 'ALLGEMEIN'
+		validFrom: new Date('2022-05-20'),
+		validTo: new Date('2022-05-24')
 	}
 ];
 
@@ -112,60 +113,54 @@ export const activities = [
 	{
 		name: 'Workshop 1',
 		limit: 30,
-		price: 0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-24Z14:00'),
 		end: new Date('2022-05-24Z16:00'),
-		category: 'Workshop',
-		author: 'Max Musterman'
+		type: 'Workshop',
+		speaker: 'Max Musterman'
 	},
 	{
 		name: 'Workshop 2',
 		limit: 30,
-		price: 0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-23Z14:00'),
 		end: new Date('2022-05-23Z14:00'),
-		category: 'Workshop',
-		author: 'Max Musterman'
+		type: 'Workshop',
+		speaker: 'Max Musterman'
 	},
 	{
 		name: 'Vortrag 1',
 		limit: 60,
-		price: 0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-25Z14:00'),
 		end: new Date('2022-05-25Z14:00'),
-		category: 'Vortrag',
-		author: 'Max Musterman'
+		type: 'Vortrag',
+		speaker: 'Max Musterman'
 	},
 	{
 		name: 'Vortrag 2',
 		limit: 70,
-		price: 0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-25Z14:00'),
 		end: new Date('2022-05-25Z14:00'),
-		category: 'Vortrag',
-		author: 'Max Musterman'
+		type: 'Vortrag',
+		speaker: 'Max Musterman'
 	},
 	{
 		name: 'Vortrag 3',
 		limit: 100,
-		price: 0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-25Z14:00'),
 		end: new Date('2022-05-25Z14:00'),
-		category: 'Vortrag',
-		author: 'Max Musterman'
+		type: 'Vortrag',
+		speaker: 'Max Musterman'
 	},
 	{
 		name: 'Clubbing',
 		limit: 150,
-		price: 22.0,
 		date: new Date('2022-05-24Z14:00'),
 		start: new Date('2022-05-25Z20:00'),
 		end: new Date('2022-05-25Z23:00'),
-		category: 'Rahmenprogramm'
+		type: 'Rahmenprogramm'
 	}
 ];

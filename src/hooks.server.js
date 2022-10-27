@@ -22,14 +22,14 @@ export const handle = async ({ event, resolve }) => {
 			if (typeof jwtUser === 'string') {
 				throw new Error('Something went wrong');
 			}
-			const user = await prisma.superuser.findUnique({
+			const user = await prisma.user.findUnique({
 				where: {
 					id: jwtUser.id
 				},
 				include: { organisations: { include: { organisation: true } } }
 			});
 			if (!user) {
-				throw new Error(`Superuser not found: ${jwtUser}`);
+				throw new Error(`User not found: ${jwtUser}`);
 			}
 			const session = {
 				id: user.id,

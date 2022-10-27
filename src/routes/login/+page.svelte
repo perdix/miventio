@@ -16,7 +16,7 @@
 		});
 		const content = await response.json();
 		if (response.status == 200) {
-			window.location.href = `/organisation/${content.user.organisations[0].organisation_id}`;
+			window.location.href = `/organisation/${content.user.organisations[0].organisationId}`;
 		} else {
 			error = content.message;
 		}
@@ -84,5 +84,6 @@
 	form {
 		margin-top: 40px;
 		min-width: 400px;
+		max-width: 600px;
 	}
 </style>

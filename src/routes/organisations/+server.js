@@ -10,9 +10,9 @@ export async function GET({ locals }) {
 	// Get all organisations of the given user
 	const organisations = await locals.prisma.organisation.findMany({
 		where: {
-			superusers: {
+			users: {
 				some: {
-					superuser_id: locals.session.id
+					userId: locals.session.id
 				}
 			}
 		}
