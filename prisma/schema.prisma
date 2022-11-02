@@ -66,15 +66,13 @@ model Contact {
   address   String?
   postcode  String?
   city      String?
+  country   String?
   website String?
   company String?
   notes   String?
   newsletterConfirmation DateTime?
-  retiredAt DateTime?
-  membershipStartedAt DateTime?
-  membershipEndedAt DateTime?
-  role String? // like a special title, internal role. Is not related to the user's role
-  gdprConfirmation DateTime?
+  status String?
+  gdprConfirmation Boolean @default(false)
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
   visitors Visitor[]

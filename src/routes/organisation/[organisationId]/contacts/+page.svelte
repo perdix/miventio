@@ -54,45 +54,141 @@
 </script>
 
 <div class="page">
+
+
+
+	<nav class="submenu">
+		<ul>
+			<li>Mitglieder & Kontakte</li>
+			<li>Mitgliedskategorien</li>
+		</ul>
+	</nav>
+
+
+
+
+
+
+
+
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveContact}>
 			<div class="md-2">
-				<label for="title">Titel</label>
-				<input id="title" type="text" bind:value={contact.title} />
+				<label for="prefix">Titel</label>
+				<input id="prefix" type="text" bind:value={contact.prefix} />
 			</div>
-			<div class="md-5">
+			<div class="md-4">
 				<label for="firstname">Vorname</label>
-				<input id="firstname" type="text" bind:value={contact.first_name} required />
+				<input id="firstname" type="text" bind:value={contact.firstName} required />
+			</div>
+			<div class="md-4">
+				<label for="lastname">Nachname</label>
+				<input id="lastname" type="text" bind:value={contact.lastName} required />
+			</div>
+			<div class="md-2">
+				<label for="postfix">Titel (nachgest.)</label>
+				<input id="postfix" type="text" bind:value={contact.postfix} />
+			</div>
+			<div class="md-2">
+				<label for="gender">Geschlecht</label>
+				<select name="gender" id="gender">
+					<option value="female">weiblich</option>
+					<option value="male">männlich</option>
+					<option value="diverse">divers</option>
+				</select>
+				
 			</div>
 			<div class="md-5">
-				<label for="lastname">Nachname</label>
-				<input id="lastname" type="text" bind:value={contact.last_name} required />
-			</div>
-			<div class="md-6">
 				<label for="email">E-Mail</label>
 				<input id="email" type="email" bind:value={contact.email} required/>
 			</div>
-			<div class="md-6">
+			<div class="md-5">
 				<label for="phone">Telefon</label>
 				<input id="phone" type="text" bind:value={contact.phone} />
 			</div>
+
+
+			<div class="md-3">
+				<label for="oegb-id">ÖGP-ID</label>
+				<input id="oegb-id" type="text" bind:value={contact.oegbId} />
+			</div>
+			<div class="md-2">
+				<label for="efp-id">SOCID EFP</label>
+				<input id="efp-id" type="text" bind:value={contact.efpId} />
+			</div>
+			<div class="md-3">
+				<label for="zaek-id">ZÄK Ärztenummer</label>
+				<input id="zaek-id" type="text" bind:value={contact.zaekId} />
+			</div>
+
+			<div class="md-2">
+				<label for="gdpr-confirmation">DSGVO</label>
+				<input id="gdpr-confirmation" type="checkbox" bind:value={contact.gdprConfirmation} />
+			</div>
+
+			<div class="md-2">
+				<label for="gdpr-confirmation">Newsletter</label>
+				<input id="gdpr-confirmation" type="checkbox" bind:value={contact.newsletterConfirmation} />
+			</div>
+
+
+			<hr class="md-12">
+			<div class="md-6">
+				<label for="category">Kategorie</label>
+				<select name="category" id="category">
+					<option value="Hauptmitglied">Hauptmitglied</option>
+					<option value="Zweitmitglied">Zweitmitglied</option>
+					<option value="Partner">Partner</option>
+				</select>
+			</div>
+
+			<div class="md-6">
+				<label for="status">Mitgliedsstatus</label>
+				<select name="status" id="status" bind:value={contact.status}>
+					<option value="CONTACT"></option>
+					<option value="AKTIV">AKTIV</option>
+					<option value="INAKTIV">INAKTIV</option>
+					<option value="PENSIONIERT">PENSIONIERT</option>
+				</select>
+			</div>
+	
+			<hr class="md-12">
+			<div class="md-6">
+				<label for="company">Praxis/Firmenname</label>
+				<input id="company" type="text" bind:value={contact.company} />
+			</div>
+
+			<div class="md-6">
+				<label for="website">Website</label>
+				<input id="website" type="url" bind:value={contact.website} />
+			</div>
+
+
 			<div class="md-12">
-				<label for="address">Adresse</label>
+				<label for="address">Straße</label>
 				<input id="address" type="text" bind:value={contact.address} />
 			</div>
-			<div class="md-6">
+			<div class="md-3">
 				<label for="postcode">Postleitzahl</label>
 				<input id="postcode" type="text" bind:value={contact.postcode} />
 			</div>
-			<div class="md-6">
+			<div class="md-4">
 				<label for="city">Stadt</label>
 				<input id="city" type="text" bind:value={contact.city} />
 			</div>
-			<div class="md-12">
-				<label for="category">Kategorie</label>
-				<input id="category" type="text" bind:value={contact.category} />
+			<div class="md-5">
+				<label for="country">Land</label>
+				<input id="country" type="text" bind:value={contact.country} />
 			</div>
 
+			<hr class="md-12">
+
+			<div class="md-12">
+				<label for="notes">Notizen</label>
+				<textarea id="notes" rows=5>{contact.notes}</textarea>
+			</div>
+			
+	
 			<div class="md-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
@@ -115,3 +211,27 @@
 		<Contacts contacts={$page.data.contacts} on:edit={openContact} />
 	</Main>
 </div>
+
+
+<style>
+	.submenu {
+		height:50px;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		padding:30px;
+	}
+	ul {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		width: 100%;
+		list-style-type: none;
+		margin:0;
+		padding: 0;
+	}
+	ul li {
+		margin-right: 20px;
+	}
+
+</style>

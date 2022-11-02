@@ -20,7 +20,7 @@
 				</div>
 				<div class="bottom">
 			
-					<p class="count">{event.number_of_visitors} Besucher</p>
+					<p class="count">{event.numberOfVisitors} Besucher</p>
 				
 					<p class="visibility">
 						<!-- {#if !(event.status == 'OPEN')}

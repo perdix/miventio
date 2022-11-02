@@ -1,4 +1,4 @@
-
+// Organisation
 export const toOrganisationJSON = (organisation) => {
 	if ('users' in organisation) {
 		organisation.users = organisation.users.map((s) => {
@@ -19,6 +19,9 @@ export const toOrganisationsJSON = (organisations) => {
 	return JSON.stringify(organisations);
 };
 
+
+// User
+
 export const toUserJSON = (user) => {
 	if ('password' in user) {
 		delete user.password;
@@ -34,6 +37,11 @@ export const toUserJSON = (user) => {
 	return JSON.stringify(user);
 };
 
+
+export const toUsersJSON = (users) => {
+	return JSON.stringify(users);
+}
+
 // Event
 
 const cleanEvent = (event) => {
@@ -42,7 +50,7 @@ const cleanEvent = (event) => {
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
 	if (('_count' in event) && ('visitors' in event._count)) {
-		event.number_of_visitors = event._count.visitors;
+		event.numberOfVisitors = event._count.visitors;
 	}
 	delete event._count;
 	return event;
@@ -59,8 +67,8 @@ export const toEventsJSON = (events) => {
 
 // Contacts
 const cleanContact = (contact) => {
-	delete contact.updated_at;
-	delete contact.created_at;
+	delete contact.updatedAt;
+	delete contact.createdAt;
 	return contact;
 };
 
@@ -75,8 +83,8 @@ export const toContactsJSON = (contacts) => {
 
 // Activities
 const cleanActivity = (activity) => {
-	delete activity.updated_at;
-	delete activity.created_at;
+	delete activity.updateAt;
+	delete activity.createdAt;
 	return activity;
 };
 
@@ -91,8 +99,8 @@ export const toActivitiesJSON = (activities) => {
 
 // Bookings
 const cleanBooking = (booking) => {
-	delete booking.updated_at;
-	delete booking.created_at;
+	delete booking.updatedAt;
+	delete booking.createdAt;
 	return booking;
 };
 
@@ -107,8 +115,8 @@ export const toBookingsJSON = (bookings) => {
 
 // EventTickets
 const cleanTicket = (ticket) => {
-	delete ticket.updated_at;
-	delete ticket.created_at;
+	delete ticket.updatedAt;
+	delete ticket.createdAt;
 	return ticket;
 };
 
@@ -122,17 +130,17 @@ export const toTicketsJSON = (tickets) => {
 };
 
 // Visitors
-const cleanVisit = (visit) => {
-	delete visit.updated_at;
-	delete visit.created_at;
-	return visit;
+const cleanVisitor = (visitor) => {
+	delete visitor.updatedAt;
+	delete visitor.createdAt;
+	return visitor;
 };
 
-export const toVisitJSON = (visit) => {
-	return JSON.stringify(cleanTicket(visit));
+export const toVisitorJSON = (visitor) => {
+	return JSON.stringify(cleanTicket(visitor));
 };
 
-export const toVisitsJSON = (visits) => {
-	const cleanedVisits = visits.map((v) => cleanVisit(v));
-	return JSON.stringify(cleanedVisits);
+export const toVisitorsJSON = (visitors) => {
+	const cleanedVisitors = visitors.map((v) => cleanVisitor(v));
+	return JSON.stringify(cleanedVisitors);
 };

@@ -6,7 +6,7 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const event = await locals.prisma.user.findFirst({
+	const event = await locals.prisma.contact.findFirst({
 		where: {
 			id: params.contactId,
 			organisation_id: params.organisationId
@@ -23,7 +23,7 @@ export async function PUT({ locals, params, request }) {
 
 	const data = await request.json();
 
-	const user = await locals.prisma.user.update({
+	const user = await locals.prisma.contact.update({
 		where: {
 			id: params.contactId
 		},
@@ -38,7 +38,7 @@ export async function DELETE({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const deletedUser = await locals.prisma.user.delete({
+	const deletedUser = await locals.prisma.contact.delete({
 		where: {
 			id: params.contactId
 		}

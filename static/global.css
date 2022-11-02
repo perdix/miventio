@@ -242,6 +242,8 @@ form input[type='time'],
 form input[type='number'],
 form input[type='date'],
 form input[type='color'],
+form input[type='url'],
+form textarea,
 form input[type='file'] {
 	border-radius: 0;
 	border: none;
@@ -275,6 +277,10 @@ form option {
 	appearance: none;
 }
 
+form input[type='checkbox'] {
+	height: 50%;
+}
+
 form input[type='radio'] ~ label,
 form input[type='checkbox'] ~ label {
 	display: inline-block;
@@ -295,8 +301,9 @@ form fieldset {
 }
 
 form input:focus {
-	box-shadow: var(--shadow);
+	box-shadow: var(--shadow-light);
 }
+
 
 
 form .message-box {
@@ -318,18 +325,27 @@ form .confirmation {
 	background-color: rgb(227, 252, 233);
 }
 
+form hr {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
 /******* Miventio ********/
 
 form.miventio {
 	/* max-width: 800px; */
 }
-form.miventio input {
+form.miventio input, form.miventio textarea {
 	padding: 0.9rem 1rem;
 	border-radius: var(--corner);
 }
 
 form.miventio input:active {
 	box-shadow: var(--shadow-light);
+}
+
+form.miventio input[type='checkbox']:active, input[type='checkbox']:focus {
+	box-shadow: none;
 }
 
 form.miventio label {
@@ -355,6 +371,12 @@ form.miventio input[type='color'] {
 
 form.miventio .submit {
 	margin-top: 2rem;
+}
+
+form.miventio hr {
+	background-color: var(--color-1-dark);
+	height: 1px;
+	border:none;
 }
 
 /******* Registration ********/

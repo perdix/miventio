@@ -6,6 +6,7 @@ import {
 	users,
 	eventTickets,
 	activities,
+	memberships,
 	contacts
 } from './data.js';
 
@@ -16,6 +17,7 @@ async function main() {
 	await prisma.role.deleteMany({});
 	await prisma.user.deleteMany({});
 	await prisma.visitor.deleteMany({});
+	await prisma.membership.deleteMany({});
 	await prisma.contact.deleteMany({});
 	await prisma.eventTicket.deleteMany({});
 	await prisma.activity.deleteMany({});
@@ -50,11 +52,45 @@ async function main() {
 		}
 	});
 
+	// Create memberships
+	await prisma.membership.createMany({
+		data: memberships
+	});
+
 	// Create some contacts
 	const contactsWithOrganisationId = contacts.map((u) => ({ ...u, organisationId: zahn_orga.id }));
 	await prisma.contact.createMany({
 		data: contactsWithOrganisationId
 	});
+
+    // Get first contact
+	const firstContact = await prisma.contact.findFirst(
+		{
+			where: {
+				email: 'max1@hallo.io'
+			}
+		}
+	);
+
+	// Get first membership
+	const firstMembership = await prisma.membership.findFirst({
+		where: {
+			name: 'Hauptmitglied'
+		}
+	});  
+	
+	// Add membership to first contact
+	const updatedContact = await prisma.contact.update({
+		where: {
+		  id: firstContact.id,
+		},
+		data: {
+			membership: {
+				connect: { id: firstMembership.id },
+			  },
+		},
+	  })
+
 
 	// Create some user with role
 	await prisma.user.createMany({

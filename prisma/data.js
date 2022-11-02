@@ -54,6 +54,18 @@ export const users = [
 	}
 ];
 
+export const memberships = [
+	{
+		name: "Hauptmitglied"
+	},
+	{
+		name: "Partner"
+	},
+	{
+		name: "Ehrenmitglied"
+	}
+]
+
 export const contacts = [
 	{
 		firstName: 'Max 1',
@@ -61,7 +73,8 @@ export const contacts = [
 		email: 'max1@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
+		status: 'AKTIV'
 	},
 	{
 		firstName: 'Max 2',
@@ -69,7 +82,8 @@ export const contacts = [
 		email: 'max2@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
+		status: 'INAKTIV'
 	},
 	{
 		firstName: 'Max 3',
@@ -77,7 +91,8 @@ export const contacts = [
 		email: 'max3@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
+		status: 'PENSIONIERT'
 	}
 ];
 
