@@ -24,7 +24,7 @@
 	<tbody>
 		{#each contacts as contact}
 			<tr on:click={() => edit(contact)}>
-				<td>{contact.first_name} {contact.last_name}</td>
+				<td>{contact.firstName} {contact.lastName}</td>
 				<td
 					>{contact.address || ''} <br />
 					{contact.postcode || ''}

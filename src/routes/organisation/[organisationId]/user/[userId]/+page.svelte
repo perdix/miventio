@@ -6,16 +6,21 @@
 
 	let user = {};
 	let message = '';
+	let status;
 
 	const updateUser = async () => {
-		if (user.password == user.passwordRepeat) {
-			const res = await fetch(`/users/${$page.data.user.id}`, {
-				method: 'PUT',
-				body: JSON.stringify(user)
-			});
-			if (res.status === 200) {
-				message = 'Password wurde erfolgreich geändert!';
-			}
+		console.log(user)
+		const res = await fetch(`/users/${$page.data.user.id}`, {
+			method: 'PUT',
+			body: JSON.stringify(user)
+		});
+		if (res.status === 200) {
+			message = 'Passwort wurde erfolgreich geändert!';
+			status = res.status;
+		}
+		if (res.status === 404) {
+			message = 'Passwort konnte nicht geändert werden!';
+			status = res.status;
 		}
 	};
 </script>
@@ -42,20 +47,20 @@
 					</div>
 					<div class="md-6">
 						<label for="password-repeat">Neues Passwort</label>
-						<input id="password-repeat" type="password" bind:value={user.passwordRepeat} />
+						<input id="password-repeat" type="password" bind:value={user.newPassword} minlength="5" />
 					</div>
 					<div class="md-12 submit">
 						<button type="submit">Speichern</button>
 					</div>
 					{#if message}
-						<div class="md-12 submit">
-							<div class="message">{message || ''}</div>
+						<div class="md-12">
+							<div class="message-box" class:error={status==404} class:confirmation={status==200}>{message || ''}</div>
 						</div>
 					{/if}
 				</form>
 			</Box>
 		</div>
-		<div class="md-12 col">
+		<!-- <div class="md-12 col">
 			<Box>
 				<h2>Meine Organisationen</h2>
 
@@ -65,7 +70,7 @@
 					</div>
 				{/each}
 			</Box>
-		</div>
+		</div> -->
 	</div>
 </Main>
 
@@ -82,10 +87,5 @@
 		border-radius: var(--corner);
 		margin-bottom: 5px;
 		/* cursor: pointer; */
-	}
-	.message {
-		background-color: var(--color-1-light);
-		padding: 20px;
-		display: inline-block;
 	}
 </style>

@@ -2,6 +2,8 @@
 	export let organisations = [];
 	export let organisation = {};
 
+	import { page } from '$app/stores';
+
 	let isDropdownOpen = false;
 
 	const showOrganisations = () => {
@@ -36,7 +38,7 @@
 		{/if}
 	</div>
 	<div>
-		<a href="/organisation/{organisation.id}/account"><span class="material-symbols-outlined">account_circle</span></a>
+		<a href="/organisation/{organisation.id}/user/{$page.data.session.id}"><span class="material-symbols-outlined">account_circle</span></a>
 	</div>
 </header>
 

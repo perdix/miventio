@@ -9,27 +9,27 @@ export async function GET({ locals, params }) {
 	const event = await locals.prisma.event.findFirst({
 		where: {
 			id: params.eventId,
-			organisation_id: params.organisationId
+			organisationId: params.organisationId
 		},
 		include: {
-			event_fees: true,
+			eventTickets: true,
 			bookings: {
 				include: {
-					visits: {
+					visitors: {
 						select: {
 							id: true,
 							status: true,
-							event_fee: true,
-							event_fee_id: true,
-							event_fee_price: true,
-							activities_fees_prices: true,
+							eventTicket: true,
+							eventTicketId: true,
+							eventTicketPrice: true,
+							activitiesTicketsPrices: true,
 							price: true,
 							activities: true,
-							user: {
+							contact: {
 								select: {
 									id: true,
-									first_name: true,
-									last_name: true,
+									firstName: true,
+									lastName: true,
 									email: true
 								}
 							}
@@ -38,21 +38,21 @@ export async function GET({ locals, params }) {
 				}
 			},
 			activities: true,
-			visits: {
+			visitors: {
 				select: {
 					id: true,
 					status: true,
-					event_fee_id: true,
-					event_fee: true,
-					event_fee_price: true,
+					eventTicketId: true,
+					eventTicket: true,
+					eventTicketPrice: true,
 					price: true,
 					activities: true,
-					activities_fees_prices: true,
-					user: {
+					activitiesTicketsPrices: true,
+					contact: {
 						select: {
 							id: true,
-							first_name: true,
-							last_name: true,
+							firstName: true,
+							lastName: true,
 							email: true
 						}
 					}

@@ -25,7 +25,7 @@ export async function PUT({ locals, params, request }) {
 			id: params.bookingId
 		},
 		include: {
-			visits: true
+			visitors: true
 		}
 	});
 	if (booking == null) {
@@ -38,23 +38,23 @@ export async function PUT({ locals, params, request }) {
 	// Should be refactored to put everything into one transaction!
 
 	// Deletion of all visits which are not here anymore
-	const deleteVisits = await locals.prisma.visit.deleteMany({
+	const deleteVisitors = await locals.prisma.visitor.deleteMany({
 		where: {
 			id: {
 				not: {
-					in: data.visits.map((v) => v.id).filter((i) => i != undefined)
+					in: data.visitors.map((v) => v.id).filter((i) => i != undefined)
 				}
 			}
 		}
 	});
 
-	// Update or Insert new visits
+	// Update or Insert new visitors
 	let price = 0;
-	for (const visit of data.visits) {
+	for (const visit of data.visitors) {
 		// Get Ticket and Activities
-		const ticket = await locals.prisma.ticket.findUnique({
+		const ticket = await locals.prisma.eventTicket.findUnique({
 			where: {
-				id: visit.ticket_id
+				id: visit.ticketId
 			}
 		});
 		// Get activities

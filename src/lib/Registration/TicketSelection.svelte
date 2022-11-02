@@ -17,7 +17,6 @@
 	const addItem = (e) => {
 		$booking.cart.push(e.detail.item);
 		$booking = $booking;
-		console.log($booking);
 		if (e.detail.next == true) {
 			switchTo(2, '#booking');
 		}

@@ -6,9 +6,6 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	console.log(locals.session)
-	console.log(params)
-
 	const organisation = await locals.prisma.organisation.findFirst({
 		where: {
 			id: params.organisationId,

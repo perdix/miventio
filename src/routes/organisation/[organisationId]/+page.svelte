@@ -1,7 +1,5 @@
 <script>
 	import Main from '$lib/blocks/Main.svelte';
-	import Content from '$lib/blocks/Content.svelte';
-	import Contacts from '$lib/Contacts.svelte';
 	import Events from '$lib/Events.svelte';
 	import { page } from '$app/stores';
 </script>
@@ -17,16 +15,10 @@
 							<h4>{$page.data.organisation.events.length}</h4>
 						</section>
 					</div>
-					<div class="md-3 count">
-						<section>
-							<h3># Mitglieder</h3>
-							<h4>{$page.data.organisation.users.length}</h4>
-						</section>
-					</div>
-					<div class="md-3 count">
+					<div class="md-6 count">
 						<section>
 							<h3># Kontakte</h3>
-							<h4>{$page.data.organisation.users.length}</h4>
+							<h4>{$page.data.organisation.contacts.length}</h4>
 						</section>
 					</div>
 				</div>
@@ -34,12 +26,7 @@
 
 			<div class="block">
 				<h2>Aktuelle Veranstaltungen</h2>
-				<Events events={$page.data.organisation.events.slice(0,2)} />
-			</div>
-
-			<div class="block">
-				<h2>Neueste Kontakte</h2>
-				<Contacts contacts={$page.data.organisation.users} />
+				<Events events={$page.data.organisation.events.slice(0,4)} />
 			</div>
 
 	</Main>
