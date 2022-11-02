@@ -12,9 +12,6 @@ export const toOrganisationJSON = (organisation) => {
 	if ('events' in organisation) {
 		organisation.events = organisation.events.map(e => cleanEvent(e))
 	}
-
-
-
 	return JSON.stringify(organisation);
 };
 
@@ -44,8 +41,8 @@ const cleanEvent = (event) => {
 	delete event.createdAt;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
-	if (('_count' in event) && ('visits' in event._count)) {
-		event.number_of_visits = event._count.visits;
+	if (('_count' in event) && ('visitors' in event._count)) {
+		event.number_of_visitors = event._count.visitors;
 	}
 	delete event._count;
 	return event;

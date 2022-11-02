@@ -298,12 +298,24 @@ form input:focus {
 	box-shadow: var(--shadow);
 }
 
-.error-box {
+
+form .message-box {
 	padding: 20px;
-	display: inline-block;
+	margin-top:20px;
+	display: block;
+}
+
+form .error {
+	padding: 20px;
+	display: lock;
 	border: 1px solid red;
 	background-color: lightpink;
 	margin-top: 20px;
+}
+
+form .confirmation {
+	border: 1px solid rgb(16, 84, 45);
+	background-color: rgb(227, 252, 233);
 }
 
 /******* Miventio ********/
