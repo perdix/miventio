@@ -1,11 +1,13 @@
 <script>
 	import Contacts from '$lib/Contacts.svelte';
+	import Subnavigation from '$lib/Subnavigation.svelte';
 	import { page } from '$app/stores';
 	import Header from '$lib/blocks/Header.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
 
 	let contact = {};
+	let contacts = $page.data.contacts;
 	let showPopup = false;
 	let popupTitle = 'Neuer Kontakt';
 
@@ -22,6 +24,8 @@
 				}
 			);
 			if (res.status === 200) {
+				const updatedContact = await res.json();
+				contacts = contacts.map((c) => (c.id == contact.id ? updatedContact : c));
 				togglePopup();
 			}
 		} else {
@@ -31,6 +35,7 @@
 			});
 			if (res.status === 201) {
 				togglePopup();
+				location.reload();
 			}
 		}
 	};
@@ -40,6 +45,11 @@
 		popupTitle = 'Kontakt editieren';
 		togglePopup();
 	};
+
+	const newContact = () => {
+		contact = {};
+		togglePopup();
+	}
 
 	const deleteContact = async () => {
 		const res = await fetch(`/organisations/${$page.data.organisation.id}/contacts/${contact.id}`, {
@@ -51,23 +61,25 @@
 			location.reload();
 		}
 	};
+
+
+	const subNavItems = [
+		{
+			name: "Mitglieder & Kontakte",
+			slug: "contacts"
+		},
+		{
+			name: "Mitgliedskategorien",
+			slug: "memberships"
+		}
+	]
 </script>
 
 <div class="page">
 
 
 
-	<nav class="submenu">
-		<ul>
-			<li>Mitglieder & Kontakte</li>
-			<li>Mitgliedskategorien</li>
-		</ul>
-	</nav>
-
-
-
-
-
+	<Subnavigation items={subNavItems} activeItem="Mitglieder & Kontakte"></Subnavigation>
 
 
 
@@ -92,6 +104,7 @@
 			<div class="md-2">
 				<label for="gender">Geschlecht</label>
 				<select name="gender" id="gender">
+					<option value=""></option>
 					<option value="female">weiblich</option>
 					<option value="male">männlich</option>
 					<option value="diverse">divers</option>
@@ -123,29 +136,31 @@
 
 			<div class="md-2">
 				<label for="gdpr-confirmation">DSGVO</label>
-				<input id="gdpr-confirmation" type="checkbox" bind:value={contact.gdprConfirmation} />
+				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.gdprConfirmation} />
 			</div>
 
 			<div class="md-2">
 				<label for="gdpr-confirmation">Newsletter</label>
-				<input id="gdpr-confirmation" type="checkbox" bind:value={contact.newsletterConfirmation} />
+				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.newsletterConfirmation} />
 			</div>
 
 
 			<hr class="md-12">
 			<div class="md-6">
 				<label for="category">Kategorie</label>
-				<select name="category" id="category">
-					<option value="Hauptmitglied">Hauptmitglied</option>
-					<option value="Zweitmitglied">Zweitmitglied</option>
-					<option value="Partner">Partner</option>
+				<select name="category" id="category" bind:value={contact.membershipId}>
+					<option value=""></option>
+					{#each $page.data.memberships as membership}
+						<option value="{membership.id}">{membership.name}</option>
+					{/each}
+
 				</select>
 			</div>
 
 			<div class="md-6">
 				<label for="status">Mitgliedsstatus</label>
 				<select name="status" id="status" bind:value={contact.status}>
-					<option value="CONTACT"></option>
+					<option value=""></option>
 					<option value="AKTIV">AKTIV</option>
 					<option value="INAKTIV">INAKTIV</option>
 					<option value="PENSIONIERT">PENSIONIERT</option>
@@ -185,7 +200,7 @@
 
 			<div class="md-12">
 				<label for="notes">Notizen</label>
-				<textarea id="notes" rows=5>{contact.notes}</textarea>
+				<textarea id="notes" rows="5" bind:value={contact.notes}></textarea>
 			</div>
 			
 	
@@ -200,38 +215,24 @@
 		</form>
 	</Popup>
 
+
+	<div class="main">
+
 	<Main>
 		<Header title={'Mitglieder & Kontakte'}>
-			<button on:click={togglePopup}>
+			<button on:click={newContact}>
 				<span>Neuer Kontakt</span>
 				<span class="material-symbols-outlined">add_circle</span>
 			</button>
 		</Header>
 
-		<Contacts contacts={$page.data.contacts} on:edit={openContact} />
+		<Contacts contacts={contacts} on:edit={openContact} />
 	</Main>
+</div>
 </div>
 
 
 <style>
-	.submenu {
-		height:50px;
-		display: flex;
-		align-items: center;
-		width: 100%;
-		padding:30px;
-	}
-	ul {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		width: 100%;
-		list-style-type: none;
-		margin:0;
-		padding: 0;
-	}
-	ul li {
-		margin-right: 20px;
-	}
 
+	
 </style>

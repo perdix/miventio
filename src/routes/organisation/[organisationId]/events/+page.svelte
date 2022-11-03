@@ -4,7 +4,31 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
+	import Subnavigation from '$lib/Subnavigation.svelte';
 	import { goto } from '$app/navigation';
+
+	const subNavItems = [
+        {
+            name: 'Veranstaltungen',
+            slug: 'events'
+        },
+        // {
+        //     name: 'Aussteller',
+        //     slug: "exhibitors"
+        // },
+        {
+            name: 'Hotels',
+            slug: "hotels"
+        },
+        // {
+        //     name: 'Lieferanten',
+        //     slug: "contractors"
+        // },
+        {
+            name: 'Referenten',
+            slug: "speakers"
+        },
+    ]
 
 	let event = {};
 	let showPopup = false;
@@ -59,24 +83,7 @@
 		</form>
 	</Popup>
 
-	<!-- <nav class="subnav">
-		<div>
-			<h2>Crew</h2>
-		</div>
-		<div>
-			<h2>Aussteller</h2>
-		</div>
-		<div>
-			<h2>Hotels</h2>
-		</div>
-		<div>
-			<h2>Lieferanten</h2>
-		</div>
-		<div>
-			<h2>Referenten</h2>
-		</div>
-
-	</nav> -->
+	<Subnavigation items={subNavItems} activeItem={"Veranstaltungen"}></Subnavigation>	
 
 	<Main>
 		<Header title={'Veranstaltungen'}>
@@ -92,24 +99,5 @@
 
 
 <style>
-	.subnav {
-		height: 50px;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	}
-	.subnav div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: white;
-	}
-	.subnav div h2 {
-		font-size: 20px;
-	}
-	.subnav div:hover {
-		cursor: pointer;
-		background-color: var(--lightgrey);
-	}
-
 
 </style>

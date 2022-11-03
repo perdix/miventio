@@ -53,12 +53,13 @@ async function main() {
 	});
 
 	// Create memberships
+	const membershipsWithOrganisationId = memberships.map((m) => ({ ...m, organisationId: zahn_orga.id }));
 	await prisma.membership.createMany({
-		data: memberships
+		data: membershipsWithOrganisationId
 	});
 
 	// Create some contacts
-	const contactsWithOrganisationId = contacts.map((u) => ({ ...u, organisationId: zahn_orga.id }));
+	const contactsWithOrganisationId = contacts.map((c) => ({ ...c, organisationId: zahn_orga.id }));
 	await prisma.contact.createMany({
 		data: contactsWithOrganisationId
 	});

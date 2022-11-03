@@ -39,7 +39,7 @@
 				</td>
 				<td>
 					{#if contact.membership}
-					<span class="membership">
+					<span class="membership" style="background-color:{contact.membership.color};">
 						{contact.membership.name}
 					</span>
 					{/if}
@@ -57,11 +57,12 @@
 </table>
 
 <style>
+
 	.membership {
-		border-radius: 30px;
 		padding: 5px 10px;
-		font-size: 18px;
-		font-weight: 400;
+		font-size: 16px;
+		border: 1px solid black;
+		font-weight: 300;
 	}
 	.status {
 		border-radius: 30px;
@@ -81,7 +82,7 @@
 	.retired {
 		border: 1px solid gray;
 		color:rgb(68, 68, 68);
-		background-color: lightgrey;
+		background-color: var(--lightgrey);
 	}
 	
 </style>

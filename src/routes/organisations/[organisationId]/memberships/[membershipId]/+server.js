@@ -1,4 +1,4 @@
-import { toContactJSON } from '$lib/server/serialization';
+import { toMembershipJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
@@ -6,38 +6,35 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const event = await locals.prisma.contact.findFirst({
+	const event = await locals.prisma.membership.findFirst({
 		where: {
-			id: params.contactId,
+			id: params.membershipId,
 			organisationId: params.organisationId
-		},
-		include: { membership: true } 
+		}
 	});
 
-	return new Response(toContactJSON(event));
+	return new Response(toMembershipJSON(event));
 }
 
 export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-
 	const data = await request.json();
-	if ('membership' in data) {
-		delete data.membership
-	}
-	if ('membershipId' in data && data.membershipId == '') {
-		data.membershipId = null;
-	}
-	const contact = await locals.prisma.contact.update({
+
+	const membership = await locals.prisma.membership.update({
 		where: {
-			id: params.contactId
+			id: params.membershipId
 		},
-		data: data,
-		include: { membership: true } 
+		data: {
+			color: data.color,
+			name: data.name,
+			descripription: data.descripription,
+			price: data.price
+		}
 	});
 
-	return new Response(toContactJSON(contact));
+	return new Response(toMembershipJSON(membership));
 }
 
 export async function DELETE({ locals, params }) {
@@ -45,14 +42,13 @@ export async function DELETE({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const deletedContact = await locals.prisma.contact.delete({
+	const deletedMembership= await locals.prisma.membership.delete({
 		where: {
-			id: params.contactId
-		},
-		include: { membership: true } 
+			id: params.membershipId
+		}
 	});
 
-	return new Response(JSON.stringify({ message: 'Contact successfully deleted!' }), {
+	return new Response(JSON.stringify({ message: 'Membership successfully deleted!' }), {
 		status: 200
 	});
 }

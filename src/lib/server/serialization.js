@@ -137,10 +137,31 @@ const cleanVisitor = (visitor) => {
 };
 
 export const toVisitorJSON = (visitor) => {
-	return JSON.stringify(cleanTicket(visitor));
+	return JSON.stringify(cleanVisitor(visitor));
 };
 
 export const toVisitorsJSON = (visitors) => {
 	const cleanedVisitors = visitors.map((v) => cleanVisitor(v));
 	return JSON.stringify(cleanedVisitors);
+};
+
+
+// Visitors
+const cleanMembership = (membership) => {
+	delete membership.updatedAt;
+	delete membership.createdAt;
+	if ('_count' in membership) {
+		membership.numberOfContacts= membership._count.contacts;
+		delete membership._count;
+	}
+	return membership;
+};
+
+export const toMembershipJSON = (membership) => {
+	return JSON.stringify(cleanMembership(membership));
+};
+
+export const toMembershipsJSON = (memberships) => {
+	const cleanedMemberships = memberships.map((m) => cleanMembership(m));
+	return JSON.stringify(cleanedMemberships);
 };

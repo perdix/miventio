@@ -47,7 +47,7 @@
 	--white: #fff;
 	--grey: #f6f6f6;
 	--black: #000;
-	--darkgrey: rgb(69, 69, 69);
+	--darkgrey: #96a8a6;
 	--grey: #e1edec;
 	--lightgrey: #f0f5f4;
 	--color-1: #37c0ae;
@@ -366,7 +366,8 @@ form.miventio select:focus {
 }
 
 form.miventio input[type='color'] {
-	height: 80px;
+	height: 44px;
+	padding: 0.3rem;
 }
 
 form.miventio .submit {
@@ -448,7 +449,4 @@ table tr:nth-child(odd) {
 	background-color: var(--white);
 	border-radius: var(--corner);
 }
-table span {
-	border-radius: 10px;
-	padding: 3px 10px;
-}
+

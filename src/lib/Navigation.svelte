@@ -39,7 +39,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
-		padding: calc(var(--unit)) calc(var(--unit) * 1);
+		padding: calc(var(--unit) / 1) calc(var(--unit) / 1);
 		width: 100%;
 	}
 
@@ -69,6 +69,7 @@
 		display: flex;
 		align-items: center;
 		font-weight: 400;
+		/* margin-right: 10px; */
 	}
 	ul li a:hover,
 	ul li a.active {

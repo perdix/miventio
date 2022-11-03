@@ -44,6 +44,7 @@ model Organisation {
   events Event[]
   users Role[]
   contacts Contact[]
+  memberships Membership[]
 }
 
 // Contacts/members of the organisation
@@ -70,7 +71,7 @@ model Contact {
   website String?
   company String?
   notes   String?
-  newsletterConfirmation DateTime?
+  newsletterConfirmation Boolean @default(false)
   status String?
   gdprConfirmation Boolean @default(false)
   organisationId String
@@ -89,8 +90,11 @@ model Membership{
   name String
   description String?
   price Float @default(0)
+  color String @default("#FFFFFF")
   membershipTickets MembershipTicket[]
   contacts Contact[]
+  organisationId String
+  organisation Organisation @relation(fields: [organisationId], references: [id])
 }
 
 // A membership ticket is valid for a given year

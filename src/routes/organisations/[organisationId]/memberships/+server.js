@@ -1,4 +1,4 @@
-import { toEventJSON, toEventsJSON } from '$lib/server/serialization';
+import { toMembershipsJSON, toMembershipJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
@@ -6,17 +6,19 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const events = await locals.prisma.event.findMany({
-		where: { organisationId: params.organisationId },
+	const memberships = await locals.prisma.membership.findMany({
+		where: {
+			organisationId: params.organisationId
+		}, 
+
 		include: {
 			_count: {
-			  select: { visitors: true },
+				select: { contacts: true },
 			},
-		  },
+		}
+	
 	});
-
-
-	return new Response(toEventsJSON(events));
+	return new Response(toMembershipsJSON(memberships));
 }
 
 export async function POST({ locals, params, request }) {
@@ -26,11 +28,9 @@ export async function POST({ locals, params, request }) {
 
 	const data = await request.json();
 	data.organisationId = params.organisationId;
-	data.start = new Date(data.start);
-	data.end = new Date(data.end);
-	const event = await locals.prisma.event.create({
+	const membership = await locals.prisma.membership.create({
 		data: data
 	});
 
-	return new Response(toEventJSON(event), { status: 201 });
+	return new Response(toMembershipJSON(membership), { status: 201 });
 }
