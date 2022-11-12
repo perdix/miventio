@@ -254,7 +254,7 @@ form input[type='file'] {
 	outline: none;
 	background-color: white;
 	margin: 4px 0;
-	width: calc(100%);
+	width: calc(100% - 8px);
 }
 
 form input[type='radio'] {

@@ -87,7 +87,6 @@
 
 		<div class="md-6">
 			<label for="category">Teilnehmer-Kategorie</label>
-		
 			<select name="category" id="category" bind:value={ticket.participationCategoryId}>
 				{#each $event.participationCategories as category}
 					<option value={category.id}>{category.name}</option>

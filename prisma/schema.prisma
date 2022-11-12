@@ -185,7 +185,7 @@ model ActivityTicket {
   updatedAt DateTime @updatedAt
   name String?
   activityId String
-  activity Activity @relation(fields: [activityId], references: [id])
+  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
   visitors Visitor[]
   price Float @default(0)
   participationCategoryId String?

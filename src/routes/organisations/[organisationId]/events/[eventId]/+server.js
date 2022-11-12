@@ -53,7 +53,34 @@ export async function GET({ locals, params }) {
 					}
 				}
 			},
-			activities: true,
+			activities: {
+				select: {
+					id: true,
+					name: true,
+					description: true,
+					speaker: true,
+					limit: true,
+					location: true,
+					date: true,
+					start: true,
+					end: true,
+					type:true,
+					activityTickets: {
+						select: {
+							id: true,
+							name: true,
+							price: true,
+							participationCategoryId: true,
+							participationCategory: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
+						}
+					}
+				}
+			},
 			visitors: {
 				select: {
 					id: true,
@@ -82,7 +109,6 @@ export async function GET({ locals, params }) {
 			}
 		}
 	});
-
 	return new Response(toEventJSON(event));
 }
 

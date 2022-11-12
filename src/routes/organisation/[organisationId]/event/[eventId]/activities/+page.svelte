@@ -5,16 +5,31 @@
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
 
-	let activity = {};
+	let activity = { activityTickets: []};
 	let showPopup = false;
 	let popupTitle = '';
+
+	const weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+	function getDatesInRange(startDate, endDate) {
+		const date = startDate;
+		const dates = [];
+		while (date <= endDate) {
+			dates.push(new Date(date));
+			date.setDate(date.getDate() + 1);
+		}
+		return dates;
+	}
+
+
+	let days = getDatesInRange(new Date($event.start), new Date($event.end))
+
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
 
 	const newActivity = () => {
-		activity = {};
+		activity = {activityTickets: []};
 		popupTitle = 'Neue Aktivität';
 		togglePopup();
 	};
@@ -53,8 +68,7 @@
 			);
 			if (res.status === 200) {
 				const updatedActivity = await res.json();
-				$event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
-				$event = $event;
+				$event.activites = $event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
 				togglePopup();
 			}
 		} else {
@@ -73,14 +87,26 @@
 			}
 		}
 	};
+	const addTicket = () => {
+		activity.activityTickets.push({ participationCategoryId: null, name: ''});
+		activity = activity;
+	}
+	const deleteTicket = (ticket) => {
+		let filtered = activity.activityTickets.filter(a => ((a.name != ticket.name) || (a.participationCategory.name != ticket.participationCategory.name)));
+		activity.activityTickets = filtered;
+	}
 </script>
 
 <div class="page">
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
-			<div class="md-12">
+			<div class="md-6">
 				<label for="Name">Name</label>
 				<input id="name" type="text" bind:value={activity.name} required />
+			</div>
+			<div class="md-6">
+				<label for="Name">Referent/Verantwortlicher</label>
+				<input id="name" type="text" bind:value={activity.speaker} />
 			</div>
 			<div class="md-12">
 				<label for="description">Beschreibung</label>
@@ -96,41 +122,66 @@
 			</div>
 			<div class="md-4">
 				<label for="end">Ende</label>
-				<input id="end" type="time" bind:value={activity.end} required/>
+				<input id="end" type="time" bind:value={activity.end}/>
 			</div>
-			<div class="md-6">
-				<label for="author">Verantwortlicher</label>
-				<input id="author" type="text" bind:value={activity.author} />
-			</div>
-			<div class="md-6">
+			<div class="md-4">
 				<label for="location">Ort</label>
 				<input id="location" type="text" bind:value={activity.location} placeholder="Saal 1" />
 			</div>
 			<div class="md-4">
-				<label for="category">Kategorie</label>
-				<input id="category" type="text" bind:value={activity.category} placeholder="Workshop" />
+				<label for="type">Typ</label>
+				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." />
 			</div>
 			<div class="md-4">
 				<label for="limit">Limit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
-			<div class="md-4">
-				<label for="price">Preis</label>
-				<input id="price" type="number" step="0.01" bind:value={activity.price} />
+			<div class="md-12">
+				<br><br>
+				<h2 class="ticket-section">
+					Tickets
+					<span class="material-symbols-outlined add" on:click={addTicket}>add_circle</span>
+				</h2>
 			</div>
+	
+		
+			{#each activity.activityTickets as ticket}
+				<div class="md-1">
+					<span class="material-symbols-outlined rm" on:click={() => deleteTicket(ticket)}>delete</span>
+				</div>
+				<!-- <div class="md-4">
+					<label for="name">Name</label>
+					<input id="name" type="text" bind:value={ticket.name} />
+				</div> -->
+				<div class="md-6">
+					<label for="category">Teilnehmer-Kategorie</label>
+					<select name="category" id="category" bind:value={ticket.participationCategoryId}>
+						{#each $event.participationCategories as category}
+							<option value={category.id}>{category.name}</option>
+						{/each}
+					</select>
+				</div>
+				<div class="md-5">
+					<label for="price">Preis in Euro</label>
+					<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
+				</div>
 
+		
+			{/each}
+			
+	
 			<div class="md-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
 			<div class="md-6 submit right">
-				<button class="secondary" type="button" on:click={deleteActivity}>
+				<button type="button" on:click={deleteActivity}>
 					<span class="material-symbols-outlined">delete</span>
 				</button>
 			</div>
 		</form>
 	</Popup>
 
-	<Header title={'Aktivitäten'}>
+	<Header title={'Programm'}>
 		<button on:click={newActivity}>
 			<span>Neue Aktivität</span>
 			<span class="material-symbols-outlined">add_circle</span>
@@ -138,37 +189,86 @@
 	</Header>
 
 	<Content>
+
+		{#each days as day}
+		<h2>{weekdays[day.getDay()]}, {day.toLocaleDateString('de-AT')}</h2>
 		<table>
 			<thead>
 				<tr>
 					<th>Title</th>
-					<th>Kategorie</th>
+					<th>Typ</th>
 					<th>Datum</th>
 					<th>Zeit</th>
-					<th>Preis</th>
 					<th>Besucher-Limit</th>
+					<th>Tickets</th>
 				</tr>
 			</thead>
 			<tbody>	
-				{#each $event.activities as activity}
+				{#each $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)) as activity}
 					<tr on:click={() => editActivity(activity)}>
 						<td>{activity.name}</td>
-						<td>{activity.category || ''}</td>
+						<td>{activity.type || ''}</td>
 						<td>{activity.date.substring(0,10)}</td>
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
 							{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}</td>
-						<td>
-							{#if activity.price}
-							{activity.price} €
-							{/if}
-						</td>
+
 						<td>{activity.limit || '-'}</td>
+						<td>
+							{#each activity.activityTickets as ticket}
+								<span class="ticket">
+									{ticket.participationCategory.name||''} | {ticket.price}€
+								</span>
+							{/each}
+						</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
+
+		<br>
+		<br>
+		{/each}
+
+
+
+
 	</Content>
 </div>
 
 <style>
+	h2 {
+		font-size: 1.3rem;
+		font-weight: 300;
+		color: var(--black);
+	}
+	.ticket-section {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+	}
+	.add, .rm {
+		border-radius: 50%;
+		display: inline-block;
+		padding: 3px;
+		color: var(--color-1);
+		font-size: 20px;
+		cursor: pointer;
+		transition: all 0.3s;
+	}
+	.add:hover, .rm:hover {
+		color: var(--color-1-dark);
+		transition: all 0.3s;
+	}
+	.rm {
+		margin-top: 45px;
+    	margin-left: 30px;
+	}
+	.ticket {
+		background-color: var(--grey);
+		color:var(--color-1-dark);
+		padding: 5px 8px;
+		display: inline-block;
+		margin-right: 2px;
+		font-size: 0.9rem;
+	}
 </style>
