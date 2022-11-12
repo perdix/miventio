@@ -71,7 +71,8 @@
 		},
 		{
 			name: "Mitgliedskategorien",
-			slug: "memberships"
+			slug: "memberships",
+			status: 'active'
 		}
 	]
 </script>
@@ -80,7 +81,7 @@
 
 
 
-	<Subnavigation items={subNavItems} activeItem="Mitgliedskategorien"></Subnavigation>
+	<Subnavigation items={subNavItems}></Subnavigation>
 
 
 

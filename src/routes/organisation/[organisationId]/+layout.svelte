@@ -9,7 +9,6 @@
 <div data-sveltekit-prefetch>
 	<div class="main-nav">
 		<Header organisations={$page.data.session.organisations} organisation={$organisation}/>
-		<Navigation organisation={$organisation}/>
 	</div>
 
 	<div class="placeholder" />
@@ -28,10 +27,10 @@
 		z-index: 100;
 	}
 	.placeholder {
-		height: 158px;
+		height: 55px;
 	}
 	.content {
-		min-height: calc(100vh - 158px);
+		min-height: calc(100vh - 55px);
 		background-color: var(--lightgrey);
 	}
 </style>

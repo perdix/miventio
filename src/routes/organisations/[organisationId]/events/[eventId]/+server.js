@@ -12,7 +12,23 @@ export async function GET({ locals, params }) {
 			organisationId: params.organisationId
 		},
 		include: {
-			eventTickets: true,
+			eventTickets: {
+				select: {
+					id: true,
+					name: true,
+					price: true,
+					availableFrom: true,
+					availableTo: true,
+					dayTicketDate: true,
+					participationCategoryId: true,
+					participationCategory: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			},
 			bookings: {
 				include: {
 					visitors: {
@@ -57,6 +73,12 @@ export async function GET({ locals, params }) {
 						}
 					}
 				}
+			},
+			participationCategories: {
+				select: {
+					id: true,
+					name: true,
+				}
 			}
 		}
 	});
@@ -71,17 +93,20 @@ export async function PUT({ locals, params, request }) {
 
 	// Prepare data
 	const data = await request.json();
-	delete data.tickets;
-	delete data.bookings;
-	delete data.activities;
-	data.start = new Date(data.start);
-	data.end = new Date(data.end);
+
 
 	const event = await locals.prisma.event.update({
 		where: {
 			id: params.eventId
 		},
-		data: data
+		data: {
+			name: data.name,
+			description: data.description,
+			location: data.location,
+			city: data.city,
+			start: new Date(data.start),
+			end: new Date(data.end)
+		}
 	});
 
 	return new Response(toEventJSON(event), { status: 200 });

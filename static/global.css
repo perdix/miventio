@@ -118,7 +118,7 @@ h2 {
 button,
 .button {
 	text-transform: uppercase;
-	padding: 0.6rem 1.7rem;
+	padding: 0.6rem 1.0rem;
 	color: var(--white);
 	border: none;
 	border-radius: var(--corner);
@@ -142,13 +142,16 @@ button:hover,
 	box-shadow: var(--shadow-light);
 }
 
-button.secondary {
-	background: linear-gradient(132deg, var(--color-2) 0%, var(--color-1) 100%);
-	background-position: 0%;
-	background-size: 200%;
+button.secondary, .button.secondary {
+	background: var(--white);
+	color: var(--black);
+}
+button.secondary span, .button.secondary span {
+	margin-right: 10px;
+	display: inline-block;
 }
 
-button.secondary:hover {
+button.secondary:hover, .button.secondary:hover {
 	cursor: pointer;
 	background-position: 100%;
 	box-shadow: var(--shadow-light);
@@ -251,7 +254,7 @@ form input[type='file'] {
 	outline: none;
 	background-color: white;
 	margin: 4px 0;
-	width: calc(100% - 8px);
+	width: calc(100%);
 }
 
 form input[type='radio'] {

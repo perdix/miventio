@@ -80,7 +80,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each $event.visits as visit}
+			{#each $event.visitors as visit}
 				<tr on:click={() => editVisit(visit)}>
 					<td>
 						{visit.user.first_name}

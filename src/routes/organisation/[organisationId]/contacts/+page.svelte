@@ -66,7 +66,8 @@
 	const subNavItems = [
 		{
 			name: "Mitglieder & Kontakte",
-			slug: "contacts"
+			slug: "contacts",
+			status: 'active'
 		},
 		{
 			name: "Mitgliedskategorien",
@@ -79,7 +80,7 @@
 
 
 
-	<Subnavigation items={subNavItems} activeItem="Mitglieder & Kontakte"></Subnavigation>
+	<Subnavigation items={subNavItems}></Subnavigation>
 
 
 

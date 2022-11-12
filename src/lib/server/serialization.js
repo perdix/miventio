@@ -146,7 +146,7 @@ export const toVisitorsJSON = (visitors) => {
 };
 
 
-// Visitors
+// Membership
 const cleanMembership = (membership) => {
 	delete membership.updatedAt;
 	delete membership.createdAt;
@@ -164,4 +164,21 @@ export const toMembershipJSON = (membership) => {
 export const toMembershipsJSON = (memberships) => {
 	const cleanedMemberships = memberships.map((m) => cleanMembership(m));
 	return JSON.stringify(cleanedMemberships);
+};
+
+
+// ParticipationCategory
+const cleanCategory = (category) => {
+	delete category.updatedAt;
+	delete category.createdAt;
+	return category;
+};
+
+export const toCategoryJSON = (category) => {
+	return JSON.stringify(cleanCategory(category));
+};
+
+export const toCategoriesJSON = (categories) => {
+	const cleanedCategories = categories.map((c) => cleanCategory(c));
+	return JSON.stringify(cleanedCategories);
 };

@@ -1,4 +1,4 @@
-import { toVisitsJSON } from '$lib/server/serialization';
+import { toVisitorsJSON } from '$lib/server/serialization';
 import { isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
@@ -6,14 +6,14 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const visits = await locals.prisma.visit.findMany({
+	const visitors = await locals.prisma.visitor.findMany({
 		where: {
 			organisation_id: params.organisationId,
-			event_id: params.visitId
+			eventId: params.visitId
 		},
 		include: {
 			user: true
 		}
 	});
-	return new Response(toVisitsJSON(visits));
+	return new Response(toVisitorsJSON(visitors));
 }

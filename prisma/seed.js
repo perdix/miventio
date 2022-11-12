@@ -22,6 +22,7 @@ async function main() {
 	await prisma.eventTicket.deleteMany({});
 	await prisma.activity.deleteMany({});
 	await prisma.booking.deleteMany({});
+	await prisma.participationCategory.deleteMany({});
 	await prisma.event.deleteMany({});
 	await prisma.organisation.deleteMany({});
 

@@ -6,7 +6,7 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const ticket = await locals.prisma.ticket.findFirst({
+	const ticket = await locals.prisma.eventTicket.findFirst({
 		where: {
 			id: params.ticketId,
 			event_id: params.eventId
@@ -21,12 +21,34 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	data.date = new Date(Date.parse(data.date));
-	const ticket = await locals.prisma.ticket.update({
+
+	const ticket = await locals.prisma.eventTicket.update({
 		where: {
 			id: params.ticketId
 		},
-		data: data
+		data: {
+			name: data.name,
+			price: data.price,
+			availableFrom: data.availableFrom ? new Date(Date.parse(data.availableFrom)): null,
+			availableTo: data.availableTo ? new Date(Date.parse(data.availableTo)): null,
+			dayTicketDate: data.dayTicketDate ? new Date(Date.parse(data.dayTicketDate)): null,
+			participationCategoryId: data.participationCategoryId
+		}, 
+		select: {	
+			id: true,
+			name: true,
+			price: true,
+			availableFrom: true,
+			availableTo: true,
+			dayTicketDate: true,
+			participationCategoryId: true,
+			participationCategory: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		}
 	});
 
 	return new Response(toTicketJSON(ticket), { status: 200 });
@@ -37,7 +59,7 @@ export async function DELETE({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const deletedTicket = await locals.prisma.ticket.delete({
+	const deletedTicket = await locals.prisma.eventTicket.delete({
 		where: {
 			id: params.ticketId
 		}

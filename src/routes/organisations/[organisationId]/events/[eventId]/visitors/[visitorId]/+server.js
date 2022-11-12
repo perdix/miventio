@@ -1,4 +1,4 @@
-import { toVisitJSON } from '$lib/server/serialization';
+import { toVisitorJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
@@ -6,17 +6,17 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const visit = await locals.prisma.visit.findFirst({
+	const visitor = await locals.prisma.visitor.findFirst({
 		where: {
-			id: params.visitId,
-			event_id: params.eventId
+			id: params.visitorId,
+			eventId: params.eventId
 		},
 		include: {
 			ticket: true,
 			activities: true
 		}
 	});
-	return new Response(toVisitJSON(visit));
+	return new Response(toVisitorJSON(visitor));
 }
 
 export async function PUT({ locals, params, request }) {
@@ -27,14 +27,14 @@ export async function PUT({ locals, params, request }) {
 	const data = await request.json();
 
 	// Update status of visit
-	const visit = await locals.prisma.visit.update({
+	const visitor = await locals.prisma.visit.update({
 		where: {
-			id: params.visitId
+			id: params.visitorId
 		},
 		data: {
 			status: data.status
 		}
 	});
 
-	return new Response(toVisitJSON(visit), { status: 200 });
+	return new Response(toVisitorJSON(visitor), { status: 200 });
 }

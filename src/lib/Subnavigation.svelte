@@ -1,13 +1,12 @@
 <script>
     export let items = []
-    export let activeItem = ""
     import { organisation } from '$lib/store/organisation';
 </script>
 
 <nav class="subnav">
     <ul>
         {#each items as item}
-            {#if item.name == activeItem}
+            {#if item.status == 'active'}
                 <li><a href="/organisation/{$organisation.id}/{item.slug}" class="active">{item.name}</a></li>
             {:else}
             <li><a href="/organisation/{$organisation.id}/{item.slug}">{item.name}</a></li>
@@ -41,7 +40,6 @@
     transition: all 0.5s;
 }
 .subnav ul li a:hover, .subnav ul li a.active {
-    /* color: white; */
     background: rgba(255, 255, 255, 0.366);
     transition: all 0.5s;
 }

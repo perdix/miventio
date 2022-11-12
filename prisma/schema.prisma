@@ -77,7 +77,7 @@ model Contact {
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
   visitors Visitor[]
-  membershipTickets MembershipTicket[]
+  membershipFees MembershipFee[]
   membershipId String?
   membership Membership? @relation(fields: [membershipId], references: [id])
   @@unique([firstName, lastName, email])
@@ -91,14 +91,14 @@ model Membership{
   description String?
   price Float @default(0)
   color String @default("#FFFFFF")
-  membershipTickets MembershipTicket[]
+  membershipFees MembershipFee[]
   contacts Contact[]
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
 }
 
-// A membership ticket is valid for a given year
-model MembershipTicket {
+// A membership must be paid every year
+model MembershipFee {
   id  String  @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -128,30 +128,30 @@ model Event {
   website String?
   bookingStart DateTime?
   bookingEnd DateTime?
-  visitorCategories VisitorCategory[]
   activities Activity[]
   bookings Booking[]
   eventTickets EventTicket[]
   visitors Visitor[]
+  participationCategories ParticipationCategory[]
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
 }
 
-// To book
+// To book an event you need a ticket
 model EventTicket {
   id        String  @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name  String
   price Float? @default(0)
-  validFrom DateTime
-  validTo DateTime
-  visitorCategoryId String?
-  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
-  date DateTime?
+  availableFrom DateTime?
+  availableTo DateTime?
+  dayTicketDate DateTime?
   eventId String
   event Event @relation(fields: [eventId], references: [id])
   visitors Visitor[]
+  participationCategoryId String?
+  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
 }
 
 // Each event can have several activities/subevents
@@ -184,13 +184,12 @@ model ActivityTicket {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name String?
-  description String?
-  visitorCategoryId String
-  visitorCategory VisitorCategory @relation(fields: [visitorCategoryId], references: [id])
   activityId String
   activity Activity @relation(fields: [activityId], references: [id])
   visitors Visitor[]
   price Float @default(0)
+  participationCategoryId String?
+  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
 }
 
 // A booking is a complete order to access an event with one or several visitors
@@ -212,12 +211,12 @@ model Booking {
   visitors Visitor[]
 }
 
-// The booking contains one or many visitors. A visitor is like an item of the booking.
+// The booking can contain one or more visitors. A visitor can exist without a booking as well.
 model Visitor {
   id  String  @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  status String? @default("RESERVED")
+  status String?
   price Float
   eventTicketPrice Float
   eventId String
@@ -234,19 +233,20 @@ model Visitor {
   email String
   contactId String?
   contact Contact? @relation(fields: [contactId], references: [id])
-  categoryId String
-  category VisitorCategory @relation(fields: [categoryId], references: [id])
+  category String?
+  participationCategoryId String?
+  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
 }
 
-model VisitorCategory {
+
+model ParticipationCategory {
   id  String  @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name String
-  isContact Boolean @default(false)
   visitors Visitor[]
-  eventTickets EventTicket[]
   activityTickets ActivityTicket[]
+  eventTickets EventTicket[]
   eventId String
   event Event @relation(fields: [eventId], references: [id])
 }

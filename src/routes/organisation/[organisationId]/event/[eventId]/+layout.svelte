@@ -4,17 +4,60 @@
 	import Time from 'svelte-time';
 	import { event } from '$lib/store/event';
 	$event = { ...$page.data.event };
+	import Subnavigation from '$lib/Subnavigation.svelte';
+	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
+
+
 
 	export let sections = [
-		{ slug: 'info', title: 'Allgemeine Infos', icon: 'info' },
-		{ slug: 'tickets', title: 'Teilnahme', icon: 'confirmation_number' },
+		{ slug: 'info', title: 'Allgemeine Daten', icon: 'info' },
+		{ slug: 'categories', title: 'Teilnahmekategorien', icon: 'category' },
+		{ slug: 'tickets', title: 'Ticketvarianten', icon: 'confirmation_number' },
 		{ slug: 'activities', title: 'Programm', icon: 'calendar_view_week' },
 		// { slug: 'form', title: 'Formular', icon: 'table' },
 		// { slug: 'hotels', title: 'Hotels', icon: 'hotel' },
 		{ slug: 'bookings', title: 'Buchungen', icon: 'payments' },
 		{ slug: 'visits', title: 'Besucher', icon: 'badge' }
 	];
+
+	const subNavItems = [
+        {
+            name: 'Veranstaltungen',
+            slug: 'events',
+			status: 'active'
+        },
+        // {
+        //     name: 'Aussteller',
+        //     slug: "exhibitors"
+        // },
+        // 
+        //     name: 'Hotels',
+        //     slug: "hotels",
+        // },
+        {
+            name: 'Lieferanten',
+            slug: "contractors"
+        },
+        // {
+        //     name: 'Referenten',
+        //     slug: "speakers",
+        // },
+    ]
+
+	let links = [
+		{
+            name: 'Veranstaltungen',
+            url: `/organisation/${$page.params.organisationId}/events`
+        },
+		{
+            name: $event.name,
+            url: `/organisation/${$page.params.organisationId}/event/${$page.params.eventId}`
+        }
+	];
 </script>
+
+<!-- <Subnavigation items={subNavItems}></Subnavigation>	 -->
+<Breadcrumbs links={links}></Breadcrumbs>
 
 <div class="wrapper">
 	<aside>
@@ -62,7 +105,7 @@
 	}
 	aside {
 		width: 24%;
-		min-width: 400px;
+		min-width: 300px;
 	}
 	section {
 		width: 76%;
@@ -71,9 +114,9 @@
 		display: block;
 	}
 	nav div {
-		padding: calc(var(--unit) * 2);
+		padding: calc(var(--unit) * 1);
 		background-color: var(--white);
-		min-height: 300px;
+		min-height: 200px;
 		display: flex;
 		justify-content: flex-end;
 		flex-direction: column;
@@ -106,10 +149,11 @@
 	nav ul li a {
 		display: block;
 		width: 100%;
-		padding: var(--unit);
-		padding-left: 50px;
-		font-size: 1.7em;
-		color: var(--darkgrey);
+		padding: 20px;
+		padding-left: 20px;
+		font-size: 1.5em;
+		font-weight: 300;
+		color: var(--black);
 		border-left: 10px solid transparent;
 	}
 	nav a span {

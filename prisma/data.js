@@ -100,27 +100,27 @@ export const eventTickets = [
 	{
 		name: 'Ticket 1',
 		price: 32.5,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 2',
 		price: 50,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 3',
 		price: 50,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24'),
-		date: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24'),
+		dayTicketDate: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 4',
 		price: 150,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	}
 ];
 
