@@ -20,15 +20,20 @@ export async function POST({ locals, params, request }) {
 	}
 
 	const data = await request.json();
+	console.log(data);
 	
 	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start;
-	data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
-	
+	let end = null;
+	if (data.end) {
+		data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		data.end = new Date(Date.parse(data.end));
+	}
+
 	const activity = await locals.prisma.activity.create({
 		data: {
 			name: data.name,
 			start: new Date(Date.parse(data.start)),
-			end: new Date(Date.parse(data.end)),
+			end: end,
 			date: new Date(Date.parse(data.date)),
 			description: data.description,
 			limit: data.limit,
@@ -60,8 +65,8 @@ export async function POST({ locals, params, request }) {
 					id: true,
 					name: true,
 					price: true,
-					participationCategoryId: true,
-					participationCategory: {
+					visitorCategoryId: true,
+					visitorCategory: {
 						select: {
 							id: true,
 							name: true

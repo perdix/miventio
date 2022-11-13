@@ -29,7 +29,7 @@ export async function POST({ locals, params, request }) {
 			availableFrom: data.availableFrom ? new Date(Date.parse(data.availableFrom)): null,
 			availableTo: data.availableTo ? new Date(Date.parse(data.availableTo)): null,
 			dayTicketDate: data.dayTicketDate ? new Date(Date.parse(data.dayTicketDate)): null,
-			participationCategoryId: data.participationCategoryId,
+			visitorCategoryId: data.visitorCategoryId,
 			eventId: params.eventId
 		}, 
 		select: {	
@@ -39,8 +39,8 @@ export async function POST({ locals, params, request }) {
 			availableFrom: true,
 			availableTo: true,
 			dayTicketDate: true,
-			participationCategoryId: true,
-			participationCategory: {
+			visitorCategoryId: true,
+			visitorCategory: {
 				select: {
 					id: true,
 					name: true

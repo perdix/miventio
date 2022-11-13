@@ -6,7 +6,7 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const category = await locals.prisma.participationCategory.findFirst({
+	const category = await locals.prisma.visitorCategory.findFirst({
 		where: {
 			id: params.categoryId,
 			eventId: params.eventId
@@ -21,7 +21,7 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	const category = await locals.prisma.participationCategory.update({
+	const category = await locals.prisma.visitorCategory.update({
 		where: {
 			id: params.categoryId
 		},
@@ -36,7 +36,7 @@ export async function DELETE({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const deletedCategory = await locals.prisma.participationCategory.delete({
+	const deletedCategory = await locals.prisma.visitorCategory.delete({
 		where: {
 			id: params.categoryId
 		}

@@ -132,7 +132,7 @@ model Event {
   bookings Booking[]
   eventTickets EventTicket[]
   visitors Visitor[]
-  participationCategories ParticipationCategory[]
+  visitorCategories VisitorCategory[]
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
 }
@@ -150,8 +150,8 @@ model EventTicket {
   eventId String
   event Event @relation(fields: [eventId], references: [id])
   visitors Visitor[]
-  participationCategoryId String?
-  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
+  visitorCategoryId String?
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
 }
 
 // Each event can have several activities/subevents
@@ -188,11 +188,11 @@ model ActivityTicket {
   activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
   visitors Visitor[]
   price Float @default(0)
-  participationCategoryId String?
-  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
+  visitorCategoryId String?
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
 }
 
-// A booking is a complete order to access an event with one or several visitors
+// A booking is a complete order with one or several visitors
 model Booking {
   id        String  @id @default(cuid())
   createdAt DateTime @default(now())
@@ -211,7 +211,7 @@ model Booking {
   visitors Visitor[]
 }
 
-// The booking can contain one or more visitors. A visitor can exist without a booking as well.
+// Attendee of an event
 model Visitor {
   id  String  @id @default(cuid())
   createdAt DateTime @default(now())
@@ -233,17 +233,20 @@ model Visitor {
   email String
   contactId String?
   contact Contact? @relation(fields: [contactId], references: [id])
-  category String?
-  participationCategoryId String?
-  participationCategory ParticipationCategory? @relation(fields: [participationCategoryId], references: [id])
+  visitorCategoryId String?
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
 }
 
 
-model ParticipationCategory {
+model VisitorCategory {
   id  String  @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name String
+  description String?
+  saveToContacts Boolean @default(false)
+  isPublic Boolean @default(false)
+  type String?
   visitors Visitor[]
   activityTickets ActivityTicket[]
   eventTickets EventTicket[]

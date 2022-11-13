@@ -7,16 +7,18 @@
 	import Time from 'svelte-time';
 	import { bookingStatuses } from '$lib/store/constants';
 
+
+
 	$: activityCategories = [...new Set($event.activities.map((a) => a.category))];
 
 	let booking = {
-		visits: [
+		visitors: [
 			{
-				user: { first_name: '' },
+				user: { firstName: '' },
 				ticket: {},
 				activities: [],
-				activities_ids: [],
-				activities_prices: []
+				activitiesIds: [],
+				activitiesPrices: []
 			}
 		],
 		phone: ''
@@ -30,13 +32,13 @@
 
 	const newBooking = () => {
 		booking = {
-			visits: [
+			visitors: [
 				{
-					user: { first_name: '' },
+					user: { firstName: '' },
 					ticket: {},
 					activities: [],
-					activities_ids: [],
-					activities_prices: []
+					activitiesIds: [],
+					activitiesPrices: []
 				}
 			],
 			phone: ''
@@ -49,30 +51,30 @@
 		booking = editBooking;
 		popupTitle = 'Buchung bearbeiten';
 		// Map activities to ids to work with checkboxes
-		booking.visits.forEach((v) => {
+		booking.visitors.forEach((v) => {
 			if ('activities' in v) {
-				v.activities_ids = v.activities.map((a) => a.id);
+				v.activitiesIds = v.activities.map((a) => a.id);
 			}
 		});
 		togglePopup();
 	};
 
 	const addVisit = () => {
-		booking.visits.unshift({
-			user: { first_name: '' },
+		booking.visitors.unshift({
+			user: { firstName: '' },
 			ticket: {},
 			activities: [],
-			activities_ids: [],
-			activities_prices: []
+			activitiesIds: [],
+			activitiesPrices: []
 		});
 		booking = booking;
 	};
 
 	const deleteVisit = async (item) => {
 		if (item.id != null) {
-			booking.visits = booking.visits.filter((v) => v.id != item.id);
+			booking.visitors = booking.visitors.filter((v) => v.id != item.id);
 		} else {
-			booking.visits = booking.visits.filter((v) => v.user.first_name != item.user.first_name);
+			booking.visitors = booking.visitors.filter((v) => v.user.firstName != item.user.firstName);
 		}
 	};
 
@@ -134,7 +136,7 @@
 					</a>
 				</div>
 				<div class="scroll">
-					{#each booking.visits as item}
+					{#each booking.visitors as item}
 						<div class="row visit">
 							<div class="md-12 flex">
 								<h3>Besucher</h3>
@@ -144,11 +146,11 @@
 							</div>
 							<div class="md-3">
 								<label for="firstname">Vorname</label>
-								<input id="firstname" type="text" bind:value={item.user.first_name} required />
+								<input id="firstname" type="text" bind:value={item.user.firstName} required />
 							</div>
 							<div class="md-4">
 								<label for="lastname">Nachname</label>
-								<input id="lastname" type="text" bind:value={item.user.last_name} required />
+								<input id="lastname" type="text" bind:value={item.user.lastName} required />
 							</div>
 							<div class="md-5">
 								<label for="email">E-Mail</label>
@@ -156,10 +158,10 @@
 							</div>
 							<div class="md-12">
 								<label for="ticket">Ticket</label>
-								<select id="ticket" bind:value={item.ticket_id} required>
-									{#each $event.tickets as ticket}
+								<select id="ticket" bind:value={item.eventTicketId} required>
+									{#each $event.eventTickets as ticket}
 										<option value={ticket.id}
-											>{ticket.category} - {ticket.name} ({ticket.price}€)</option
+											> {ticket.name} ({ticket.price}€)</option
 										>
 									{/each}
 								</select>
@@ -239,11 +241,11 @@
 					</div>
 					<div class="md-6">
 						<label for="firstname">Vorname</label>
-						<input id="firstname" type="text" bind:value={booking.first_name} required />
+						<input id="firstname" type="text" bind:value={booking.firstName} required />
 					</div>
 					<div class="md-6">
 						<label for="lastname">Nachname</label>
-						<input id="lastname" type="text" bind:value={booking.last_name} required />
+						<input id="lastname" type="text" bind:value={booking.lastName} required />
 					</div>
 					<div class="md-12">
 						<label for="address">Adresse</label>
@@ -297,14 +299,14 @@
 					<td>
 						{#each booking.visits as item}
 							<div class="bookingdetails">
-								<h3>{item.user.first_name} {item.user.last_name}</h3>
-								<p>{item.ticket.name}</p>
+								<h3>{item.user.firstName} {item.user.lastName}</h3>
+								<p>{item.eventTicket.name}</p>
 							</div>
 						{/each}
 					</td>
 					<td>
-						{booking.first_name}
-						{booking.last_name} <br />
+						{booking.firstName}
+						{booking.lastName} <br />
 						{booking.address}
 						{booking.city}<br />
 						{booking.email}

@@ -87,8 +87,8 @@
 
 		<div class="md-6">
 			<label for="category">Teilnehmer-Kategorie</label>
-			<select name="category" id="category" bind:value={ticket.participationCategoryId}>
-				{#each $event.participationCategories as category}
+			<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
+				{#each $event.visitorCategories as category}
 					<option value={category.id}>{category.name}</option>
 				{/each}
 			</select>
@@ -149,7 +149,7 @@
 				<td>
 					{ticket.name}
 				</td>
-				<td>{#if ticket.participationCategory}{ticket.participationCategory.name}{/if} </td>
+				<td>{#if ticket.visitorCategory}{ticket.visitorCategory.name}{/if} </td>
 				<td>{#if ticket.price}{ticket.price} €{/if}</td>
 				<td>{#if ticket.dayTicketDate}{ticket.dayTicketDate.substring(0,10)} {/if}</td>
 				<td>{#if ticket.availableFrom}{ticket.availableFrom.substring(0,10)} {/if}</td>

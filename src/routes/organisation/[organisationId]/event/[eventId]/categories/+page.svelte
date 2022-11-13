@@ -34,7 +34,7 @@
 		);
 		if (res.status === 200) {
 			const deletedCategory = await res.json();
-			$event.participationCategories = $event.participationCategories.filter((c) => c.id != category.id);
+			$event.visitorCategories = $event.visitorCategories.filter((c) => c.id != category.id);
 			togglePopup();
 		}
 	};
@@ -51,7 +51,7 @@
 			);
 			if (res.status === 200) {
 				const updatedCategory = await res.json();
-				$event.participationCategories.map((c) => (c.id == updatedCategory.id ? updatedCategory : c));
+				$event.visitorCategories.map((c) => (c.id == updatedCategory.id ? updatedCategory : c));
 				$event = $event;
 				togglePopup();
 			}
@@ -65,7 +65,7 @@
 			);
 			if (res.status === 201) {
 				const newCategory = await res.json();
-				$event.participationCategories.push(newCategory);
+				$event.visitorCategories.push(newCategory);
 				$event = $event;
 				togglePopup();
 			}
@@ -101,7 +101,7 @@
 </Header>
 
 <Content>
-	{#if $event.participationCategories.length > 0}
+	{#if $event.visitorCategories.length > 0}
 		<table>
 			<thead>
 				<tr>
@@ -110,7 +110,7 @@
 			
 			</thead>
 			<tbody>
-				{#each $event.participationCategories as category}
+				{#each $event.visitorCategories as category}
 					<tr on:click={() => editCategory(category)}>
 						<td>
 							{category.name}

@@ -5,7 +5,7 @@
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
 
-	let activity = { activityTickets: []};
+	let activity = { activityTickets: [{}]};
 	let showPopup = false;
 	let popupTitle = '';
 
@@ -29,7 +29,7 @@
 	};
 
 	const newActivity = () => {
-		activity = {activityTickets: []};
+		activity = {activityTickets: [{}]};
 		popupTitle = 'Neue Aktivität';
 		togglePopup();
 	};
@@ -38,7 +38,9 @@
 		activity = act;
 		activity.date = activity.date.length > 10 ? activity.date.substring(0,10) : activity.date;
 		activity.start = activity.start.length > 5 ? activity.start.substring(11,16) : activity.start;
-		activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
+		if (activity.end != null) {
+			activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
+		}
 		popupTitle = 'Aktivität bearbeiten';
 		togglePopup();
 	};
@@ -88,11 +90,11 @@
 		}
 	};
 	const addTicket = () => {
-		activity.activityTickets.push({ participationCategoryId: null, name: ''});
+		activity.activityTickets.push({});
 		activity = activity;
 	}
 	const deleteTicket = (ticket) => {
-		let filtered = activity.activityTickets.filter(a => ((a.name != ticket.name) || (a.participationCategory.name != ticket.participationCategory.name)));
+		let filtered = activity.activityTickets.filter(a => ((a.name != ticket.name) || (a.visitorCategoryId != ticket.visitorCategoryId)));
 		activity.activityTickets = filtered;
 	}
 </script>
@@ -133,42 +135,45 @@
 				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." />
 			</div>
 			<div class="md-4">
-				<label for="limit">Limit</label>
+				<label for="limit">Besucherlimit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
+			
 			<div class="md-12">
 				<br><br>
-				<h2 class="ticket-section">
-					Tickets
-					<span class="material-symbols-outlined add" on:click={addTicket}>add_circle</span>
-				</h2>
+				<div class="mini-header">
+					<h2>Zutrittsbeschänkung</h2>
+					<button class="icon" on:click|preventDefault={addTicket}>
+						<span class="material-symbols-outlined">person_add</span>
+					</button>
+				</div>
+				<div class="mini-content">
+					{#each activity.activityTickets as ticket}
+					<div class="row item">
+						<div class="md-12">
+							<div class="mini-header">
+							<h3>Ticket</h3>
+							<button class="mini-icon" on:click|preventDefault={() => deleteTicket(ticket)}>
+								<span class="material-symbols-outlined">delete</span>
+							</button>
+							</div>
+						</div>
+						<div class="md-6">
+							<label for="category">Teilnehmer-Kategorie</label>
+							<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
+								{#each $event.visitorCategories as category}
+									<option value={category.id}>{category.name}</option>
+								{/each}
+							</select>
+						</div>
+						<div class="md-6">
+							<label for="price">Preis in Euro</label>
+							<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
+						</div>
+					</div>
+					{/each}
+				</div>
 			</div>
-	
-		
-			{#each activity.activityTickets as ticket}
-				<div class="md-1">
-					<span class="material-symbols-outlined rm" on:click={() => deleteTicket(ticket)}>delete</span>
-				</div>
-				<!-- <div class="md-4">
-					<label for="name">Name</label>
-					<input id="name" type="text" bind:value={ticket.name} />
-				</div> -->
-				<div class="md-6">
-					<label for="category">Teilnehmer-Kategorie</label>
-					<select name="category" id="category" bind:value={ticket.participationCategoryId}>
-						{#each $event.participationCategories as category}
-							<option value={category.id}>{category.name}</option>
-						{/each}
-					</select>
-				</div>
-				<div class="md-5">
-					<label for="price">Preis in Euro</label>
-					<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
-				</div>
-
-		
-			{/each}
-			
 	
 			<div class="md-6 submit">
 				<button type="submit">Speichern</button>
@@ -192,39 +197,45 @@
 
 		{#each days as day}
 		<h2>{weekdays[day.getDay()]}, {day.toLocaleDateString('de-AT')}</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Typ</th>
-					<th>Datum</th>
-					<th>Zeit</th>
-					<th>Besucher-Limit</th>
-					<th>Tickets</th>
-				</tr>
-			</thead>
-			<tbody>	
+
+		{#if $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)).length > 0}
+			<table>
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Typ</th>
+						<th>Datum</th>
+						<th>Zeit</th>
+						<th>Besucherlimit</th>
+						<th>Tickets</th>
+					</tr>
+				</thead>
+				<tbody>	
 				{#each $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)) as activity}
 					<tr on:click={() => editActivity(activity)}>
 						<td>{activity.name}</td>
 						<td>{activity.type || ''}</td>
 						<td>{activity.date.substring(0,10)}</td>
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
-							{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}</td>
-
+							{#if activity.end}
+								{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}
+							{/if}
+						</td>
 						<td>{activity.limit || '-'}</td>
 						<td>
 							{#each activity.activityTickets as ticket}
 								<span class="ticket">
-									{ticket.participationCategory.name||''} | {ticket.price}€
+									{ticket.visitorCategory.name||''} | {ticket.price}€
 								</span>
 							{/each}
 						</td>
 					</tr>
 				{/each}
-			</tbody>
-		</table>
-
+				</tbody>
+			</table>
+		{:else}
+		<p class="info">Noch keine Aktivität vorhanden</p>
+	   {/if}
 		<br>
 		<br>
 		{/each}
@@ -241,28 +252,6 @@
 		font-weight: 300;
 		color: var(--black);
 	}
-	.ticket-section {
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-	}
-	.add, .rm {
-		border-radius: 50%;
-		display: inline-block;
-		padding: 3px;
-		color: var(--color-1);
-		font-size: 20px;
-		cursor: pointer;
-		transition: all 0.3s;
-	}
-	.add:hover, .rm:hover {
-		color: var(--color-1-dark);
-		transition: all 0.3s;
-	}
-	.rm {
-		margin-top: 45px;
-    	margin-left: 30px;
-	}
 	.ticket {
 		background-color: var(--grey);
 		color:var(--color-1-dark);
@@ -270,5 +259,20 @@
 		display: inline-block;
 		margin-right: 2px;
 		font-size: 0.9rem;
+	}
+	.mini-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.item {
+		background-color: var(--grey);
+		padding: 10px;
+		margin-top: 10px;
+		border-radius: var(--corner);
+	}
+	.info {
+		padding: var(--unit);
+		background-color: var(--white);
 	}
 </style>

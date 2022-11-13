@@ -17,7 +17,7 @@
 		// { slug: 'form', title: 'Formular', icon: 'table' },
 		// { slug: 'hotels', title: 'Hotels', icon: 'hotel' },
 		{ slug: 'bookings', title: 'Buchungen', icon: 'payments' },
-		{ slug: 'visits', title: 'Besucher', icon: 'badge' }
+		{ slug: 'visitors', title: 'Besucher', icon: 'badge' }
 	];
 
 	const subNavItems = [

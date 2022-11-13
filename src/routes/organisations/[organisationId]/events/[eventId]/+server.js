@@ -20,8 +20,8 @@ export async function GET({ locals, params }) {
 					availableFrom: true,
 					availableTo: true,
 					dayTicketDate: true,
-					participationCategoryId: true,
-					participationCategory: {
+					visitorCategoryId: true,
+					visitorCategory: {
 						select: {
 							id: true,
 							name: true
@@ -70,8 +70,8 @@ export async function GET({ locals, params }) {
 							id: true,
 							name: true,
 							price: true,
-							participationCategoryId: true,
-							participationCategory: {
+							visitorCategoryId: true,
+							visitorCategory: {
 								select: {
 									id: true,
 									name: true
@@ -101,7 +101,7 @@ export async function GET({ locals, params }) {
 					}
 				}
 			},
-			participationCategories: {
+			visitorCategories: {
 				select: {
 					id: true,
 					name: true,

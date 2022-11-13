@@ -167,7 +167,7 @@ export const toMembershipsJSON = (memberships) => {
 };
 
 
-// ParticipationCategory
+// VisitorCategory
 const cleanCategory = (category) => {
 	delete category.updatedAt;
 	delete category.createdAt;

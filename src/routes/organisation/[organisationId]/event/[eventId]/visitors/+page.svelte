@@ -6,32 +6,43 @@
 	import { visitStatuses } from '$lib/store/constants';
 	import Popup from '$lib/Popup.svelte';
 
-	let visit = { user: {} };
+	let visitor = {};
 	let showPopup = false;
 	let popupTitle = '';
+
+
+
+	console.log($event.visitors)
+	console.log("----------------")
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
 
-	const editVisit = (editVisit) => {
-		visit = editVisit;
+	const newVisitor = () => {
+		visitor = {};
+		popupTitle = 'Neuer Besucher';
+		togglePopup();
+	};
+
+	const editVisitor = (v) => {
+		visitor = v;
 		popupTitle = 'Besucher bearbeiten';
 		togglePopup();
 	};
 
-	const saveVisit = async () => {
-		if ('id' in visit) {
+	const saveVisitor = async () => {
+		if ('id' in visitor) {
 			const res = await fetch(
-				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visits/${visit.id}`,
+				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visits/${visitor.id}`,
 				{
 					method: 'PUT',
 					body: JSON.stringify(visit)
 				}
 			);
 			if (res.status === 200) {
-				const updatedVisit = await res.json();
-				$event.visits.map((v) => (v.id == updatedVisit.id ? updatedVisit : v));
+				const updatedVisitoror = await res.json();
+				$event.visitors.map((v) => (v.id == updatedVisitoror.id ? updatedVisitoror : v));
 				$event = $event;
 				togglePopup();
 			}
@@ -40,22 +51,22 @@
 </script>
 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
-	<form class="miventio row" on:submit|preventDefault={saveVisit}>
+	<form class="miventio row" on:submit|preventDefault={saveVisitor}>
 		<div class="md-6">
 			<label for="firstname">Vorname</label>
-			<input id="firstname" type="text" bind:value={visit.user.first_name} required />
+			<input id="firstname" type="text" bind:value={visitor.firstName} required />
 		</div>
 		<div class="md-6">
 			<label for="lastname">Nachname</label>
-			<input id="lastname" type="text" bind:value={visit.user.last_name} required />
+			<input id="lastname" type="text" bind:value={visitor.lastName} required />
 		</div>
 		<div class="md-6">
 			<label for="email">E-Mail</label>
-			<input id="email" type="email" bind:value={visit.user.email} />
+			<input id="email" type="email" bind:value={visitor.email} />
 		</div>
 		<div class="md-6">
 			<label for="status">Status</label>
-			<select name="Status" id="status" bind:value={visit.status}>
+			<select name="Status" id="status" bind:value={visitor.status}>
 				{#each $visitStatuses as status}
 					<option value={status}>{status}</option>
 				{/each}
@@ -67,7 +78,12 @@
 	</form>
 </Popup>
 
-<Header title={'Besucher'} />
+<Header title={'Besucher'} >
+	<button on:click={newVisitor}>
+		<span>Neuer Besucher</span>
+		<span class="material-symbols-outlined">add_circle</span>
+	</button>
+</Header>
 
 <Content>
 	<table>
@@ -80,18 +96,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each $event.visitors as visit}
-				<tr on:click={() => editVisit(visit)}>
+			{#each $event.visitors as visitor}
+				<tr on:click={() => editVisitor(visit)}>
 					<td>
-						{visit.user.first_name}
+						{visitor.firstName}
 					</td>
 					<td>
-						{visit.user.last_name}
+						{visitor.lastName}
 					</td>
 					<td>
-						{visit.user.email}
+						{visitor.email}
 					</td>
-					<td><span class:paid={visit.status.toUpperCase() == 'BEZAHLT'}>{visit.status}</span></td>
+					<td><span class:paid={visitor.status.toUpperCase() == 'BEZAHLT'}>{visitor.status}</span></td>
 				</tr>
 			{/each}
 		</tbody>

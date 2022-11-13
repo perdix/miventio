@@ -6,7 +6,7 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const categories = await locals.prisma.participationCategory.findMany({
+	const categories = await locals.prisma.visitorCategory.findMany({
 		where: {
 			eventId: params.eventId
 		},
@@ -23,7 +23,7 @@ export async function POST({ locals, params, request }) {
 	}
 	const data = await request.json();
 	data.eventId = params.eventId;
-	const category = await locals.prisma.participationCategory.create({
+	const category = await locals.prisma.visitorCategory.create({
 		data: data
 	});
 
