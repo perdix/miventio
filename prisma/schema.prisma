@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// This is a Prisma schema file. All database entities are defined here
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,6 +7,8 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+
 
 // Organisation users that manage the organisation
 model User {
@@ -53,9 +53,6 @@ model Contact {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   lastLogin DateTime?
-  oegbId String?
-  efpId String?
-  zaekId String?
   firstName String
   lastName  String
   gender String?
@@ -71,8 +68,10 @@ model Contact {
   website String?
   company String?
   notes   String?
+  fields Json?
   newsletterConfirmation Boolean @default(false)
   status String?
+  type String?
   gdprConfirmation Boolean @default(false)
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
@@ -91,7 +90,7 @@ model Membership{
   description String?
   price Float @default(0)
   color String @default("#FFFFFF")
-  membershipFees MembershipFee[]
+  fees MembershipFee[]
   contacts Contact[]
   organisationId String
   organisation Organisation @relation(fields: [organisationId], references: [id])
@@ -129,8 +128,9 @@ model Event {
   bookingStart DateTime?
   bookingEnd DateTime?
   activities Activity[]
+  activityTickets ActivityTicket[]
   bookings Booking[]
-  eventTickets EventTicket[]
+  tickets EventTicket[]
   visitors Visitor[]
   visitorCategories VisitorCategory[]
   organisationId String
@@ -175,7 +175,7 @@ model Activity {
   credits Float?
   logo String?
   type String? // Can be choosen freely. E.g. workshop, lecture, party, ...
-  activityTickets ActivityTicket[]
+  tickets ActivityTicket[]
   visitors Visitor[]
 }
 
@@ -190,6 +190,8 @@ model ActivityTicket {
   price Float @default(0)
   visitorCategoryId String?
   visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
+  eventId String
+  event Event @relation(fields: [eventId], references: [id])
 }
 
 // A booking is a complete order with one or several visitors
@@ -204,7 +206,7 @@ model Booking {
   postcode String
   city String
   phone String?
-  status String @default("CREATED")
+  status String @default("GEBUCHT")
   price Float
   eventId String
   event Event @relation(fields: [eventId], references: [id])
@@ -223,18 +225,19 @@ model Visitor {
   event Event @relation(fields: [eventId], references: [id])
   eventTicketId String?
   eventTicket EventTicket? @relation(fields: [eventTicketId], references: [id])
-  activitiesTicketsPrices Json // A list of all ticket prices of the selected activity tickets
+  activityTicketsPrices Json // A list of all ticket prices of the selected activity tickets
   activities Activity[]
-  activitiesTickets ActivityTicket[]
-  bookingId String
-  booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  activityTickets ActivityTicket[]
+  bookingId String?
+  booking Booking? @relation(fields: [bookingId], references: [id])
   firstName String
   lastName  String
+  type String?
   email String
-  contactId String?
   contact Contact? @relation(fields: [contactId], references: [id])
-  visitorCategoryId String?
-  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
+  contactId String?
+  categoryId String?
+  category VisitorCategory? @relation(fields: [categoryId], references: [id])
 }
 
 
@@ -244,8 +247,6 @@ model VisitorCategory {
   updatedAt DateTime @updatedAt
   name String
   description String?
-  saveToContacts Boolean @default(false)
-  isPublic Boolean @default(false)
   type String?
   visitors Visitor[]
   activityTickets ActivityTicket[]

@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
+	import { visitorTypes } from '$lib/store/constants'
 
 	let category = { };
 	let showPopup = false;
@@ -51,8 +52,7 @@
 			);
 			if (res.status === 200) {
 				const updatedCategory = await res.json();
-				$event.visitorCategories.map((c) => (c.id == updatedCategory.id ? updatedCategory : c));
-				$event = $event;
+				$event.visitorCategories = $event.visitorCategories.map((c) => (c.id == updatedCategory.id ? updatedCategory : c));
 				togglePopup();
 			}
 		} else {
@@ -76,9 +76,21 @@
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
 	
 	<form class="miventio row" on:submit|preventDefault={saveCategory}>
-		<div class="md-12">
+		<div class="md-6">
 			<label for="name">Name</label>
 			<input id="name" type="text" bind:value={category.name} required />
+		</div>
+		<div class="md-6">
+			<label for="type">Typ</label>
+			<select name="type" id="type" bind:value={category.type} required>
+				{#each $visitorTypes as type}
+					<option value={type}>{type}</option>
+				{/each}
+			</select>
+		</div>
+		<div class="md-12">
+			<label for="desc">Beschreibung</label>
+			<input id="desc" type="text" bind:value={category.description} />
 		</div>
 		<div class="md-6 submit">
 			<button type="submit">Speichern</button>
@@ -106,6 +118,8 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th>Typ</th>
+					<th>Bechreibung</th>
 				</tr>
 			
 			</thead>
@@ -115,12 +129,18 @@
 						<td>
 							{category.name}
 						</td>
+						<td>
+							{category.type}
+						</td>
+						<td>
+							{category.description || ''}
+						</td>
 					</tr>
 				{/each}
 			</tbody>
 		</table>
 	{:else}
-		<p>Sie können Teilnehmer in Kategorie einteilen, um später unterschiedliche Ticketpreise festzulegen. </p>
+		<p>Veranstaltungsteilnehmer werden in Kategorien unterteilt (z.B. Student, Ehrengast, Allgemein, ...). </p>
 	
 	{/if}
 

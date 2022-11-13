@@ -228,6 +228,10 @@ a:hover {
 	width: calc((100% / 12) * 10);
 }
 
+.md-9 {
+	width: calc((100% / 12) * 9);
+}
+
 .md-8 {
 	width: calc((100% / 12) * 8);
 }

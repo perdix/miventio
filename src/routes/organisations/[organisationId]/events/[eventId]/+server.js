@@ -12,7 +12,7 @@ export async function GET({ locals, params }) {
 			organisationId: params.organisationId
 		},
 		include: {
-			eventTickets: {
+			tickets: {
 				select: {
 					id: true,
 					name: true,
@@ -38,17 +38,9 @@ export async function GET({ locals, params }) {
 							eventTicket: true,
 							eventTicketId: true,
 							eventTicketPrice: true,
-							activitiesTicketsPrices: true,
+							activityTicketsPrices: true,
 							price: true,
 							activities: true,
-							contact: {
-								select: {
-									id: true,
-									firstName: true,
-									lastName: true,
-									email: true
-								}
-							}
 						}
 					}
 				}
@@ -65,7 +57,7 @@ export async function GET({ locals, params }) {
 					start: true,
 					end: true,
 					type:true,
-					activityTickets: {
+					tickets: {
 						select: {
 							id: true,
 							name: true,
@@ -81,16 +73,45 @@ export async function GET({ locals, params }) {
 					}
 				}
 			},
+			activityTickets: {
+				select: {
+					id: true,
+					price: true,
+					visitorCategoryId: true,
+					activity: {
+						select: {
+							id: true,
+							name: true,
+							speaker: true,
+							limit: true,
+							location: true,
+							date: true,
+							start: true,
+							end: true,
+							type:true
+						}
+					}
+				}
+			},
 			visitors: {
 				select: {
 					id: true,
+					firstName: true,
+					lastName: true,
+					email: true,
 					status: true,
 					eventTicketId: true,
 					eventTicket: true,
 					eventTicketPrice: true,
 					price: true,
 					activities: true,
-					activitiesTicketsPrices: true,
+					activityTicketsPrices: true,
+					categoryId: true,
+					activityTickets: {
+						select: {
+							id: true
+						}
+					},
 					contact: {
 						select: {
 							id: true,

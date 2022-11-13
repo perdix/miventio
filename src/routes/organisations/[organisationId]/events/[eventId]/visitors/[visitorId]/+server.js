@@ -38,3 +38,18 @@ export async function PUT({ locals, params, request }) {
 
 	return new Response(toVisitorJSON(visitor), { status: 200 });
 }
+
+
+export async function DELETE({ locals, params }) {
+	if (!isOrganisationAdmin(locals, params.organisationId)) {
+		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+	}
+
+	const deletedVisitor = await locals.prisma.visitor.delete({
+		where: {
+			id: params.visitorId
+		}
+	});
+
+	return new Response(JSON.stringify(toVisitorJSON(deletedVisitor)), { status: 200 });
+}

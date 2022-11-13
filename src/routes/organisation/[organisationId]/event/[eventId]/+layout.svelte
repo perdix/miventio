@@ -16,8 +16,8 @@
 		{ slug: 'activities', title: 'Programm', icon: 'calendar_view_week' },
 		// { slug: 'form', title: 'Formular', icon: 'table' },
 		// { slug: 'hotels', title: 'Hotels', icon: 'hotel' },
-		{ slug: 'bookings', title: 'Buchungen', icon: 'payments' },
-		{ slug: 'visitors', title: 'Besucher', icon: 'badge' }
+		// { slug: 'bookings', title: 'Buchungen', icon: 'payments' },
+		{ slug: 'visitors', title: 'Teilnehmer', icon: 'badge' }
 	];
 
 	const subNavItems = [

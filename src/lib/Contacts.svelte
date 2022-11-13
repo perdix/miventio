@@ -46,7 +46,7 @@
 				</td>
 				<td>
 					{#if contact.status}
-					<span class="status" class:active={contact.status=="AKTIV"} class:inactive={contact.status=="INAKTIV"} class:retired={contact.status=="PENSIONIERT"}>
+					<span class="status" class:active={contact.status=="AKTIV"} class:inactive={contact.status=="INAKTIV"}>
 						{contact.status}
 					</span>
 					{/if}
@@ -75,11 +75,6 @@
 		color: var(--color-1-dark);
 	}
 	.inactive {
-		border: 1px solid rgb(201, 201, 201);
-		color: rgb(201, 201, 201);
-		background-color: rgb(250, 250, 250);
-	}
-	.retired {
 		border: 1px solid gray;
 		color:rgb(68, 68, 68);
 		background-color: var(--lightgrey);

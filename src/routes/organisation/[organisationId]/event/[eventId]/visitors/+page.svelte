@@ -3,46 +3,84 @@
 	import Content from '$lib/blocks/Content.svelte';
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
-	import { visitStatuses } from '$lib/store/constants';
 	import Popup from '$lib/Popup.svelte';
+	import { visitorStatuses } from '$lib/store/constants';	
 
-	let visitor = {};
+	let visitor = { categoryId: null, activityTicketsIds: [], status: ''};
 	let showPopup = false;
 	let popupTitle = '';
 
+	console.log($event.visitors);
 
-
-	console.log($event.visitors)
-	console.log("----------------")
+	let tickets = $event.tickets;
+	let activityTickets = $event.activityTickets;
+	
+	$: {
+		if (visitor.categoryId) {
+			console.log(visitor.categoryId)
+			tickets = $event.tickets.filter(t => t.visitorCategory == null || t.visitorCategoryId == visitor.categoryId);
+			activityTickets = $event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId);
+			console.log(activityTickets)
+		}
+	}
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
 
 	const newVisitor = () => {
-		visitor = {};
-		popupTitle = 'Neuer Besucher';
+		visitor = {categoryId: null, activityTicketsIds: [], status: 'ANGEMELDET'}
+		popupTitle = 'Neuer Teilnehmer';
 		togglePopup();
 	};
 
 	const editVisitor = (v) => {
 		visitor = v;
-		popupTitle = 'Besucher bearbeiten';
+		v.activityTicketsIds = v.activityTickets.map(a => a.id);
+		popupTitle = 'Teilnehmer bearbeiten';
 		togglePopup();
+	};
+
+
+	const deleteVisitor = async () => {
+		const res = await fetch(
+			`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visitors/${visitor.id}`,
+			{
+				method: 'DELETE'
+			}
+		);
+		if (res.status === 200) {
+			const deletedVisitor = await res.json();
+			$event.visitors = $event.visitors.filter((a) => a.id != visitor.id);
+			togglePopup();
+		}
 	};
 
 	const saveVisitor = async () => {
 		if ('id' in visitor) {
 			const res = await fetch(
-				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visits/${visitor.id}`,
+				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visitors/${visitor.id}`,
 				{
 					method: 'PUT',
-					body: JSON.stringify(visit)
+					body: JSON.stringify(visitor)
 				}
 			);
 			if (res.status === 200) {
-				const updatedVisitoror = await res.json();
-				$event.visitors.map((v) => (v.id == updatedVisitoror.id ? updatedVisitoror : v));
+				const updatedVisitor = await res.json();
+				$event.visitors[$event.visitors.findIndex((b) => b.id === updatedVisitor.id)] = updatedVisitor;
+				togglePopup();
+			}
+		} else {
+			const res = await fetch(
+				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/visitors`,
+				{
+					method: 'POST',
+					body: JSON.stringify(visitor)
+				}
+			);
+			if (res.status === 201) {
+				const newVisitor = await res.json();
+				$event.visitors.unshift(newVisitor);
 				$event = $event;
 				togglePopup();
 			}
@@ -50,7 +88,10 @@
 	};
 </script>
 
-<Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
+
+
+
+<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 	<form class="miventio row" on:submit|preventDefault={saveVisitor}>
 		<div class="md-6">
 			<label for="firstname">Vorname</label>
@@ -60,27 +101,66 @@
 			<label for="lastname">Nachname</label>
 			<input id="lastname" type="text" bind:value={visitor.lastName} required />
 		</div>
-		<div class="md-6">
+		<div class="md-12">
 			<label for="email">E-Mail</label>
-			<input id="email" type="email" bind:value={visitor.email} />
+			<input id="email" type="email" bind:value={visitor.email} required />
 		</div>
 		<div class="md-6">
-			<label for="status">Status</label>
-			<select name="Status" id="status" bind:value={visitor.status}>
-				{#each $visitStatuses as status}
+			<label for="category">Teilnahmekategorie</label>
+			<select name="category" id="category" bind:value={visitor.categoryId}>
+				{#each $event.visitorCategories as category}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</select>
+		</div>
+		<div class="md-6">
+			<label for="status">Teilnahmestatus</label>
+			<select name="status" id="status" bind:value={visitor.status}>
+				{#each $visitorStatuses as status}
 					<option value={status}>{status}</option>
 				{/each}
 			</select>
 		</div>
+		<div class="md-12">
+			<label for="ticket">Ticketauswahl</label>
+			<select name="ticket" id="ticket" bind:value={visitor.eventTicketId}>
+				{#each tickets as ticket}
+					<option value={ticket.id}>{ticket.name} | { ticket.visitorCategory ? ticket.visitorCategory.name : 'Allgemein' } | Preis: {ticket.price}€</option>
+				{/each}
+			</select>
+		</div>
+
+		<div class="md-12">
+			<label for="activity">Programmauswahl</label>
+			{#each activityTickets as activityTicket}
+				<label class="activity">
+						<input type="checkbox" bind:group={visitor.activityTicketsIds} value={activityTicket.id}>
+						<b>{activityTicket.activity.type}</b> {activityTicket.activity.name} ({activityTicket.activity.speaker || 'K. Referent'}) | {activityTicket.price}€
+				</label>
+			{/each}
+		</div>
+
+		<div class="md-12">
+			<label for="price">Gesamtpreis</label>
+			<input id="price" type="number" bind:value={visitor.price} required />
+		</div>
+
 		<div class="md-6 submit">
 			<button type="submit">Speichern</button>
+		</div>
+		<div class="md-6 submit right">
+			<button type="button" on:click={deleteVisitor}>
+				<span class="material-symbols-outlined">delete</span>
+			</button>
 		</div>
 	</form>
 </Popup>
 
-<Header title={'Besucher'} >
+
+
+<Header title={'Teilnehmer'}>
 	<button on:click={newVisitor}>
-		<span>Neuer Besucher</span>
+		<span>Neuer Teilnehmer</span>
 		<span class="material-symbols-outlined">add_circle</span>
 	</button>
 </Header>
@@ -89,25 +169,39 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Vorname</th>
-				<th>Nachname</th>
-				<th>E-Mail</th>
-				<th>Anmeldestatus</th>
+				<th>Teilnehmer</th>
+				<th>Gesamtpreis</th>
+				<th>Teilnahmestatus</th>
+				<th>Zahlungstatus</th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each $event.visitors as visitor}
-				<tr on:click={() => editVisitor(visit)}>
+				<tr on:click={() => editVisitor(visitor)}>
+	
 					<td>
 						{visitor.firstName}
-					</td>
-					<td>
-						{visitor.lastName}
-					</td>
-					<td>
+						{visitor.lastName} <br />
 						{visitor.email}
 					</td>
-					<td><span class:paid={visitor.status.toUpperCase() == 'BEZAHLT'}>{visitor.status}</span></td>
+					<td>
+						{visitor.price} €
+					</td>
+					<td>
+						{visitor.status} 
+						<!-- <span
+							class:paid={booking.status.toUpperCase() == 'BEZAHLT'}
+							class:open={booking.status.toUpperCase() == 'OFFEN'}>{booking.status}</span
+						>  -->
+						</td>
+						<td>
+							{#if visitor.booking}
+								{visitor.booking.status} 
+							{/if}
+							
+						</td>
+
+
 				</tr>
 			{/each}
 		</tbody>
@@ -115,9 +209,8 @@
 </Content>
 
 <style>
-	.paid {
-		border-radius: 15px;
-		background-color: var(--color-confirmation);
-		padding: 5px 10px;
+	.activity {
+		background-color: var(--white);
+		padding: 10px;
 	}
 </style>

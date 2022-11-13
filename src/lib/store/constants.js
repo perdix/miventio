@@ -1,5 +1,5 @@
 import { readable } from 'svelte/store';
 
-export const visitStatuses = readable(['ANGEMELDET', 'STORNIERT', 'BEZAHLT', 'BESUCHT']);
-
-export const bookingStatuses = readable(['ZAHLUNG OFFEN', 'BEZAHLT', 'STORNIERT']);
+export const visitorStatuses = readable(['ANGEMELDET', 'ABGEMELDET', 'EINGECHECKT']);
+export const bookingStatuses = readable(['GEBUCHT', 'BEZAHLT', 'STORNIERT']);
+export const visitorTypes = readable(['Teilnehmer', 'Mitarbeiter', 'Aussteller', 'Lieferant']);

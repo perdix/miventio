@@ -37,7 +37,7 @@
 		);
 		if (res.status === 200) {
 			const deletedTicket = await res.json();
-			$event.eventTickets = $event.eventTickets.filter((t) => t.id != ticket.id);
+			$event.tickets = $event.tickets.filter((t) => t.id != ticket.id);
 			togglePopup();
 		}
 	};
@@ -53,11 +53,11 @@
 			);
 			if (res.status === 200) {
 				const updatedTicket = await res.json();
-				let updatedTickets = $event.eventTickets.map((t) => {
+				let updatedTickets = $event.tickets.map((t) => {
 					return t.id == updatedTicket.id ? updatedTicket : t;
 					
 				});
-				$event.eventTickets = updatedTickets;
+				$event.tickets = updatedTickets;
 				togglePopup();
 			}
 		} else {
@@ -70,7 +70,7 @@
 			);
 			if (res.status === 201) {
 				const newTicket = await res.json();
-				$event.eventTickets.push(newTicket);
+				$event.tickets.push(newTicket);
 				$event = $event;
 				togglePopup();
 			}
@@ -144,7 +144,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{#each $event.eventTickets as ticket}
+		{#each $event.tickets as ticket}
 			<tr on:click={() => editTicket(ticket)}>
 				<td>
 					{ticket.name}

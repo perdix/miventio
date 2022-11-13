@@ -102,7 +102,7 @@
 				<label for="postfix">Titel (nachgest.)</label>
 				<input id="postfix" type="text" bind:value={contact.postfix} />
 			</div>
-			<div class="md-2">
+			<div class="md-3">
 				<label for="gender">Geschlecht</label>
 				<select name="gender" id="gender">
 					<option value=""></option>
@@ -110,37 +110,22 @@
 					<option value="male">männlich</option>
 					<option value="diverse">divers</option>
 				</select>
-				
 			</div>
-			<div class="md-5">
+			<div class="md-9">
 				<label for="email">E-Mail</label>
 				<input id="email" type="email" bind:value={contact.email} required/>
 			</div>
-			<div class="md-5">
+			<div class="md-6">
 				<label for="phone">Telefon</label>
 				<input id="phone" type="text" bind:value={contact.phone} />
 			</div>
 
-
 			<div class="md-3">
-				<label for="oegb-id">ÖGP-ID</label>
-				<input id="oegb-id" type="text" bind:value={contact.oegbId} />
-			</div>
-			<div class="md-2">
-				<label for="efp-id">SOCID EFP</label>
-				<input id="efp-id" type="text" bind:value={contact.efpId} />
-			</div>
-			<div class="md-3">
-				<label for="zaek-id">ZÄK Ärztenummer</label>
-				<input id="zaek-id" type="text" bind:value={contact.zaekId} />
-			</div>
-
-			<div class="md-2">
 				<label for="gdpr-confirmation">DSGVO</label>
 				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.gdprConfirmation} />
 			</div>
 
-			<div class="md-2">
+			<div class="md-3">
 				<label for="gdpr-confirmation">Newsletter</label>
 				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.newsletterConfirmation} />
 			</div>
@@ -164,7 +149,6 @@
 					<option value=""></option>
 					<option value="AKTIV">AKTIV</option>
 					<option value="INAKTIV">INAKTIV</option>
-					<option value="PENSIONIERT">PENSIONIERT</option>
 				</select>
 			</div>
 	
@@ -209,7 +193,7 @@
 				<button type="submit">Speichern</button>
 			</div>
 			<div class="md-6 submit right">
-				<button class="secondary" type="button" on:click={deleteContact}>
+				<button type="button" on:click={deleteContact}>
 					<span class="material-symbols-outlined">delete</span>
 				</button>
 			</div>

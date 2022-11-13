@@ -5,7 +5,7 @@
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
 
-	let activity = { activityTickets: [{}]};
+	let activity = { tickets: [{}]};
 	let showPopup = false;
 	let popupTitle = '';
 
@@ -29,7 +29,7 @@
 	};
 
 	const newActivity = () => {
-		activity = {activityTickets: [{}]};
+		activity = {tickets: [{}]};
 		popupTitle = 'Neue Aktivität';
 		togglePopup();
 	};
@@ -70,7 +70,7 @@
 			);
 			if (res.status === 200) {
 				const updatedActivity = await res.json();
-				$event.activites = $event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
+				$event.activities = $event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
 				togglePopup();
 			}
 		} else {
@@ -90,12 +90,12 @@
 		}
 	};
 	const addTicket = () => {
-		activity.activityTickets.push({});
+		activity.tickets.push({});
 		activity = activity;
 	}
 	const deleteTicket = (ticket) => {
-		let filtered = activity.activityTickets.filter(a => ((a.name != ticket.name) || (a.visitorCategoryId != ticket.visitorCategoryId)));
-		activity.activityTickets = filtered;
+		let filtered = activity.tickets.filter(a => ((a.name != ticket.name) || (a.visitorCategoryId != ticket.visitorCategoryId)));
+		activity.tickets = filtered;
 	}
 </script>
 
@@ -132,7 +132,7 @@
 			</div>
 			<div class="md-4">
 				<label for="type">Typ</label>
-				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." />
+				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." required/>
 			</div>
 			<div class="md-4">
 				<label for="limit">Besucherlimit</label>
@@ -142,13 +142,13 @@
 			<div class="md-12">
 				<br><br>
 				<div class="mini-header">
-					<h2>Zutrittsbeschänkung</h2>
+					<h2>Zutrittsbeschränkung</h2>
 					<button class="icon" on:click|preventDefault={addTicket}>
 						<span class="material-symbols-outlined">person_add</span>
 					</button>
 				</div>
 				<div class="mini-content">
-					{#each activity.activityTickets as ticket}
+					{#each activity.tickets as ticket}
 					<div class="row item">
 						<div class="md-12">
 							<div class="mini-header">
@@ -202,8 +202,9 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Title</th>
 						<th>Typ</th>
+						<th>Title</th>
+						<th>Referent</th>
 						<th>Datum</th>
 						<th>Zeit</th>
 						<th>Besucherlimit</th>
@@ -213,8 +214,9 @@
 				<tbody>	
 				{#each $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)) as activity}
 					<tr on:click={() => editActivity(activity)}>
-						<td>{activity.name}</td>
 						<td>{activity.type || ''}</td>
+						<td>{activity.name}</td>
+						<td>{activity.speaker}</td>
 						<td>{activity.date.substring(0,10)}</td>
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
 							{#if activity.end}
@@ -223,7 +225,7 @@
 						</td>
 						<td>{activity.limit || '-'}</td>
 						<td>
-							{#each activity.activityTickets as ticket}
+							{#each activity.tickets as ticket}
 								<span class="ticket">
 									{ticket.visitorCategory.name||''} | {ticket.price}€
 								</span>

@@ -10,7 +10,7 @@ export async function GET({ locals, params }) {
 	const activity = await locals.prisma.activity.findFirst({
 		where: {
 			id: params.activityId,
-			organisation_id: params.organisationId
+			organisationId: params.organisationId
 		}
 	});
 	return new Response(toActivityJSON(activity));
@@ -31,7 +31,7 @@ export async function PUT({ locals, params, request }) {
 			activityId: params.activityId,
 			id: {
 				not: {
-					in: data.activityTickets.map((a) => a.id).filter((i) => i != undefined)
+					in: data.tickets.map((a) => a.id).filter((i) => i != undefined)
 				}
 			}
 		}
@@ -39,7 +39,7 @@ export async function PUT({ locals, params, request }) {
 
 
 	// Override other activityTickets
-	for (const ticket of data.activityTickets) {
+	for (const ticket of data.tickets) {
 		const updatedTicket = await locals.prisma.activityTicket.upsert({
 			where: { id: ticket.id || '' },
 			update: {
@@ -51,7 +51,8 @@ export async function PUT({ locals, params, request }) {
 				name: ticket.name,
 				price: ticket.price,
 				visitorCategoryId: ticket.visitorCategoryId,
-				activityId: params.activityId
+				activityId: params.activityId,
+				eventId: params.eventId
 			}
 		});
 	}
@@ -89,7 +90,8 @@ export async function PUT({ locals, params, request }) {
 			date: true,
 			start: true,
 			end: true,
-			activityTickets: {
+			type: true,
+			tickets: {
 				select: {
 					id: true,
 					name: true,
@@ -105,9 +107,6 @@ export async function PUT({ locals, params, request }) {
 			}
 		}
 	});
-
-	console.log(activity)
-
 	return new Response(toActivityJSON(activity), { status: 200 });
 }
 

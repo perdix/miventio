@@ -92,7 +92,6 @@ export const contacts = [
 		address: 'musterplatz 2',
 		city: 'Wien',
 		postcode: '1010',
-		status: 'PENSIONIERT'
 	}
 ];
 
