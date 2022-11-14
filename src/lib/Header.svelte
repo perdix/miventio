@@ -64,7 +64,6 @@
 		justify-content: flex-start;
 		align-items: center;
 		border-radius: var(--corner);
-		/* padding: 0px 10px; */
 		cursor: pointer;
 		color: var(--white);
 		box-shadow: none;
@@ -109,5 +108,9 @@
 	}
 	.organisation h2:hover {
 		background-color: var(--grey);
+	}
+	h1 {
+		font-family: var(--font-1);
+		font-weight: 300;
 	}
 </style>

@@ -116,7 +116,7 @@
 	nav div {
 		padding: calc(var(--unit) * 1);
 		background-color: var(--white);
-		min-height: 200px;
+		min-height: 300px;
 		display: flex;
 		justify-content: flex-end;
 		flex-direction: column;
