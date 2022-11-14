@@ -1,17 +1,17 @@
-import { toSuperuserJSON } from '$lib/server/serialization';
+import { toUserJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
 	if (!isOrganisationMember(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-	const superuser = await locals.prisma.superuser.findFirst({
+	const user = await locals.prisma.user.findFirst({
 		where: {
-			id: params.superuserId,
-			organisation_id: params.organisationId
+			id: params.userId,
+			organisationId: params.organisationId
 		}
 	});
-	return new Response(toSuperuserJSON(superuser));
+	return new Response(toUserJSON(user));
 }
 
 export async function PUT({ locals, params, request }) {
@@ -20,27 +20,27 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	const user = await locals.prisma.superuser.update({
+	const user = await locals.prisma.user.update({
 		where: {
-			id: params.superuserId
+			id: params.userId
 		},
 		data: data
 	});
 
-	return new Response(toSuperuserJSON(user));
+	return new Response(toUserJSON(user));
 }
 
 export async function DELETE({ locals, params }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-	const deletedSuperuser = await locals.prisma.superuser.delete({
+	const deletedUser = await locals.prisma.user.delete({
 		where: {
-			id: params.superuserId
+			id: params.userId
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'Superuser successfully deleted!' }), {
+	return new Response(JSON.stringify({ message: 'User successfully deleted!' }), {
 		status: 200
 	});
 }
