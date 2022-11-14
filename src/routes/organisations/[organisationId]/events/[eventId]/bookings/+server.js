@@ -71,7 +71,5 @@ export async function POST({ locals, params, request }) {
 		}
 	});
 	
-	
-
 	return new Response(toBookingJSON(booking), { status: 201 });
 }
