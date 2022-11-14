@@ -24,7 +24,7 @@
 	div {
 		/* padding: calc(var(--unit) * 1); */
 		/* background-color: white; */
-		min-height: 500px;
+		min-height: 200px;
 		border-radius: var(--corner);
 	}
 </style>

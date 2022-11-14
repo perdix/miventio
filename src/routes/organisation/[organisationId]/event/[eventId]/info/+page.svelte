@@ -33,7 +33,7 @@
 	};
 </script>
 
-<Header title={'Allgemeine Infos'}>
+<Header title={'Allgemeine Daten'}>
 	<span class="material-symbols-outlined delete" on:click={deleteEvent}>delete</span>
 </Header>
 
@@ -68,17 +68,6 @@
 			<button type="submit">Speichern</button>
 		</div>
 	</form>
-</Content>
-
-<Header title={'Teilnahmevarianten'}>
-	
-</Header>
-<Content>
-	<h2>Teilnehmerkategorien</h2>
-
-
-	<h2>Preiskategorien</h2>
-
 </Content>
 
 

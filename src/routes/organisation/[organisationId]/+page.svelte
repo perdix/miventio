@@ -1,33 +1,45 @@
 <script>
 	import Main from '$lib/blocks/Main.svelte';
+	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
+	import Header from '$lib/blocks/Header.svelte';
+	import Content from '$lib/blocks/Content.svelte';
 	import Events from '$lib/Events.svelte';
+	import Contacts from '$lib/Contacts.svelte';
 	import { page } from '$app/stores';
+
 </script>
+
 
 <div class="page">
 	<Main>
-			<div class="block">
-				<h2>Überblick</h2>
-				<div class="row">
-					<div class="md-6 count">
-						<section>
-							<h3># Veranstaltungen</h3>
-							<h4>{$page.data.organisation.events.length}</h4>
-						</section>
-					</div>
-					<div class="md-6 count">
-						<section>
-							<h3># Kontakte</h3>
-							<h4>{$page.data.organisation.contacts.length}</h4>
-						</section>
-					</div>
-				</div>
-			</div>
 
-			<div class="block">
-				<h2>Aktuelle Veranstaltungen</h2>
+			<Header title={'Mitglieder & Kontakte'}>
+				<a class="button secondary" href="{$page.data.organisation.id}/contacts" >
+					<span class="material-symbols-outlined">group</span>
+					<span>Mitgliederverwaltung</span>
+				</a>
+			</Header>
+			<Content>
+				<Contacts contacts={$page.data.organisation.contacts.slice(0,10)} />
+			</Content>
+
+			<br><br>
+
+			<Header title={'Veranstaltungen'}>
+				<a class="button secondary" href="{$page.data.organisation.id}/events" >
+					<span class="material-symbols-outlined">event</span>
+					<span>Veranstaltungsmanagement</span>
+				</a>
+			</Header>
+
+			<Content>
 				<Events events={$page.data.organisation.events.slice(0,4)} />
-			</div>
+			</Content>
+
+
+				
+			
+		
 
 	</Main>
 </div>

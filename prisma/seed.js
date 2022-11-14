@@ -6,7 +6,9 @@ import {
 	users,
 	eventTickets,
 	activities,
-	contacts
+	memberships,
+	contacts,
+	visitorCategories
 } from './data.js';
 
 const prisma = new PrismaClient();
@@ -16,10 +18,12 @@ async function main() {
 	await prisma.role.deleteMany({});
 	await prisma.user.deleteMany({});
 	await prisma.visitor.deleteMany({});
+	await prisma.membership.deleteMany({});
 	await prisma.contact.deleteMany({});
 	await prisma.eventTicket.deleteMany({});
 	await prisma.activity.deleteMany({});
 	await prisma.booking.deleteMany({});
+	await prisma.visitorCategory.deleteMany({});
 	await prisma.event.deleteMany({});
 	await prisma.organisation.deleteMany({});
 
@@ -50,11 +54,46 @@ async function main() {
 		}
 	});
 
+	// Create memberships
+	const membershipsWithOrganisationId = memberships.map((m) => ({ ...m, organisationId: zahn_orga.id }));
+	await prisma.membership.createMany({
+		data: membershipsWithOrganisationId
+	});
+
 	// Create some contacts
-	const contactsWithOrganisationId = contacts.map((u) => ({ ...u, organisationId: zahn_orga.id }));
+	const contactsWithOrganisationId = contacts.map((c) => ({ ...c, organisationId: zahn_orga.id }));
 	await prisma.contact.createMany({
 		data: contactsWithOrganisationId
 	});
+
+    // Get first contact
+	const firstContact = await prisma.contact.findFirst(
+		{
+			where: {
+				email: 'max1@hallo.io'
+			}
+		}
+	);
+
+	// Get first membership
+	const firstMembership = await prisma.membership.findFirst({
+		where: {
+			name: 'Hauptmitglied'
+		}
+	});  
+	
+	// Add membership to first contact
+	const updatedContact = await prisma.contact.update({
+		where: {
+		  id: firstContact.id,
+		},
+		data: {
+			membership: {
+				connect: { id: firstMembership.id },
+			  },
+		},
+	  })
+
 
 	// Create some user with role
 	await prisma.user.createMany({
@@ -88,6 +127,12 @@ async function main() {
 	const activitiesWithEventId = activities.map((a) => ({ ...a, eventId: event.id }));
 	await prisma.activity.createMany({
 		data: activitiesWithEventId
+	});
+
+	// Create some visitorCategories
+	const visCatWithEventId = visitorCategories.map((a) => ({ ...a, eventId: event.id }));
+	await prisma.visitorCategory.createMany({
+		data: visCatWithEventId
 	});
 }
 

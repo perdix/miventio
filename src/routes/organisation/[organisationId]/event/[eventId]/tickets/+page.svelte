@@ -1,6 +1,5 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
-	import Ticket from '$lib/Ticket.svelte';
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
@@ -13,6 +12,7 @@
 		showPopup = !showPopup;
 	};
 
+
 	const newTicket = () => {
 		ticket = {};
 		popupTitle = 'Neues Ticket';
@@ -21,6 +21,9 @@
 
 	const editTicket = (editTicket) => {
 		ticket = editTicket;
+		ticket.dayTicketDate = ticket.dayTicketDate ? ticket.dayTicketDate.substring(0,10) : ticket.dayTicketDate;
+		ticket.availableFrom = ticket.availableFrom ? ticket.availableFrom.substring(0,10) : ticket.availableFrom;
+		ticket.availableTo = ticket.availableTo ? ticket.availableTo.substring(0,10) : ticket.availableTo;
 		popupTitle = 'Ticket bearbeiten';
 		togglePopup();
 	};
@@ -50,8 +53,11 @@
 			);
 			if (res.status === 200) {
 				const updatedTicket = await res.json();
-				$event.tickets.map((t) => (t.id == updatedTicket.id ? updatedTicket : t));
-				$event = $event;
+				let updatedTickets = $event.tickets.map((t) => {
+					return t.id == updatedTicket.id ? updatedTicket : t;
+					
+				});
+				$event.tickets = updatedTickets;
 				togglePopup();
 			}
 		} else {
@@ -80,57 +86,81 @@
 		</div>
 
 		<div class="md-6">
+			<label for="category">Teilnehmer-Kategorie</label>
+			<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
+				{#each $event.visitorCategories as category}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</select>
+		</div>
+
+		<div class="md-6">
 			<label for="price">Preis in Euro</label>
-			<input id="price" type="number" step="0.01" bind:value={ticket.price} />
+			<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
 		</div>
-
-		<div class="md-12">
-			<br />
-			<h3>Ticketvariante</h3>
-		</div>
-
 		<div class="md-6">
-			<label for="date">Datum, wenn es ein Tagesticket ist!</label>
-			<input id="date" type="date" bind:value={ticket.date} />
+			<label for="end">Ist es ein Tagesticket?</label>
+			<input id="end" type="date" bind:value={ticket.dayTicketDate} />
+		</div>
+		<div class="md-6">
+			<label for="start">Online verfügbar von</label>
+			<input id="start" type="date" bind:value={ticket.availableFrom}/>
+		</div>
+		<div class="md-6">
+			<label for="end">Online verfügbar bis</label>
+			<input id="end" type="date" bind:value={ticket.availableTo} />
 		</div>
 
-		<div class="md-6">
-			<label for="mode">Kategorie</label>
-			<input id="mode" type="text" bind:value={ticket.category} placeholder="Student / Mitglied / ..."/>
-		</div>
 
 		<div class="md-6 submit">
 			<button type="submit">Speichern</button>
 		</div>
 		<div class="md-6 submit right">
-			<button class="secondary" type="button" on:click={deleteTicket}>
+			<button type="button" on:click={deleteTicket}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>
 		</div>
 	</form>
 </Popup>
 
-<Header title={'Tickets'}>
+
+
+<Header title={'Ticketvarianten'}>
 	<button on:click={newTicket}>
-		<span>Neues Ticket</span>
+		<span>Neue Ticketvariante</span>
 		<span class="material-symbols-outlined">add_circle</span>
 	</button>
 </Header>
 
-<div class="tickets">
-	{#each $event.tickets as ticket}
-		<div on:click={() => editTicket(ticket)}>
-			<Ticket {ticket} event={$event} />
-		</div>
-	{/each}
-</div>
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Kategorie</th>
+			<th>Preis</th>
+			<th>Tagesticket</th>
+			<th>Verfügbar von</th>
+			<th>Verfügbar bis</th>
+		</tr>
+	</thead>
+	<tbody>
+		{#each $event.tickets as ticket}
+			<tr on:click={() => editTicket(ticket)}>
+				<td>
+					{ticket.name}
+				</td>
+				<td>{#if ticket.visitorCategory}{ticket.visitorCategory.name}{/if} </td>
+				<td>{#if ticket.price}{ticket.price} €{/if}</td>
+				<td>{#if ticket.dayTicketDate}{ticket.dayTicketDate.substring(0,10)} {/if}</td>
+				<td>{#if ticket.availableFrom}{ticket.availableFrom.substring(0,10)} {/if}</td>
+				<td>{#if ticket.availableTo}{ticket.availableTo.substring(0,10)} {/if}</td>
+				
+			</tr>
+		{/each}
+	</tbody>
+</table>
+
 
 <style>
-	h3 {
-		margin: 10px 0;
-	}
-	.tickets {
-		/* display: flex;
-		justify-content: space-evenly; */
-	}
+
 </style>

@@ -5,16 +5,31 @@
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
 
-	let activity = {};
+	let activity = { tickets: [{}]};
 	let showPopup = false;
 	let popupTitle = '';
+
+	const weekdays = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+	function getDatesInRange(startDate, endDate) {
+		const date = startDate;
+		const dates = [];
+		while (date <= endDate) {
+			dates.push(new Date(date));
+			date.setDate(date.getDate() + 1);
+		}
+		return dates;
+	}
+
+
+	let days = getDatesInRange(new Date($event.start), new Date($event.end))
+
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
 
 	const newActivity = () => {
-		activity = {};
+		activity = {tickets: [{}]};
 		popupTitle = 'Neue Aktivität';
 		togglePopup();
 	};
@@ -23,7 +38,9 @@
 		activity = act;
 		activity.date = activity.date.length > 10 ? activity.date.substring(0,10) : activity.date;
 		activity.start = activity.start.length > 5 ? activity.start.substring(11,16) : activity.start;
-		activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
+		if (activity.end != null) {
+			activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
+		}
 		popupTitle = 'Aktivität bearbeiten';
 		togglePopup();
 	};
@@ -38,6 +55,7 @@
 		if (res.status === 200) {
 			const deletedActivity = await res.json();
 			$event.activities = $event.activities.filter((a) => a.id != activity.id);
+			refreshActivityTickets();
 			togglePopup();
 		}
 	};
@@ -53,8 +71,8 @@
 			);
 			if (res.status === 200) {
 				const updatedActivity = await res.json();
-				$event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
-				$event = $event;
+				$event.activities = $event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
+				refreshActivityTickets();
 				togglePopup();
 			}
 		} else {
@@ -69,18 +87,40 @@
 				const newActivity = await res.json();
 				$event.activities.push(newActivity);
 				$event = $event;
+				refreshActivityTickets();
 				togglePopup();
 			}
 		}
 	};
+
+	const refreshActivityTickets = async () => {
+		// Update event with fresh list of activityTickets
+		fetch(`${$page.url.origin}/organisations/${$page.params.organisationId}/events/${$page.params.eventId}/activityTickets`)
+		.then((r) => r.json()).then(tickets => {
+			$event.activityTickets = tickets;
+		});
+	}
+
+	const addTicket = () => {
+		activity.tickets.push({});
+		activity = activity;
+	}
+	const deleteTicket = (ticket) => {
+		let filtered = activity.tickets.filter(a => ((a.name != ticket.name) || (a.visitorCategoryId != ticket.visitorCategoryId)));
+		activity.tickets = filtered;
+	}
 </script>
 
 <div class="page">
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
-			<div class="md-12">
+			<div class="md-6">
 				<label for="Name">Name</label>
 				<input id="name" type="text" bind:value={activity.name} required />
+			</div>
+			<div class="md-6">
+				<label for="Name">Referent/Verantwortlicher</label>
+				<input id="name" type="text" bind:value={activity.speaker} />
 			</div>
 			<div class="md-12">
 				<label for="description">Beschreibung</label>
@@ -96,41 +136,69 @@
 			</div>
 			<div class="md-4">
 				<label for="end">Ende</label>
-				<input id="end" type="time" bind:value={activity.end} required/>
+				<input id="end" type="time" bind:value={activity.end}/>
 			</div>
-			<div class="md-6">
-				<label for="author">Verantwortlicher</label>
-				<input id="author" type="text" bind:value={activity.author} />
-			</div>
-			<div class="md-6">
+			<div class="md-4">
 				<label for="location">Ort</label>
 				<input id="location" type="text" bind:value={activity.location} placeholder="Saal 1" />
 			</div>
 			<div class="md-4">
-				<label for="category">Kategorie</label>
-				<input id="category" type="text" bind:value={activity.category} placeholder="Workshop" />
+				<label for="type">Typ</label>
+				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." required/>
 			</div>
 			<div class="md-4">
-				<label for="limit">Limit</label>
+				<label for="limit">Besucherlimit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
-			<div class="md-4">
-				<label for="price">Preis</label>
-				<input id="price" type="number" step="0.01" bind:value={activity.price} />
+			
+			<div class="md-12">
+				<br><br>
+				<div class="mini-header">
+					<h2>Zutrittsbeschränkung</h2>
+					<button class="icon" on:click|preventDefault={addTicket}>
+						<span class="material-symbols-outlined">person_add</span>
+					</button>
+				</div>
+				<div class="mini-content">
+					{#each activity.tickets as ticket}
+					<div class="row item">
+						<div class="md-12">
+							<div class="mini-header">
+							<h3>Ticket</h3>
+							<button class="mini-icon" on:click|preventDefault={() => deleteTicket(ticket)}>
+								<span class="material-symbols-outlined">delete</span>
+							</button>
+							</div>
+						</div>
+						<div class="md-6">
+							<label for="category">Teilnehmer-Kategorie</label>
+							<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
+								{#each $event.visitorCategories as category}
+									<option value={category.id}>{category.name}</option>
+								{/each}
+							</select>
+						</div>
+						<div class="md-6">
+							<label for="price">Preis in Euro</label>
+							<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
+						</div>
+					</div>
+					{/each}
+				</div>
 			</div>
-
+	
 			<div class="md-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
 			<div class="md-6 submit right">
-				<button class="secondary" type="button" on:click={deleteActivity}>
+				<button type="button" on:click={deleteActivity}>
 					<span class="material-symbols-outlined">delete</span>
 				</button>
 			</div>
 		</form>
 	</Popup>
 
-	<Header title={'Aktivitäten'}>
+	<Header title={'Programm'}>
 		<button on:click={newActivity}>
 			<span>Neue Aktivität</span>
 			<span class="material-symbols-outlined">add_circle</span>
@@ -138,37 +206,87 @@
 	</Header>
 
 	<Content>
-		<table>
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Kategorie</th>
-					<th>Datum</th>
-					<th>Zeit</th>
-					<th>Preis</th>
-					<th>Besucher-Limit</th>
-				</tr>
-			</thead>
-			<tbody>	
-				{#each $event.activities as activity}
+
+		{#each days as day}
+		<h2>{weekdays[day.getDay()]}, {day.toLocaleDateString('de-AT')}</h2>
+
+		{#if $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)).length > 0}
+			<table>
+				<thead>
+					<tr>
+						<th>Typ</th>
+						<th>Title</th>
+						<th>Referent</th>
+						<th>Datum</th>
+						<th>Zeit</th>
+						<th>Besucherlimit</th>
+						<th>Tickets</th>
+					</tr>
+				</thead>
+				<tbody>	
+				{#each $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)) as activity}
 					<tr on:click={() => editActivity(activity)}>
+						<td>{activity.type || ''}</td>
 						<td>{activity.name}</td>
-						<td>{activity.category || ''}</td>
+						<td>{activity.speaker}</td>
 						<td>{activity.date.substring(0,10)}</td>
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
-							{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}</td>
-						<td>
-							{#if activity.price}
-							{activity.price} €
+							{#if activity.end}
+								{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}
 							{/if}
 						</td>
 						<td>{activity.limit || '-'}</td>
+						<td>
+							{#each activity.tickets as ticket}
+								<span class="ticket">
+									{ticket.visitorCategory.name||''} | {ticket.price}€
+								</span>
+							{/each}
+						</td>
 					</tr>
 				{/each}
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		{:else}
+		<p class="info">Noch keine Aktivität vorhanden</p>
+	   {/if}
+		<br>
+		<br>
+		{/each}
+
+
+
+
 	</Content>
 </div>
 
 <style>
+	h2 {
+		font-size: 1.3rem;
+		font-weight: 300;
+		color: var(--black);
+	}
+	.ticket {
+		background-color: var(--grey);
+		color:var(--color-1-dark);
+		padding: 5px 8px;
+		display: inline-block;
+		margin-right: 2px;
+		font-size: 0.9rem;
+	}
+	.mini-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.item {
+		background-color: var(--grey);
+		padding: 10px;
+		margin-top: 10px;
+		border-radius: var(--corner);
+	}
+	.info {
+		padding: var(--unit);
+		background-color: var(--white);
+	}
 </style>

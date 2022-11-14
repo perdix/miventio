@@ -22,10 +22,31 @@ export async function POST({ locals, params, request }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 	const data = await request.json();
-	data.date = new Date(Date.parse(data.date));
-	data.event_id = params.eventId;
-	const ticket = await locals.prisma.ticket.create({
-		data: data
+	const ticket = await locals.prisma.eventTicket.create({
+		data: {
+			name: data.name,
+			price: data.price,
+			availableFrom: data.availableFrom ? new Date(Date.parse(data.availableFrom)): null,
+			availableTo: data.availableTo ? new Date(Date.parse(data.availableTo)): null,
+			dayTicketDate: data.dayTicketDate ? new Date(Date.parse(data.dayTicketDate)): null,
+			visitorCategoryId: data.visitorCategoryId,
+			eventId: params.eventId
+		}, 
+		select: {	
+			id: true,
+			name: true,
+			price: true,
+			availableFrom: true,
+			availableTo: true,
+			dayTicketDate: true,
+			visitorCategoryId: true,
+			visitorCategory: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		}
 	});
 
 	return new Response(toTicketJSON(ticket), { status: 201 });

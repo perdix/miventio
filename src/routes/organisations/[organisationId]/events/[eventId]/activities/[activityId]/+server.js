@@ -1,5 +1,6 @@
-import { toActivityJSON } from '$lib/server/serialization';
+
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
+import { toActivityJSON } from '$lib/server/serialization';
 
 export async function GET({ locals, params }) {
 	if (!isOrganisationMember(locals, params.organisationId)) {
@@ -9,11 +10,13 @@ export async function GET({ locals, params }) {
 	const activity = await locals.prisma.activity.findFirst({
 		where: {
 			id: params.activityId,
-			organisation_id: params.organisationId
+			organisationId: params.organisationId
 		}
 	});
 	return new Response(toActivityJSON(activity));
 }
+
+
 
 export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
@@ -21,9 +24,46 @@ export async function PUT({ locals, params, request }) {
 	}
 	
 	const data = await request.json();
-	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start
-	data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end
 
+	// Delete activityTickets which are not given anymore
+	const deletedTickets = await locals.prisma.activityTicket.deleteMany({
+		where: {
+			activityId: params.activityId,
+			id: {
+				not: {
+					in: data.tickets.map((a) => a.id).filter((i) => i != undefined)
+				}
+			}
+		}
+	});
+
+
+	// Override other activityTickets
+	for (const ticket of data.tickets) {
+		const updatedTicket = await locals.prisma.activityTicket.upsert({
+			where: { id: ticket.id || '' },
+			update: {
+				name: ticket.name,
+				price: ticket.price,
+				visitorCategoryId: ticket.visitorCategoryId
+			},
+			create: {
+				name: ticket.name,
+				price: ticket.price,
+				visitorCategoryId: ticket.visitorCategoryId,
+				activityId: params.activityId,
+				eventId: params.eventId
+			}
+		});
+	}
+
+	// Update Activity
+	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start
+	let end = null;
+	if (data.end) {
+		data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		data.end = new Date(Date.parse(data.end));
+	}
 
 	const activity = await locals.prisma.activity.update({
 		where: {
@@ -32,19 +72,44 @@ export async function PUT({ locals, params, request }) {
 		data: {
 			name: data.name,
 			start: new Date(Date.parse(data.start)),
-			end: new Date(Date.parse(data.end)),
+			end: end,
 			date: new Date(Date.parse(data.date)),
 			description: data.description,
 			limit: data.limit,
-			price: data.price || 0,
-			author: data.author,
-			category: data.category,
+			type: data.type,
+			speaker: data.speaker,
 			location: data.location,
+		},
+		select: {
+			id: true,
+			name: true,
+			description: true,
+			speaker: true,
+			limit: true,
+			location: true,
+			date: true,
+			start: true,
+			end: true,
+			type: true,
+			tickets: {
+				select: {
+					id: true,
+					name: true,
+					price: true,
+					visitorCategoryId: true,
+					visitorCategory: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			}
 		}
 	});
-
 	return new Response(toActivityJSON(activity), { status: 200 });
 }
+
 
 export async function DELETE({ locals, params }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {

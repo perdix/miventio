@@ -2,9 +2,37 @@
 	import Events from '$lib/Events.svelte';
 	import { page } from '$app/stores';
 	import Header from '$lib/blocks/Header.svelte';
+	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
+	import Subnavigation from '$lib/Subnavigation.svelte';
 	import { goto } from '$app/navigation';
+
+	const subNavItems = [
+        {
+            name: 'Veranstaltungen',
+            slug: 'events',
+			status: 'active'
+        },
+        // {
+        //     name: 'Aussteller',
+        //     slug: "exhibitors"
+        // },
+        // {
+        //     name: 'Hotels',
+        //     slug: "hotels",
+		// 	status: 'disabled',
+        // },
+        {
+            name: 'Lieferanten',
+            slug: "contractors"
+        },
+        // {
+        //     name: 'Referenten',
+        //     slug: "speakers",
+		// 	status: 'disabled',
+        // },
+    ]
 
 	let event = {};
 	let showPopup = false;
@@ -23,14 +51,23 @@
 			goto(`/organisation/${$page.data.organisation.id}/event/${newEvent.id}`);
 		}
 	};
+
+	let links = [        {
+            name: 'Veranstaltungen',
+            url: ''
+        }
+	];
+
 </script>
+
+<Breadcrumbs links={links}></Breadcrumbs>
 
 <div class="page">
 	<Popup title="Neue Veranstaltung" show={showPopup} on:close={togglePopup}>
 		<form class="miventio row" on:submit|preventDefault={saveEvent}>
 			<div class="md-12">
 				<label for="Name">Name</label>
-				<input id="name" type="text" bind:value={event.name} />
+				<input id="name" type="text" bind:value={event.name} required />
 			</div>
 			<div class="md-12">
 				<label for="description">Beschreibung</label>
@@ -38,7 +75,7 @@
 			</div>
 			<div class="md-6">
 				<label for="start">Startdatum</label>
-				<input id="start" type="date" bind:value={event.start} />
+				<input id="start" type="date" bind:value={event.start} required/>
 			</div>
 			<div class="md-6">
 				<label for="end">Enddatum</label>
@@ -46,11 +83,11 @@
 			</div>
 			<div class="md-6">
 				<label for="location">Location</label>
-				<input id="location" type="text" bind:value={event.location} />
+				<input id="location" type="text" bind:value={event.location} required/>
 			</div>
 			<div class="md-6">
 				<label for="city">Stadt</label>
-				<input id="city" type="text" bind:value={event.city} />
+				<input id="city" type="text" bind:value={event.city} required/>
 			</div>
 
 			<div class="md-12 submit">
@@ -59,24 +96,7 @@
 		</form>
 	</Popup>
 
-	<!-- <nav class="subnav">
-		<div>
-			<h2>Crew</h2>
-		</div>
-		<div>
-			<h2>Aussteller</h2>
-		</div>
-		<div>
-			<h2>Hotels</h2>
-		</div>
-		<div>
-			<h2>Lieferanten</h2>
-		</div>
-		<div>
-			<h2>Referenten</h2>
-		</div>
-
-	</nav> -->
+	<!-- <Subnavigation items={subNavItems}></Subnavigation>	 -->
 
 	<Main>
 		<Header title={'Veranstaltungen'}>
@@ -92,24 +112,5 @@
 
 
 <style>
-	.subnav {
-		height: 50px;
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	}
-	.subnav div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background-color: white;
-	}
-	.subnav div h2 {
-		font-size: 20px;
-	}
-	.subnav div:hover {
-		cursor: pointer;
-		background-color: var(--lightgrey);
-	}
-
 
 </style>

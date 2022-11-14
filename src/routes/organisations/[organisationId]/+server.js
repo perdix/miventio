@@ -58,7 +58,7 @@ export async function PUT({ locals, params, request }) {
 		include: {
 			users: { include: { user: true } },
 			events: true,
-			contacts: true
+			contacts: {include: { membership: true } }
 		}
 	});
 	return new Response(toOrganisationJSON(organisation));

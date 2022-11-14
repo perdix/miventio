@@ -54,6 +54,29 @@ export const users = [
 	}
 ];
 
+export const memberships = [
+	{
+		name: "Hauptmitglied"
+	},
+	{
+		name: "Partner"
+	},
+	{
+		name: "Ehrenmitglied"
+	}
+]
+
+export const visitorCategories = [
+	{
+		name: "Student",
+		type: "Teilnehmer"
+	},
+	{
+		name: "Gast",
+		type: "Teilnehmer"
+	}
+]
+
 export const contacts = [
 	{
 		firstName: 'Max 1',
@@ -61,7 +84,8 @@ export const contacts = [
 		email: 'max1@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
+		status: 'AKTIV'
 	},
 	{
 		firstName: 'Max 2',
@@ -69,7 +93,8 @@ export const contacts = [
 		email: 'max2@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
+		status: 'INAKTIV'
 	},
 	{
 		firstName: 'Max 3',
@@ -77,7 +102,7 @@ export const contacts = [
 		email: 'max3@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010'
+		postcode: '1010',
 	}
 ];
 
@@ -85,27 +110,27 @@ export const eventTickets = [
 	{
 		name: 'Ticket 1',
 		price: 32.5,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 2',
 		price: 50,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 3',
 		price: 50,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24'),
-		date: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24'),
+		dayTicketDate: new Date('2022-05-24')
 	},
 	{
 		name: 'Ticket 4',
 		price: 150,
-		validFrom: new Date('2022-05-20'),
-		validTo: new Date('2022-05-24')
+		availableFrom: new Date('2022-05-20'),
+		availableTo: new Date('2022-05-24')
 	}
 ];
 

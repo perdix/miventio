@@ -79,7 +79,6 @@
 		font-weight: 300;
 		font-size: 25px;
 		margin-bottom: 20px;
-		margin-top: 30px;
 	}
 	.organisation {
 		background-color: white;

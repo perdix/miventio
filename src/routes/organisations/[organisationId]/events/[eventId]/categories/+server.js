@@ -1,4 +1,4 @@
-import { toVisitJSON } from '$lib/server/serialization';
+import { toCategoryJSON, toCategoriesJSON } from '$lib/server/serialization';
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 
 export async function GET({ locals, params }) {
@@ -6,35 +6,26 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const visit = await locals.prisma.visit.findFirst({
+	const categories = await locals.prisma.visitorCategory.findMany({
 		where: {
-			id: params.visitId,
-			event_id: params.eventId
+			eventId: params.eventId
 		},
 		include: {
-			ticket: true,
-			activities: true
+			event: true
 		}
 	});
-	return new Response(toVisitJSON(visit));
+	return new Response(toCategoriesJSON(categories));
 }
 
-export async function PUT({ locals, params, request }) {
+export async function POST({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-
 	const data = await request.json();
-
-	// Update status of visit
-	const visit = await locals.prisma.visit.update({
-		where: {
-			id: params.visitId
-		},
-		data: {
-			status: data.status
-		}
+	data.eventId = params.eventId;
+	const category = await locals.prisma.visitorCategory.create({
+		data: data
 	});
 
-	return new Response(toVisitJSON(visit), { status: 200 });
+	return new Response(toCategoryJSON(category), { status: 201 });
 }

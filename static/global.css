@@ -47,7 +47,7 @@
 	--white: #fff;
 	--grey: #f6f6f6;
 	--black: #000;
-	--darkgrey: rgb(69, 69, 69);
+	--darkgrey: #96a8a6;
 	--grey: #e1edec;
 	--lightgrey: #f0f5f4;
 	--color-1: #37c0ae;
@@ -118,7 +118,7 @@ h2 {
 button,
 .button {
 	text-transform: uppercase;
-	padding: 0.6rem 1.7rem;
+	padding: 0.6rem 1.0rem;
 	color: var(--white);
 	border: none;
 	border-radius: var(--corner);
@@ -142,17 +142,49 @@ button:hover,
 	box-shadow: var(--shadow-light);
 }
 
-button.secondary {
-	background: linear-gradient(132deg, var(--color-2) 0%, var(--color-1) 100%);
-	background-position: 0%;
-	background-size: 200%;
+button.secondary, .button.secondary {
+	background: var(--white);
+	color: var(--black);
+}
+button.secondary span, .button.secondary span {
+	margin-right: 10px;
+	display: inline-block;
 }
 
-button.secondary:hover {
+button.secondary:hover, .button.secondary:hover {
 	cursor: pointer;
-	background-position: 100%;
 	box-shadow: var(--shadow-light);
 }
+
+button.icon, .button.icon {
+	background: var(--grey);
+	color: var(--color-1-dark);
+	padding: 8px 12px;
+	border-radius: var(--corner);
+}
+button.icon:hover, .button.icon:hover {
+	cursor: pointer;
+	background: var(--grey);
+	box-shadow: var(--shadow-light);
+}
+
+button.mini-icon, .button.mini-icon {
+	background: var(--lightgrey);
+	color: var(--color-1-dark);
+	padding: 5px 10px;
+	border-radius: var(--corner);
+}
+button.mini-icon:hover, .button.mini-icon:hover {
+	cursor: pointer;
+	background: var(--lightgrey);
+	box-shadow: var(--shadow-light);
+}
+.mini-icon span {
+	font-size: 16px !important;
+}
+
+
+
 
 a {
 	color: var(--color-1);
@@ -194,6 +226,10 @@ a:hover {
 
 .md-10 {
 	width: calc((100% / 12) * 10);
+}
+
+.md-9 {
+	width: calc((100% / 12) * 9);
 }
 
 .md-8 {
@@ -242,6 +278,8 @@ form input[type='time'],
 form input[type='number'],
 form input[type='date'],
 form input[type='color'],
+form input[type='url'],
+form textarea,
 form input[type='file'] {
 	border-radius: 0;
 	border: none;
@@ -275,6 +313,10 @@ form option {
 	appearance: none;
 }
 
+form input[type='checkbox'] {
+	height: 50%;
+}
+
 form input[type='radio'] ~ label,
 form input[type='checkbox'] ~ label {
 	display: inline-block;
@@ -295,8 +337,9 @@ form fieldset {
 }
 
 form input:focus {
-	box-shadow: var(--shadow);
+	box-shadow: var(--shadow-light);
 }
+
 
 
 form .message-box {
@@ -318,18 +361,27 @@ form .confirmation {
 	background-color: rgb(227, 252, 233);
 }
 
+form hr {
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
 /******* Miventio ********/
 
 form.miventio {
 	/* max-width: 800px; */
 }
-form.miventio input {
+form.miventio input, form.miventio textarea {
 	padding: 0.9rem 1rem;
 	border-radius: var(--corner);
 }
 
 form.miventio input:active {
 	box-shadow: var(--shadow-light);
+}
+
+form.miventio input[type='checkbox']:active, input[type='checkbox']:focus {
+	box-shadow: none;
 }
 
 form.miventio label {
@@ -350,11 +402,18 @@ form.miventio select:focus {
 }
 
 form.miventio input[type='color'] {
-	height: 80px;
+	height: 44px;
+	padding: 0.3rem;
 }
 
 form.miventio .submit {
 	margin-top: 2rem;
+}
+
+form.miventio hr {
+	background-color: var(--color-1-dark);
+	height: 1px;
+	border:none;
 }
 
 /******* Registration ********/
@@ -426,7 +485,4 @@ table tr:nth-child(odd) {
 	background-color: var(--white);
 	border-radius: var(--corner);
 }
-table span {
-	border-radius: 10px;
-	padding: 3px 10px;
-}
+

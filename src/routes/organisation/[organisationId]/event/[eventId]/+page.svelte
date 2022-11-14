@@ -1,65 +1,53 @@
 <script>
-	import Header from '$lib/blocks/Header.svelte';
-	import Content from '$lib/blocks/Content.svelte';
 	import { event } from '$lib/store/event';
 </script>
 
-<Header title={'Gesamtübersicht'} />
 
-<Content>
+
+
 	<div class="row">
 		<div class="md-6 col">
 			<div>
-				<h3>Anzahl der Besucher</h3>
+				<h3>Gesamtanmeldungen</h3>
 				<div class="count">
-					<p>{$event.visits.length}</p>
+					<p>{$event.visitors.length}</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="md-6 col">
-			<div>
-				<h3>Anzahl der Buchungen</h3>
-				<div class="count">
-					<p>{$event.bookings.length}</p>
-				</div>
-			</div>
-		</div>
-
+		{#if $event.visitors.length > -1}
 		<div class="md-12 col">
 			<div>
-				<h3>Die letzten 15 Besucher</h3>
+				<h3>Die letzten 15 Anmeldungen</h3>
 				<table>
 					<thead>
 						<tr>
 							<th>Name</th>
 							<th>E-Mail</th>
-							<th>Status</th>
 						</tr>
 					</thead>
 					<tbody>
-						{#each $event.visits as visit}
+						{#each $event.visitors as visitor}
 							<tr>
 								<td>
-									{visit.user.first_name}
-									{visit.user.last_name}
+									{visitor.firstName}
+									{visitor.lastName}
 								</td>
 								<td>
-									{visit.user.email}
+									{visitor.email}
 								</td>
-								<td>{visit.status} </td>
+						
 							</tr>
 						{/each}
 					</tbody>
 				</table>
 			</div>
 		</div>
+		{/if}
 	</div>
-</Content>
+
 
 <style>
-	.row {
-	}
 	.row > div {
 		padding: 15px;
 	}

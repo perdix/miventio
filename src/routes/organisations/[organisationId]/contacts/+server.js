@@ -6,13 +6,14 @@ export async function GET({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const users = await locals.prisma.user.findMany({
+	const contacts = await locals.prisma.contact.findMany({
 		where: {
-			organisation_id: params.organisationId
-		}
+			organisationId: params.organisationId
+		}, 
+		include: { membership: true } 
 	});
 
-	return new Response(toContactsJSON(users));
+	return new Response(toContactsJSON(contacts));
 }
 
 export async function POST({ locals, params, request }) {
@@ -21,10 +22,10 @@ export async function POST({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	data.organisation_id = params.organisationId;
-	const user = await locals.prisma.user.create({
+	data.organisationId = params.organisationId;
+	const contact = await locals.prisma.contact.create({
 		data: data
 	});
 
-	return new Response(toContactJSON(user), { status: 201 });
+	return new Response(toContactJSON(contact), { status: 201 });
 }

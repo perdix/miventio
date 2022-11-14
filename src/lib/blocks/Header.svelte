@@ -20,7 +20,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding-top: calc(var(--unit) / 2);
+		/* padding-top: calc(var(--unit) / 2); */
 		margin-bottom: calc(var(--unit));
 	}
 

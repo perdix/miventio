@@ -1,6 +1,5 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
-	import Content from '$lib/blocks/Content.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import { page } from '$app/stores';
 	import { organisation } from '$lib/store/organisation';
@@ -22,113 +21,122 @@
 			const updatedOrganisation = await res.json();
 			// Merge updated organisation into old one, keeping the role attribute!
 		    $organisation = { ...$organisation, ...updatedOrganisation};
-			goto(`/organisation/${$organisation.id}`);
-		}
-	};
-
-	let superuser = {};
-	let showPopup = false;
-	let popupTitle = 'Neuer Mitarbeiter';
-
-	const togglePopup = () => {
-		showPopup = !showPopup;
-	};
-
-	const newSuperuser = (event) => {
-		popupTitle = 'Neuer Mitarbeiter';
-		superuser = {};
-		togglePopup();
-	};
-
-	const editSuperuser = (su) => {
-		superuser = su;
-		popupTitle = 'Mitarbeiter editieren';
-		togglePopup();
-	};
-	const deleteSuperuser = async () => {
-		const res = await fetch(
-			`/organisations/${$page.data.organisation.id}/users/${superuser.id}`,
-			{
-				method: 'DELETE'
-			}
-		);
-		if (res.status === 200) {
-			const deletedSuperuser = await res.json();
-			togglePopup();
-		}
-	};
-	const saveSuperuser = async () => {
-		if ('id' in superuser) {
-			const res = await fetch(
-				`/organisations/${$page.data.organisation.id}/users/${superuser.id}`,
-				{
-					method: 'PUT',
-					body: JSON.stringify(superuser)
-				}
-			);
-			if (res.status === 200) {
-				const updatedSuperuser = await res.json();
-				togglePopup();
-			}
+			message = 'Die Organisation wurde upgedated';
+			status = res.status;
 		} else {
-			const res = await fetch(
-				`/organisations/${$page.data.organisation.id}/users`,
-				{
-					method: 'POST',
-					body: JSON.stringify(superuser)
-				}
-			);
-			if (res.status === 201) {
-				const newSuperuser = await res.json();
-				togglePopup();
-			}
+			message = 'Fehler beim Update der Organisation';
+			status = 400;
 		}
 	};
+
+	let user = {};
+	let message = '';
+	let status;
+
+	// let showPopup = false;
+	// let popupTitle = 'Neuer Mitarbeiter';
+
+	// const togglePopup = () => {
+	// 	showPopup = !showPopup;
+	// };
+
+	// const newUser = (event) => {
+	// 	popupTitle = 'Neuer Mitarbeiter';
+	// 	user = {};
+	// 	togglePopup();
+	// };
+
+	// const editUser = (u) => {
+	// 	user = u;
+	// 	popupTitle = 'Mitarbeiter editieren';
+	// 	togglePopup();
+	// };
+	// const deleteUser = async () => {
+	// 	const res = await fetch(
+	// 		`/organisations/${$page.data.organisation.id}/users/${user.id}`,
+	// 		{
+	// 			method: 'DELETE'
+	// 		}
+	// 	);
+	// 	if (res.status === 200) {
+	// 		const deletedSuperuser = await res.json();
+	// 		togglePopup();
+	// 	}
+	// };
+	// const saveUser = async () => {
+	// 	if ('id' in user) {
+	// 		const res = await fetch(
+	// 			`/organisations/${$page.data.organisation.id}/users/${user.id}`,
+	// 			{
+	// 				method: 'PUT',
+	// 				body: JSON.stringify(user)
+	// 			}
+	// 		);
+	// 		if (res.status === 200) {
+	// 			const updatedSuperuser = await res.json();
+	// 			togglePopup();
+	// 		}
+	// 	} else {
+	// 		const res = await fetch(
+	// 			`/organisations/${$page.data.organisation.id}/users`,
+	// 			{
+	// 				method: 'POST',
+	// 				body: JSON.stringify(user)
+	// 			}
+	// 		);
+	// 		if (res.status === 201) {
+	// 			const newUser = await res.json();
+	// 			togglePopup();
+	// 		}
+	// 	}
+	// };
 
 </script>
-
+<!-- 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
-	<form class="miventio row" on:submit|preventDefault={saveSuperuser}>
+	<form class="miventio row" on:submit|preventDefault={saveUser}>
 		<div class="md-6">
 			<label for="email">E-Mail</label>
-			<input id="email" type="email" bind:value={superuser.email} required/>
+			<input id="email" type="email" bind:value={user.email} required/>
 		</div>
 		<div class="md-6">
 			<label for="role">Rolle</label>
-			<input id="role" type="text" bind:value={superuser.role} required />
+			<input id="role" type="text" bind:value={user.role} required />
 		</div>
 		<div class="md-6">
 			<label for="password1">Passwort</label>
-			<input id="password1" type="password" bind:value={superuser.password} required/>
+			<input id="password1" type="password" bind:value={user.password} required/>
 		</div>
 		<div class="md-6">
 			<label for="password2">Wiederholung Passwort</label>
-			<input id="password2" type="password" bind:value={superuser.passwordConfirmation} required/>
+			<input id="password2" type="password" bind:value={user.passwordConfirmation} required/>
 		</div>
 		
 		<div class="md-6 submit">
 			<button type="submit">Speichern</button>
 		</div>
 		<div class="md-6 submit right">
-			<button class="secondary" type="button" on:click={deleteSuperuser}>
+			<button class="secondary" type="button" on:click={deleteUser}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>
 		</div>
 	</form>
-</Popup>
+</Popup> -->
 
 <Main>
-	<Header title={'Einstellungen'}>
-		<!-- <a href="/organisation/{$organisation.id}" class="close"><span class="material-symbols-outlined">close</span></a>	 -->
+	<Header title={'Organisationseinstellungen'}>
+		<a href="javascript:history.back()" class="close"
+		><span class="material-symbols-outlined">close</span></a
+	>
 	</Header>
 
-	<Content>
+
 		<div class="row">
-			<div class="md-6 col">
+			<div class="md-12 col">
 				<h1>Allgemein</h1>
 				<form class="miventio row" on:submit|preventDefault={saveOrganisation} data-sveltekit-prefetch="off">
 					<div class="md-12">
-						<label for="Name">Organisationsname</label>
+						<label for="Name">Name der Organisation</label>
 						<input id="name" type="text" bind:value={editOrganisation.name} />
 					</div>
 					<div class="md-12">
@@ -142,16 +150,21 @@
 					<div class="md-12 submit">
 						<button type="submit">Speichern</button>
 					</div>
+					{#if message}
+					<div class="md-12">
+						<div class="message-box" class:error={status==404} class:confirmation={status==200}>{message || ''}</div>
+					</div>
+				{/if}
 				</form>
 			</div>
-			<div class="md-6 col">
+			<!-- <div class="md-6 col">
 				<h1>Subscription</h1>
 				<div class="abo">
 					<p>Welches Abo wurde gegewählt?</p>
 				</div>
-			</div>
+			</div> -->
 
-			<div class="md-12 col">
+			<!-- <div class="md-12 col">
 				
 				
 
@@ -171,12 +184,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							{#each $organisation.superusers as superuser}
-								<tr on:click={() => editSuperuser(superuser)}>
-									<td>{superuser.email}</td>
+							{#each $organisation.users as user}
+								<tr on:click={() => editUser(user)}>
+									<td>{user.email}</td>
 									<td
-										><span class:admin={superuser.role.toUpperCase() == 'ADMIN'}
-											>{superuser.role}</span
+										><span class:admin={user.role.toUpperCase() == 'ADMIN'}
+											>{user.role}</span
 										></td
 									>
 								</tr>
@@ -185,13 +198,13 @@
 					</table>
 				</div>
 			</div>
-		</div>
-	</Content>
+		</div> -->
+
 </Main>
 
 <style>
 	.col {
-		padding: 30px;
+		margin-bottom: 30px;
 	}
 	h1 {
 		font-size: 1.5rem;
