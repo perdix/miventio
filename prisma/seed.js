@@ -7,7 +7,8 @@ import {
 	eventTickets,
 	activities,
 	memberships,
-	contacts
+	contacts,
+	visitorCategories
 } from './data.js';
 
 const prisma = new PrismaClient();
@@ -126,6 +127,12 @@ async function main() {
 	const activitiesWithEventId = activities.map((a) => ({ ...a, eventId: event.id }));
 	await prisma.activity.createMany({
 		data: activitiesWithEventId
+	});
+
+	// Create some visitorCategories
+	const visCatWithEventId = visitorCategories.map((a) => ({ ...a, eventId: event.id }));
+	await prisma.visitorCategory.createMany({
+		data: visCatWithEventId
 	});
 }
 

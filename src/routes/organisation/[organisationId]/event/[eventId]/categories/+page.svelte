@@ -130,7 +130,7 @@
 							{category.name}
 						</td>
 						<td>
-							{category.type}
+							{category.type || ''}
 						</td>
 						<td>
 							{category.description || ''}

@@ -29,7 +29,7 @@ model Role {
   userId String
   user User @relation(fields: [userId], references: [id])
   organisationId String
-  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   @@id([userId, organisationId])
 }
 
@@ -74,11 +74,11 @@ model Contact {
   type String?
   gdprConfirmation Boolean @default(false)
   organisationId String
-  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitors Visitor[]
   membershipFees MembershipFee[]
   membershipId String?
-  membership Membership? @relation(fields: [membershipId], references: [id])
+  membership Membership? @relation(fields: [membershipId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   @@unique([firstName, lastName, email])
 }
 
@@ -93,7 +93,7 @@ model Membership{
   fees MembershipFee[]
   contacts Contact[]
   organisationId String
-  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // A membership must be paid every year
@@ -102,13 +102,14 @@ model MembershipFee {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   year String?
-  membershipId String
-  membership Membership @relation(fields: [membershipId], references: [id])
+  name String?
+  membershipId String?
+  membership Membership? @relation(fields: [membershipId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   price Float @default(0)
   prescribedAt DateTime?
   paidAt DateTime?
   contactId String
-  contact Contact @relation(fields: [contactId], references: [id])
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Event {
@@ -134,7 +135,7 @@ model Event {
   visitors Visitor[]
   visitorCategories VisitorCategory[]
   organisationId String
-  organisation Organisation @relation(fields: [organisationId], references: [id])
+  organisation Organisation @relation(fields: [organisationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // To book an event you need a ticket
@@ -151,7 +152,7 @@ model EventTicket {
   event Event @relation(fields: [eventId], references: [id])
   visitors Visitor[]
   visitorCategoryId String?
-  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id], onDelete: SetNull, onUpdate: SetNull)
 }
 
 // Each event can have several activities/subevents
@@ -171,7 +172,7 @@ model Activity {
   abstract String?
   sponsor String?
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   credits Float?
   logo String?
   type String? // Can be choosen freely. E.g. workshop, lecture, party, ...
@@ -185,13 +186,13 @@ model ActivityTicket {
   updatedAt DateTime @updatedAt
   name String?
   activityId String
-  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  activity Activity @relation(fields: [activityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitors Visitor[]
   price Float @default(0)
   visitorCategoryId String?
-  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id])
+  visitorCategory VisitorCategory? @relation(fields: [visitorCategoryId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 // A booking is a complete order with one or several visitors
@@ -209,7 +210,7 @@ model Booking {
   status String @default("GEBUCHT")
   price Float
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitors Visitor[]
 }
 
@@ -222,22 +223,22 @@ model Visitor {
   price Float
   eventTicketPrice Float
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   eventTicketId String?
-  eventTicket EventTicket? @relation(fields: [eventTicketId], references: [id])
+  eventTicket EventTicket? @relation(fields: [eventTicketId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   activityTicketsPrices Json // A list of all ticket prices of the selected activity tickets
   activities Activity[]
   activityTickets ActivityTicket[]
   bookingId String?
-  booking Booking? @relation(fields: [bookingId], references: [id])
+  booking Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   firstName String
   lastName  String
   type String?
   email String
-  contact Contact? @relation(fields: [contactId], references: [id])
+  contact Contact? @relation(fields: [contactId], references: [id], onDelete: SetNull, onUpdate: SetNull)
   contactId String?
   categoryId String?
-  category VisitorCategory? @relation(fields: [categoryId], references: [id])
+  category VisitorCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull, onUpdate: SetNull)
 }
 
 
@@ -252,5 +253,5 @@ model VisitorCategory {
   activityTickets ActivityTicket[]
   eventTickets EventTicket[]
   eventId String
-  event Event @relation(fields: [eventId], references: [id])
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }

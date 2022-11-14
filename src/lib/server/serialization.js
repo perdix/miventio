@@ -182,3 +182,19 @@ export const toCategoriesJSON = (categories) => {
 	const cleanedCategories = categories.map((c) => cleanCategory(c));
 	return JSON.stringify(cleanedCategories);
 };
+
+// ActivityTicket
+const cleanActivityTicket = (activityTicket) => {
+	delete activityTicket.updatedAt;
+	delete activityTicket.createdAt;
+	return activityTicket;
+};
+
+export const toActivityTicketJSON = (activityTicket) => {
+	return JSON.stringify(cleanCategory(activityTicket));
+};
+
+export const toActivityTicketsJSON = (activityTickets) => {
+	const cleanedActivityTickets = activityTickets.map((a) => cleanActivityTicket(a));
+	return JSON.stringify(cleanedActivityTickets);
+};

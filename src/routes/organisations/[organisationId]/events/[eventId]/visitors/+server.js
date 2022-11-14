@@ -8,11 +8,52 @@ export async function GET({ locals, params }) {
 
 	const visitors = await locals.prisma.visitor.findMany({
 		where: {
-			organisation_id: params.organisationId,
-			eventId: params.visitId
+			eventId: params.eventId
 		},
-		include: {
-			user: true
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			email: true,
+			status: true,
+			eventTicketId: true,
+			eventTicket: true,
+			eventTicketPrice: true,
+			price: true,
+			activities: true,
+			activityTicketsPrices: true,
+			categoryId: true,
+			category: {
+				select: {
+					id: true,
+					name: true,
+				}
+			},
+			activityTickets: {
+				select: {
+					id: true
+				}
+			},
+			booking: {
+				select: {
+					id: true,
+					firstName: true,
+					lastName: true,
+					email: true,
+					address: true,
+					postcode: true,
+					city: true,
+					phone: true,
+					status: true,
+					visitors: {
+						select: {
+							id: true,
+							firstName: true,
+							lastName: true
+						}
+					}
+				}
+			},
 		}
 	});
 	return new Response(toVisitorsJSON(visitors));
@@ -25,7 +66,6 @@ export async function POST({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	console.log(data);
 
 	// Get category
 	const category = await locals.prisma.visitorCategory.findFirst({
@@ -62,29 +102,32 @@ export async function POST({ locals, params, request }) {
 			activityTicketsPrices: activityTickets.map(a => a.price),
 			activityTickets: {
 				connect: activityTickets.map(a => ({ id: a.id}))
+			},	
+		},
+		select: {
+			id: true,
+			firstName: true,
+			lastName: true,
+			email: true,
+			status: true,
+			eventTicketId: true,
+			eventTicket: true,
+			eventTicketPrice: true,
+			price: true,
+			activities: true,
+			activityTicketsPrices: true,
+			categoryId: true,
+			category: {
+				select: {
+					id: true,
+					name: true,
+				}
 			},
-			// contact: {
-			// 	connectOrCreate: {
-			// 		where: {
-			// 			firstName_lastName_email: {
-			// 				firstName: data.firstName,
-			// 				lastName: data.lastName,
-			// 				email: data.email
-			// 			}
-			// 		},
-			// 		create: {
-			// 			firstName: data.firstName,
-			// 			lastName: data.lastName,
-			// 			email: data.email,
-			// 			type: category.type,
-			// 			organisation: {
-			// 				connect: {
-			// 					id: params.organisationId
-			// 				}
-			// 			}
-			// 		}
-			// 	},
-			// },
+			activityTickets: {
+				select: {
+					id: true
+				}
+			}
 		}
 	});
 
@@ -112,8 +155,6 @@ export async function POST({ locals, params, request }) {
 			}
 		},
 	});
-
-	console.log(visitor);
 
 	return new Response(toVisitorJSON(visitor), { status: 201 });
 }

@@ -93,7 +93,7 @@ export async function GET({ locals, params }) {
 					}
 				}
 			},
-			visitors: {
+			visitors: {	
 				select: {
 					id: true,
 					firstName: true,
@@ -107,19 +107,37 @@ export async function GET({ locals, params }) {
 					activities: true,
 					activityTicketsPrices: true,
 					categoryId: true,
+					category: {
+						select: {
+							id: true,
+							name: true,
+						}
+					},
 					activityTickets: {
 						select: {
 							id: true
 						}
 					},
-					contact: {
+					booking: {
 						select: {
 							id: true,
 							firstName: true,
 							lastName: true,
-							email: true
+							email: true,
+							address: true,
+							postcode: true,
+							city: true,
+							phone: true,
+							status: true,
+							visitors: {
+								select: {
+									id: true,
+									firstName: true,
+									lastName: true
+								}
+							}
 						}
-					}
+					},
 				}
 			},
 			visitorCategories: {

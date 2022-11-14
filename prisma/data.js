@@ -66,6 +66,17 @@ export const memberships = [
 	}
 ]
 
+export const visitorCategories = [
+	{
+		name: "Student",
+		type: "Teilnehmer"
+	},
+	{
+		name: "Gast",
+		type: "Teilnehmer"
+	}
+]
+
 export const contacts = [
 	{
 		firstName: 'Max 1',

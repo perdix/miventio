@@ -55,6 +55,7 @@
 		if (res.status === 200) {
 			const deletedActivity = await res.json();
 			$event.activities = $event.activities.filter((a) => a.id != activity.id);
+			refreshActivityTickets();
 			togglePopup();
 		}
 	};
@@ -71,6 +72,7 @@
 			if (res.status === 200) {
 				const updatedActivity = await res.json();
 				$event.activities = $event.activities.map((a) => (a.id == updatedActivity.id ? updatedActivity : a));
+				refreshActivityTickets();
 				togglePopup();
 			}
 		} else {
@@ -85,10 +87,20 @@
 				const newActivity = await res.json();
 				$event.activities.push(newActivity);
 				$event = $event;
+				refreshActivityTickets();
 				togglePopup();
 			}
 		}
 	};
+
+	const refreshActivityTickets = async () => {
+		// Update event with fresh list of activityTickets
+		fetch(`${$page.url.origin}/organisations/${$page.params.organisationId}/events/${$page.params.eventId}/activityTickets`)
+		.then((r) => r.json()).then(tickets => {
+			$event.activityTickets = tickets;
+		});
+	}
+
 	const addTicket = () => {
 		activity.tickets.push({});
 		activity = activity;
