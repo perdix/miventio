@@ -237,7 +237,7 @@
 						</td>
 						<td>
 					
-							{activity.numberOfVisitors} / {activity.limit || '-'}
+							{activity.numberOfVisitors || '0'} / {activity.limit || '-'}
 					
 						</td>
 						

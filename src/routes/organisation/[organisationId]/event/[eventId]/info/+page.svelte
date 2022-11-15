@@ -55,12 +55,12 @@
 			<label for="city">Stadt</label>
 			<input id="city" type="text" bind:value={eventData.city} />
 		</div>
-		<div class="md-12">
-			<label for="von">Start</label>
+		<div class="md-6">
+			<label for="von">Eventbeginnn</label>
 			<input id="von" type="date" bind:value={eventData.start} />
 		</div>
-		<div class="md-12">
-			<label for="bis">Ende</label>
+		<div class="md-6">
+			<label for="bis">Eventende</label>
 			<input id="bis" type="date" bind:value={eventData.end} />
 		</div>
 

@@ -1,14 +1,246 @@
 <script>
-	import Registration from '$lib/Registration/Registration.svelte';
 	import { page } from '$app/stores';
+	import { slide, fly, fade } from 'svelte/transition';
+
+	let event = $page.data.event;
+	let step = 1;
+	let booking = { visitors: []};
+
+	let visitor = { categoryId: null, activityTickets: [], eventTicket: {}}
+
+	let tickets = event.tickets;
+	let activityTickets = event.activityTickets;
+
+	$: total = visitor.eventTicket.price + visitor.activityTickets.map(a => a.price).reduce((a,b) => a+b, 0);
+
+	$: {
+		if (visitor.categoryId) {
+			tickets = event.tickets.filter(t => t.visitorCategory == null || t.visitorCategoryId == visitor.categoryId);
+			activityTickets = event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId);
+		}
+	}
+
+	const saveAndNext = () => {
+		step++;
+	}
+	const previous = () => {
+		step--;
+	}
+	const submitOrder = async () => {
+		booking.visitors.push(visitor);
+
+		const res = await fetch(`/form/${event.id}/register`, {
+			method: 'POST',
+			body: JSON.stringify(booking)
+		});
+		if (res.status === 201) {
+			booking = { visitors: [] };
+			step++
+		}
+	}
+
+
 </script>
 
-<div>
-	<Registration event={$page.data.event} />
+<div class="registration">
+	<h1>Anmeldung</h1>
+	<h2>{event.name}</h2>
+	
+	{#if step == 1}
+	<section class="category">
+
+		<h3>Besucher</h3>
+		
+		<form class="register row" on:submit|preventDefault={saveAndNext}>			
+			<div class="md-12">
+				<label for="category">Teilnahme als</label>
+				<select name="category" id="category" bind:value={visitor.categoryId} required>
+					{#each event.visitorCategories as category}
+						<option value={category.id}>{category.name}</option>
+					{/each}
+				</select>
+			</div>
+			<div class="md-6">
+				<label for="firstname">Vorname</label>
+				<input id="firstname" type="text" bind:value={visitor.firstName} required />
+			</div>
+			<div class="md-6">
+				<label for="lastname">Nachname</label>
+				<input id="lastname" type="text" bind:value={visitor.lastName} required />
+			</div>
+			<div class="md-12">
+				<label for="email">E-Mail</label>
+				<input id="email" type="email" bind:value={visitor.email} required />
+			</div>
+			<div class="md-12 right submit">
+				<button type="submit">Weiter</button>
+			</div>
+		</form>
+	</section>
+	{/if}
+
+	{#if step == 2}
+	<section class="tickets" in:fly="{{ x: 300, duration: 700 }}">
+
+		<h3>Programm</h3>
+		<form class="register row" on:submit|preventDefault={saveAndNext}>
+
+			<div class="md-12">
+				<label for="ticket">Ticketauswahl</label>
+				<select name="ticket" id="ticket" bind:value={visitor.eventTicket} required>
+					{#each tickets as ticket}
+						<option value={ticket}>{ticket.name} | { ticket.visitorCategory ? ticket.visitorCategory.name : 'Allgemein' } | Preis: {ticket.price}€</option>
+					{/each}
+				</select>
+			</div>
+	
+			<div class="md-12">
+				<label for="activity">Zusatzprogramm</label>
+				{#each activityTickets as activityTicket}
+					<label class="activity">
+							<input type="checkbox" bind:group={visitor.activityTickets} value={activityTicket}>
+							<b>{activityTicket.activity.type}</b> {activityTicket.activity.name} ({activityTicket.activity.speaker || 'K. Referent'}) | {activityTicket.price}€
+					</label>
+				{/each}
+			</div>
+			<div class="md-6 submit">
+				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
+			</div>
+			<div class="md-6 right submit">
+				<button type="submit">Weiter</button>
+			</div>
+		</form>
+	</section>
+	{/if}
+
+
+	{#if step == 3}
+	<section class="overview" in:fly="{{ x: 300, duration: 700 }}">
+		<h3>Gesamtüberblick</h3>
+		<br>
+		<br>
+		<form class="register row" on:submit|preventDefault={submitOrder}>
+
+			<div class="md-12">
+				<h4>{visitor.firstName || ''} {visitor.lastName || ''}</h4>
+			</div>
+
+			{#if Object.keys(visitor.eventTicket).length > 0}
+			<div class="md-6">
+				<p><b>Veranstaltungsticket:</b> {visitor.eventTicket.name || ''}</p>
+			</div>
+			<div class="md-6 right">
+				
+				<p>{visitor.eventTicket.price || ''}€</p>
+			</div>
+			{/if}
+			
+			<div class="md-6">
+				{#each visitor.activityTickets as activityTicket}
+				<p><b>{activityTicket.activity.type}:</b> {activityTicket.activity.name}</p>
+				{/each}
+			</div>
+
+			<div class="md-6 right">
+				<div>
+				{#each visitor.activityTickets as activityTicket}
+				<p>{activityTicket.price}€</p>
+				{/each}
+				</div>
+			</div>
+
+			{#if total}
+			<div class="sum md-6">
+				<p><b>Gesamtpreis</b></p>
+			</div>
+			<div class="sum md-6 right">
+				<p><b>{total}€</b></p>
+			</div>
+			{/if}
+
+			<div class="md-6 submit">
+				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
+			</div>
+			<div class="md-6 right submit">
+				<button type="submit">Verbindlich teilnehmen</button>
+			</div>
+		</form>
+	</section>
+	{/if}
+
+	{#if step == 4}
+	<section class="confirmation" in:fade>
+		<div class="check">
+			<span class="material-symbols-outlined">
+				check_circle
+				</span>
+			<h3>Teilnahmebestätigung</h3>
+			<p>Vielen Dank, wir freuen uns auf Sie!</p>
+			
+		</div>
+
+	</section>
+	{/if}
+
+
 </div>
 
 <style>
-	div {
-		padding: 10px;
+	.registration {
+		min-width: 350px;
+		max-width: 600px;
+		margin:auto;
+	}
+	section {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-direction: column;
+		background-color: rgba(234, 234, 234, 0.264);
+		padding: 15px;
+		margin-top: 20px;
+		border-radius: 10px;
+	}
+	h1 {
+		margin-top: 50px;
+		font-size: 25px;
+		font-family: var(--font-1);
+	}
+	h2 {
+		font-size: 20px;
+		color:black;
+		font-family: var(--font-2);
+	}
+	h3 {
+		margin-top: 10px;
+		font-size: 20px;
+		font-family: var(--font-1);
+	}
+	h4 {
+		font-size: 18px;
+	}
+	button {
+		margin-top:20px;
+	}
+	.check {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		width: 100%;
+		padding: 30px;
+	}
+	.check span {
+		font-size: 40px;
+		color: white;
+		background-color: rgb(12, 156, 12);
+		border-radius: 50%;
+		padding:5px;
+	}
+	.sum {
+		border-top: 1px solid black;
+		padding-top: 10px;
+		margin-bottom: 5px;
 	}
 </style>

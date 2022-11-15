@@ -49,6 +49,9 @@ const cleanEvent = (event) => {
 	delete event.createdAt;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
+	event.bookingStart = event.bookingStart ? event.bookingStart.toISOString().substring(0, 10) : null;
+	event.bookingEnd = event.bookingEnd ? event.bookingEnd.toISOString().substring(0, 10) : null;
+	
 	if (('_count' in event) && ('visitors' in event._count)) {
 		event.numberOfVisitors = event._count.visitors;
 	}

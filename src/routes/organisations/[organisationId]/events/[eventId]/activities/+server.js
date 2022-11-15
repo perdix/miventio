@@ -42,6 +42,7 @@ export async function POST({ locals, params, request }) {
 			description: data.description,
 			limit: data.limit,
 			speaker: data.speaker,
+			type: data.type,
 			location: data.location,
 			author: data.author,
 			status: data.status,
