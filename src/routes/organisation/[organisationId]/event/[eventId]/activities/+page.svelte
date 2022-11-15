@@ -219,8 +219,8 @@
 						<th>Referent</th>
 						<th>Datum</th>
 						<th>Zeit</th>
-						<th>Besucherlimit</th>
-						<th>Tickets</th>
+						<th>Anmeldungen</th>
+						<th>Ticketvarianten</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -228,14 +228,19 @@
 					<tr on:click={() => editActivity(activity)}>
 						<td>{activity.type || ''}</td>
 						<td>{activity.name}</td>
-						<td>{activity.speaker}</td>
+						<td>{activity.speaker || ''}</td>
 						<td>{activity.date.substring(0,10)}</td>
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
 							{#if activity.end}
 								{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}
 							{/if}
 						</td>
-						<td>{activity.limit || '-'}</td>
+						<td>
+					
+							{activity.numberOfVisitors} / {activity.limit || '-'}
+					
+						</td>
+						
 						<td>
 							{#each activity.tickets as ticket}
 								<span class="ticket">

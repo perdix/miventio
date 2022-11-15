@@ -63,6 +63,10 @@ export async function PUT({ locals, params, request }) {
 			price: data.price,
 			eventTicketPrice: eventTicket.price,
 			activityTicketsPrices: activityTickets.map(a => a.price),
+			activities: {
+				set:[],
+				connect: activityTickets.map(a => ({ id: a.activityId}))
+			},
 			activityTickets: {
 				set:[],
 				connect: activityTickets.map(a => ({ id: a.id}))

@@ -57,6 +57,10 @@ export async function GET({ locals, params }) {
 					start: true,
 					end: true,
 					type:true,
+					visitors: true,
+					_count: {
+						select: { visitors: true },
+					  },
 					tickets: {
 						select: {
 							id: true,

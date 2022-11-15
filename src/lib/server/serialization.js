@@ -53,6 +53,14 @@ const cleanEvent = (event) => {
 		event.numberOfVisitors = event._count.visitors;
 	}
 	delete event._count;
+	if (event.activities) {
+		event.activities.forEach(a => {
+			if (('_count' in a) && ('visitors' in a._count)) {
+				a.numberOfVisitors = a._count.visitors;
+			}
+			delete a._count;
+		});
+	}
 	return event;
 };
 
