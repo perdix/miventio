@@ -292,8 +292,6 @@
 </form>
 </Popup>
 
-
-
 <Header title={'Teilnehmer'}>
 	<button on:click={newVisitor}>
 		<span>Neuer Teilnehmer</span>

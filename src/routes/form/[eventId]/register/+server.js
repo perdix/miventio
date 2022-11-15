@@ -12,88 +12,106 @@ export async function POST({ locals, params, request }) {
 	}
 
 	// Create visits prisma query
-	let createVisits = [];
-	let price = 0;
-	for (const visit of data.cart) {
+	let createVisitors = [];
+	let totalPrice = 0;
+	for (const visitor of data.visitors) {
 		// Get ticket
-		const ticket = await locals.prisma.ticket.findUnique({
+		const eventTicket = await locals.prisma.eventTicket.findUnique({
 			where: {
-				id: visit.ticket_id
+				id: visitor.eventTicket.id
 			}
 		});
-		// Get activities
-		const activities = await locals.prisma.activity.findMany({
+		// Get activities tickets
+		const activityTickets = await locals.prisma.activityTicket.findMany({
 			where: {
-				id: { in: visit.activities_ids }
+				id: { in: visitor.activityTickets.map(a => a.id) }
+			}
+		});
+		// Get category
+		const category = await locals.prisma.visitorCategory.findFirst({
+			where: {
+				id: data.categoryId
 			}
 		});
 
 		// Calculate prices and statuses
-		const visit_price = ticket.price + activities.map((a) => a.price).reduce((a, b) => a + b, 0);
-		price += visit_price;
+		const visitorPrice = eventTicket.price + activityTickets.map((a) => a.price).reduce((a, b) => a + b, 0);
+		totalPrice += visitorPrice;
 
-		const newVisit = {
-			status: 'ANGEMELDET',
-			activities: {
-				connect: activities.map((a) => ({ id: a.id }))
-			},
-			activities_prices: activities.map((a) => ({ id: a.id, price: a.price })),
-			ticket: {
+		const newVisitor = {
+			firstName: visitor.firstName,
+			lastName: visitor.lastName,
+			email: visitor.email,
+			eventTicket: {
 				connect: {
-					id: ticket.id
+					id: eventTicket.id
 				}
 			},
-			ticket_price: ticket.price,
-			price: visit_price,
 			event: {
 				connect: {
-					id: params.eventId
+					id: event.id
 				}
 			},
-			user: {
+			category: {
+				connect: {
+					id: visitor.categoryId
+				}
+			},
+			type: category.type,
+			status: "ANGEMELDET",
+			price: visitorPrice,
+			eventTicketPrice: eventTicket.price,
+			activityTicketsPrices: activityTickets.map(a => a.price),
+			activities: {
+				connect: activityTickets.map(a => ({ id: a.activityId}))
+			},
+			activityTickets: {
+				connect: activityTickets.map(a => ({ id: a.id}))
+			},	
+			contact: {
 				connectOrCreate: {
 					where: {
-						first_name_last_name_email: {
-							first_name: visit.first_name,
-							last_name: visit.last_name,
-							email: visit.email
+						firstName_lastName_email: {
+							firstName: visitor.firstName,
+							lastName: visitor.lastName,
+							email: visitor.email
 						}
 					},
 					create: {
-						email: visit.email,
-						first_name: visit.first_name,
-						last_name: visit.last_name,
-						title: visit.title,
+						email: visitor.email,
+						firstName: visitor.firstName,
+						lastName: visitor.lastName,
+						type: visitor.type,
 						organisation: {
 							connect: {
-								id: event.organisation_id
+								id: event.organisationId
 							}
 						}
 					}
 				}
 			}
 		};
-		createVisits.push(newVisit);
+		createVisitors.push(newVisitor);
 	}
 
 	const booking = await locals.prisma.booking.create({
 		data: {
-			first_name: data.first_name,
-			last_name: data.last_name,
-			email: data.email,
-			phone: data.phone,
-			address: data.address,
-			postcode: data.postcode,
-			city: data.city,
 			status: 'OFFEN',
-			price: price,
+			firstName: data.firstName || '',
+			lastName: data.lastName || '',
+			email: data.email || '',
+			address: data.address || '',
+			postcode: data.postcode || '',
+			city: data.city || '',
+			phone: data.phone,
+			price: totalPrice,
 			event: {
 				connect: {
-					id: params.eventId
+					id: event.id
 				}
 			},
-			visits: {
-				create: createVisits
+			visitors: {
+				create: createVisitors
 			}
 		}
 	});

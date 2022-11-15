@@ -20,7 +20,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		/* padding-top: calc(var(--unit) / 2); */
 		margin-bottom: calc(var(--unit));
 	}
 
@@ -31,7 +30,8 @@
 		justify-content: center;
 		align-items: center;
 		color: var(--color-1-dark);
-		font-family: 'Roboto';
+		font-family: var(--font-1);
+		font-weight: 300;
 	}
 	h1 span {
 		display: block;

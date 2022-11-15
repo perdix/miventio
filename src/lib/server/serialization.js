@@ -49,10 +49,21 @@ const cleanEvent = (event) => {
 	delete event.createdAt;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
+	event.bookingStart = event.bookingStart ? event.bookingStart.toISOString().substring(0, 10) : null;
+	event.bookingEnd = event.bookingEnd ? event.bookingEnd.toISOString().substring(0, 10) : null;
+	
 	if (('_count' in event) && ('visitors' in event._count)) {
 		event.numberOfVisitors = event._count.visitors;
 	}
 	delete event._count;
+	if (event.activities) {
+		event.activities.forEach(a => {
+			if (('_count' in a) && ('visitors' in a._count)) {
+				a.numberOfVisitors = a._count.visitors;
+			}
+			delete a._count;
+		});
+	}
 	return event;
 };
 

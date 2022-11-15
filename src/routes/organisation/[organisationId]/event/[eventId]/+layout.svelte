@@ -14,7 +14,7 @@
 		{ slug: 'categories', title: 'Teilnahmekategorien', icon: 'category' },
 		{ slug: 'tickets', title: 'Ticketvarianten', icon: 'confirmation_number' },
 		{ slug: 'activities', title: 'Programm', icon: 'calendar_view_week' },
-		// { slug: 'form', title: 'Formular', icon: 'table' },
+		{ slug: 'form', title: 'Anmeldeformular', icon: 'table' },
 		// { slug: 'hotels', title: 'Hotels', icon: 'hotel' },
 		// { slug: 'bookings', title: 'Buchungen', icon: 'payments' },
 		{ slug: 'visitors', title: 'Teilnehmer', icon: 'badge' }
@@ -116,7 +116,7 @@
 	nav div {
 		padding: calc(var(--unit) * 1);
 		background-color: var(--white);
-		min-height: 200px;
+		min-height: 300px;
 		display: flex;
 		justify-content: flex-end;
 		flex-direction: column;

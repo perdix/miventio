@@ -12,8 +12,81 @@ export async function load(request) {
 			id: eventId
 		},
 		include: {
-			tickets: true,
-			activities: true
+			tickets: {
+				select: {
+					id: true,
+					name: true,
+					price: true,
+					availableFrom: true,
+					availableTo: true,
+					dayTicketDate: true,
+					visitorCategoryId: true,
+					visitorCategory: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			},
+			activities: {
+				select: {
+					id: true,
+					name: true,
+					description: true,
+					speaker: true,
+					limit: true,
+					location: true,
+					date: true,
+					start: true,
+					end: true,
+					type:true,
+					visitors: true,
+					_count: {
+						select: { visitors: true },
+					  },
+					tickets: {
+						select: {
+							id: true,
+							name: true,
+							price: true,
+							visitorCategoryId: true,
+							visitorCategory: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
+						}
+					}
+				}
+			},
+			activityTickets: {
+				select: {
+					id: true,
+					price: true,
+					visitorCategoryId: true,
+					activity: {
+						select: {
+							id: true,
+							name: true,
+							speaker: true,
+							limit: true,
+							location: true,
+							date: true,
+							start: true,
+							end: true,
+							type:true
+						}
+					}
+				}
+			},
+			visitorCategories: {
+				select: {
+					id: true,
+					name: true,
+				}
+			}
 		}
 	});
 

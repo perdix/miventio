@@ -2,42 +2,63 @@
 	import Header from '$lib/blocks/Header.svelte';
 	import Content from '$lib/blocks/Content.svelte';
 	import { page } from '$app/stores';
-
+	import { event } from '$lib/store/event';
 	const url = `${$page.url.origin}/form/${$page.params.eventId}`;
+
+	let eventData = { ...$event };
+
+	const updateFormOptions = async () => {
+		const res = await fetch(
+			`/organisations/${$page.data.organisation.id}/events/${$page.data.event.id}`,
+			{
+				method: 'PUT',
+				body: JSON.stringify(eventData)
+			}
+		);
+		if (res.status === 200) {
+			const updatedEvent = await res.json();
+			$event = updatedEvent;
+		}
+	}
 </script>
 
 <Header title={'Anmeldeformular'} />
 
 <Content>
-	<h2>Link zum Anmeldeformular</h2>
+
+	<h3>Link zum Anmeldeformular</h3>
 
 	<div>
 		<a href={url} target="_blank">{url}</a>
 	</div>
 
-	<h2>Einbinden mit dem Embed-Tag</h2>
+	<form class="miventio row" on:submit|preventDefault={updateFormOptions}>
+		<div class="md-6">
+			<label for="von">Online-Anmeldung von</label>
+			<input id="von" type="date" bind:value={eventData.bookingStart} />
+		</div>
+		<div class="md-6">
+			<label for="bis">Online-Anmeldung bis</label>
+			<input id="bis" type="date" bind:value={eventData.bookingEnd} />
+		</div>
 
-	<div>
-		<code>
-			&lt;embed type="text/html" src="{url}" width="600" &gt;
-		</code>
-	</div>
+		<div class="md-12 submit">
+			<button type="submit">Speichern</button>
+		</div>
+	</form>
+
+
+
+
 </Content>
 
 <style>
-	h2 {
+	h3 {
 		font-weight: 400;
-		font-size: 1.5rem;
 	}
-	div {
-		margin-top: 10px;
-		margin-bottom: 30px;
-		font-size: 1.2rem;
-	}
-	a,
-	code {
+	a {
 		background-color: white;
-		padding: 30px;
+		padding: 15px;
 		display: block;
 		font-size: 1rem;
 	}

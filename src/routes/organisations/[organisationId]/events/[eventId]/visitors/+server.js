@@ -100,6 +100,9 @@ export async function POST({ locals, params, request }) {
 			price: data.price,
 			eventTicketPrice: eventTicket.price,
 			activityTicketsPrices: activityTickets.map(a => a.price),
+			activities: {
+				connect: activityTickets.map(a => ({ id: a.activityId}))
+			},
 			activityTickets: {
 				connect: activityTickets.map(a => ({ id: a.id}))
 			},	
