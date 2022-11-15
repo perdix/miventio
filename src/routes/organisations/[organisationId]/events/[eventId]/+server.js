@@ -321,6 +321,8 @@ export async function PUT({ locals, params, request }) {
 				select: {
 					id: true,
 					name: true,
+					type: true,
+					description: true,
 				}
 			}
 		}
