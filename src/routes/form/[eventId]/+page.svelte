@@ -1,9 +1,11 @@
 <script>
 	import { page } from '$app/stores';
 	import { slide, fly, fade } from 'svelte/transition';
+	import Spinner from '$lib/Spinner.svelte';
 
 	let event = $page.data.event;
 	let step = 1;
+	let wait = false;
 	let warning = {}
 
 	// Check for booking start and end
@@ -37,6 +39,7 @@
 		}
 	}
 
+	
 	const saveAndNext = () => {
 		step++;
 	}
@@ -44,15 +47,16 @@
 		step--;
 	}
 	const submitOrder = async () => {
+		wait = true;
 		booking.visitors.push(visitor);
-
+		step++;
 		const res = await fetch(`/form/${event.id}/register`, {
 			method: 'POST',
 			body: JSON.stringify(booking)
 		});
 		if (res.status === 201) {
 			booking = { visitors: [] };
-			step++
+			step++;
 		}
 	}
 
@@ -185,18 +189,28 @@
 				<p><b>{total}€</b></p>
 			</div>
 			{/if}
-
+			
 			<div class="md-6 submit">
 				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
 			</div>
 			<div class="md-6 right submit">
-				<button type="submit">Verbindlich teilnehmen</button>
+				<button type="submit" disabled={wait}>Verbindlich teilnehmen</button>
 			</div>
 		</form>
 	</section>
 	{/if}
 
 	{#if step == 4}
+	<section class="confirmation" in:fade>
+		<div class="check">
+			<Spinner/>
+			<h3>Anfrage wird gesendet!</h3>			
+		</div>
+
+	</section>
+	{/if}
+
+	{#if step == 5}
 	<section class="confirmation" in:fade>
 		<div class="check">
 			<span class="material-symbols-outlined">

@@ -483,3 +483,6 @@ table tr:nth-child(odd) {
 	border-radius: var(--corner);
 }
 
+button:disabled {
+	opacity: 0.3;
+}
