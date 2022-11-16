@@ -14,6 +14,7 @@
 <table>
 	<thead>
 		<tr>
+			<th>Id</th>
 			<th>Name</th>
 			<th>Adresse</th>
 			<th>Kontaktdaten</th>
@@ -24,6 +25,7 @@
 	<tbody>
 		{#each contacts as contact}
 			<tr on:click={() => edit(contact)}>
+				<td>{contact.identifier || ''}</td>
 				<td>{contact.prefix || ''} {contact.firstName} {contact.lastName} {contact.postfix || ''}</td>
 				<td>
 					{#if contact.company}{contact.company} <br />{/if}
