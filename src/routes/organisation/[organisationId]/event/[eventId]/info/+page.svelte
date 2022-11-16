@@ -4,6 +4,9 @@
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import { goto } from '$app/navigation';
+	import Notification from '$lib/Notification.svelte';
+
+	let saved = false;
 	let eventData = { ...$event };
 
 	const updateEvent = async () => {
@@ -17,6 +20,7 @@
 		if (res.status === 200) {
 			const updatedEvent = await res.json();
 			$event = updatedEvent;
+			saved = true;
 		}
 	};
 	const deleteEvent = async () => {
@@ -32,6 +36,8 @@
 		}
 	};
 </script>
+
+<Notification bind:show={saved} message="Eventdaten wurden gespeichert"></Notification>
 
 <Header title={'Allgemeine Daten'}>
 	<span class="material-symbols-outlined delete" on:click={deleteEvent}>delete</span>

@@ -64,6 +64,14 @@ const cleanEvent = (event) => {
 			delete a._count;
 		});
 	}
+	if (event.activityTickets) {
+		event.activityTickets.forEach(a => {
+			if (('_count' in a) && ('visitors' in a._count)) {
+				a.numberOfVisitors = a._count.visitors;
+			}
+			delete a._count;
+		});
+	}
 	return event;
 };
 
@@ -96,6 +104,10 @@ export const toContactsJSON = (contacts) => {
 const cleanActivity = (activity) => {
 	delete activity.updateAt;
 	delete activity.createdAt;
+	if (('_count' in activity) && ('visitors' in activity._count)) {
+		activity.numberOfVisitors = activity._count.visitors;
+	}
+	delete activity._count;
 	return activity;
 };
 
