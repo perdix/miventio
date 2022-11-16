@@ -10,6 +10,9 @@
 	let showPopup = false;
 	let popupTitle = '';
 
+
+	console.log($event.visitorCategories)
+
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};

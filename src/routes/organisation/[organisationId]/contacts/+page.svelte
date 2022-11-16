@@ -86,6 +86,19 @@
 
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveContact}>
+			<div class="md-6">
+				<label for="prefix">ID</label>
+				<input id="prefix" type="text" bind:value={contact.identifier} />
+			</div>
+			<div class="md-6">
+				<label for="gender">Geschlecht</label>
+				<select name="gender" id="gender">
+					<option value=""></option>
+					<option value="female">weiblich</option>
+					<option value="male">männlich</option>
+					<option value="diverse">divers</option>
+				</select>
+			</div>
 			<div class="md-2">
 				<label for="prefix">Titel</label>
 				<input id="prefix" type="text" bind:value={contact.prefix} />
@@ -102,30 +115,22 @@
 				<label for="postfix">Titel (nachgest.)</label>
 				<input id="postfix" type="text" bind:value={contact.postfix} />
 			</div>
-			<div class="md-3">
-				<label for="gender">Geschlecht</label>
-				<select name="gender" id="gender">
-					<option value=""></option>
-					<option value="female">weiblich</option>
-					<option value="male">männlich</option>
-					<option value="diverse">divers</option>
-				</select>
-			</div>
-			<div class="md-9">
+
+			<div class="md-5">
 				<label for="email">E-Mail</label>
 				<input id="email" type="email" bind:value={contact.email} required/>
 			</div>
-			<div class="md-6">
+			<div class="md-5">
 				<label for="phone">Telefon</label>
 				<input id="phone" type="text" bind:value={contact.phone} />
 			</div>
 
-			<div class="md-3">
+			<div class="md-1">
 				<label for="gdpr-confirmation">DSGVO</label>
 				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.gdprConfirmation} />
 			</div>
 
-			<div class="md-3">
+			<div class="md-1">
 				<label for="gdpr-confirmation">Newsletter</label>
 				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.newsletterConfirmation} />
 			</div>

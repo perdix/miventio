@@ -69,7 +69,7 @@ model Contact {
   website String?
   company String?
   notes   String?
-  fields Json?
+  fields Json? @default("{}")
   newsletterConfirmation Boolean @default(false)
   status String?
   type String?

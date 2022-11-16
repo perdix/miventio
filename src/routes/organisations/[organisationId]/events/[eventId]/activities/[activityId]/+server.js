@@ -91,6 +91,9 @@ export async function PUT({ locals, params, request }) {
 			start: true,
 			end: true,
 			type: true,
+			_count: {
+				select: { visitors: true },
+			  },
 			tickets: {
 				select: {
 					id: true,

@@ -3,8 +3,9 @@
 	import Content from '$lib/blocks/Content.svelte';
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
+	import Notification from '$lib/Notification.svelte';
 	const url = `${$page.url.origin}/form/${$page.params.eventId}`;
-
+	let saved = false;
 	let eventData = { ...$event };
 
 	const updateFormOptions = async () => {
@@ -18,9 +19,13 @@
 		if (res.status === 200) {
 			const updatedEvent = await res.json();
 			$event = updatedEvent;
+			saved = true;
+
 		}
 	}
 </script>
+
+<Notification bind:show={saved} message="Formulareinstellung wurde gespeichert!"></Notification>
 
 <Header title={'Anmeldeformular'} />
 
@@ -46,8 +51,6 @@
 			<button type="submit">Speichern</button>
 		</div>
 	</form>
-
-
 
 
 </Content>

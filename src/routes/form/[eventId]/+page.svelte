@@ -1,17 +1,36 @@
 <script>
 	import { page } from '$app/stores';
 	import { slide, fly, fade } from 'svelte/transition';
+	import Spinner from '$lib/Spinner.svelte';
 
 	let event = $page.data.event;
 	let step = 1;
+	let wait = false;
+	let warning = {}
+
+	// Check for booking start and end
+	if (!event.bookingStart) {
+		step = 0;
+		warning = { title: 'Online-Anmeldung nicht verfügbar!', message: ''}
+	} else {
+		if (event.bookingStart.setHours(0,0,0,0) > new Date().setHours(0,0,0,0)) {
+			step = 0;
+			warning = { title: 'Online-Anmeldung noch nicht geöffnet', message: `Die Online-Anmeldung ist ab dem ${event.bookingStart.toLocaleDateString()} möglich!`}
+		}
+		if (event.bookingEnd && event.bookingEnd.setHours(0,0,0,0) < new Date().setHours(0,0,0,0)) {
+			step = 0;
+			warning = { title: 'Online-Anmeldung geschlossen!', message: 'Die Online-Anmeldung ist geschlossen, bitte melden Sie sich vor Ort an!'}
+		}
+	}
+		
 	let booking = { visitors: []};
-
 	let visitor = { categoryId: null, activityTickets: [], eventTicket: {}}
-
 	let tickets = event.tickets;
 	let activityTickets = event.activityTickets;
 
 	$: total = visitor.eventTicket.price + visitor.activityTickets.map(a => a.price).reduce((a,b) => a+b, 0);
+
+	$: validVisitorCategories = event.visitorCategories.filter(v => v.type == "Teilnehmer");
 
 	$: {
 		if (visitor.categoryId) {
@@ -20,6 +39,7 @@
 		}
 	}
 
+	
 	const saveAndNext = () => {
 		step++;
 	}
@@ -27,15 +47,16 @@
 		step--;
 	}
 	const submitOrder = async () => {
+		wait = true;
 		booking.visitors.push(visitor);
-
+		step++;
 		const res = await fetch(`/form/${event.id}/register`, {
 			method: 'POST',
 			body: JSON.stringify(booking)
 		});
 		if (res.status === 201) {
 			booking = { visitors: [] };
-			step++
+			step++;
 		}
 	}
 
@@ -45,6 +66,17 @@
 <div class="registration">
 	<h1>Anmeldung</h1>
 	<h2>{event.name}</h2>
+
+
+	{#if step == 0}
+	<section class="warning" in:fade>
+		<div class="check">
+			<h3>{warning.title}</h3>
+			<p>{warning.message}</p>
+		</div>
+	</section>
+	{/if}
+
 	
 	{#if step == 1}
 	<section class="category">
@@ -55,7 +87,7 @@
 			<div class="md-12">
 				<label for="category">Teilnahme als</label>
 				<select name="category" id="category" bind:value={visitor.categoryId} required>
-					{#each event.visitorCategories as category}
+					{#each validVisitorCategories as category}
 						<option value={category.id}>{category.name}</option>
 					{/each}
 				</select>
@@ -97,8 +129,8 @@
 			<div class="md-12">
 				<label for="activity">Zusatzprogramm</label>
 				{#each activityTickets as activityTicket}
-					<label class="activity">
-							<input type="checkbox" bind:group={visitor.activityTickets} value={activityTicket}>
+					<label class="activity" class:disabled="{activityTicket._count.visitors >= activityTicket.activity.limit}">
+							<input type="checkbox" bind:group={visitor.activityTickets} value={activityTicket} disabled='{activityTicket._count.visitors >= activityTicket.activity.limit}'>
 							<b>{activityTicket.activity.type}</b> {activityTicket.activity.name} ({activityTicket.activity.speaker || 'K. Referent'}) | {activityTicket.price}€
 					</label>
 				{/each}
@@ -157,18 +189,28 @@
 				<p><b>{total}€</b></p>
 			</div>
 			{/if}
-
+			
 			<div class="md-6 submit">
 				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
 			</div>
 			<div class="md-6 right submit">
-				<button type="submit">Verbindlich teilnehmen</button>
+				<button type="submit" disabled={wait}>Verbindlich teilnehmen</button>
 			</div>
 		</form>
 	</section>
 	{/if}
 
 	{#if step == 4}
+	<section class="confirmation" in:fade>
+		<div class="check">
+			<Spinner/>
+			<h3>Anfrage wird gesendet!</h3>			
+		</div>
+
+	</section>
+	{/if}
+
+	{#if step == 5}
 	<section class="confirmation" in:fade>
 		<div class="check">
 			<span class="material-symbols-outlined">
@@ -181,7 +223,6 @@
 
 	</section>
 	{/if}
-
 
 </div>
 
@@ -242,5 +283,8 @@
 		border-top: 1px solid black;
 		padding-top: 10px;
 		margin-bottom: 5px;
+	}
+	input[type="checkbox"]:disabled, .disabled {
+		color: rgb(164, 164, 164) !important
 	}
 </style>

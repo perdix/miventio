@@ -137,7 +137,7 @@ export async function GET({ locals, params }) {
 								select: {
 									id: true,
 									firstName: true,
-									lastName: true
+									lastName: true,
 								}
 							}
 						}
@@ -148,6 +148,8 @@ export async function GET({ locals, params }) {
 				select: {
 					id: true,
 					name: true,
+					type: true,
+					description: true,
 				}
 			}
 		}
@@ -163,6 +165,7 @@ export async function PUT({ locals, params, request }) {
 	
 	// Prepare data
 	const data = await request.json();
+	console.log(data)
 
 	const updateData = {
 		name: data.name,
@@ -174,11 +177,15 @@ export async function PUT({ locals, params, request }) {
 	}
 	if (data.bookingStart) {
 		updateData.bookingStart = new Date(data.bookingStart);
+	} else if (data.bookingStart == '') {
+		updateData.bookingStart = null;
 	}
 	if (data.bookingEnd) {
 		updateData.bookingEnd = new Date(data.bookingEnd);
+	} else if (data.bookingEnd == '') {
+		updateData.bookingEnd = null;
 	}
-
+	
 	const event = await locals.prisma.event.update({
 		where: {
 			id: params.eventId
@@ -321,6 +328,8 @@ export async function PUT({ locals, params, request }) {
 				select: {
 					id: true,
 					name: true,
+					type: true,
+					description: true,
 				}
 			}
 		}
