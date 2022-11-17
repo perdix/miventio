@@ -79,11 +79,11 @@
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
 	
 	<form class="miventio row" on:submit|preventDefault={saveCategory}>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="name">Name</label>
 			<input id="name" type="text" bind:value={category.name} required />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="type">Typ</label>
 			<select name="type" id="type" bind:value={category.type} required>
 				{#each $visitorTypes as type}
@@ -91,15 +91,15 @@
 				{/each}
 			</select>
 		</div>
-		<div class="md-12">
+		<div class="col-12">
 			<label for="desc">Beschreibung</label>
 			<input id="desc" type="text" bind:value={category.description} />
 		</div>
-		<div class="md-6 submit">
+		<div class="col-6 submit">
 			<button type="submit">Speichern</button>
 
 		</div>
-		<div class="md-6 submit right">
+		<div class="col-6 submit right">
 			<button type="button" on:click={deleteCategory}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>

@@ -45,32 +45,32 @@
 
 <Content>
 	<form class="miventio row" on:submit|preventDefault={updateEvent}>
-		<div class="md-12">
+		<div class="col-12">
 			<label for="Name">Veranstaltungstitel</label>
 			<input id="name" type="text" bind:value={eventData.name} />
 		</div>
-		<div class="md-12">
+		<div class="col-12">
 			<label for="description">Beschreibung</label>
 			<input id="description" type="text" bind:value={eventData.description} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="location">Location</label>
 			<input id="location" type="text" bind:value={eventData.location} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="city">Stadt</label>
 			<input id="city" type="text" bind:value={eventData.city} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="von">Eventbeginnn</label>
 			<input id="von" type="date" bind:value={eventData.start} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="bis">Eventende</label>
 			<input id="bis" type="date" bind:value={eventData.end} />
 		</div>
 
-		<div class="md-12 submit">
+		<div class="col-12 submit">
 			<button type="submit">Speichern</button>
 		</div>
 	</form>

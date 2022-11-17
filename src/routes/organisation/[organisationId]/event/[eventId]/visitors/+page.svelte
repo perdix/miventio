@@ -161,19 +161,19 @@
 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'1200px'}>
 	<form class="miventio row" on:submit|preventDefault={saveVisitor}>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="firstname">Vorname</label>
 			<input id="firstname" type="text" bind:value={visitor.firstName} required />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="lastname">Nachname</label>
 			<input id="lastname" type="text" bind:value={visitor.lastName} required />
 		</div>
-		<div class="md-12">
+		<div class="col-12">
 			<label for="email">E-Mail</label>
 			<input id="email" type="email" bind:value={visitor.email} required />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="category">Teilnahmekategorie</label>
 			<select name="category" id="category" bind:value={visitor.categoryId}>
 				{#each $event.visitorCategories as category}
@@ -181,7 +181,7 @@
 				{/each}
 			</select>
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="status">Teilnahmestatus</label>
 			<select name="status" id="status" bind:value={visitor.status}>
 				{#each $visitorStatuses as status}
@@ -189,7 +189,7 @@
 				{/each}
 			</select>
 		</div>
-		<div class="md-12">
+		<div class="col-12">
 			<label for="ticket">Ticketauswahl</label>
 			<select name="ticket" id="ticket" bind:value={visitor.eventTicketId}>
 				{#each tickets as ticket}
@@ -198,7 +198,7 @@
 			</select>
 		</div>
 
-		<div class="md-12">
+		<div class="col-12">
 			<label for="activity">Programmauswahl</label>
 			{#each activityTickets as activityTicket}
 				<label class="activity">
@@ -208,20 +208,20 @@
 			{/each}
 		</div>
 
-		<div class="md-12">
+		<div class="col-12">
 			<label for="price">Gesamtpreis</label>
 			<input id="price" type="number" bind:value={visitor.price} required />
 		</div>
 
-		<div class="md-6 submit">
+		<div class="col-6 submit">
 			<button type="submit">Speichern</button>
 		</div>
-		<div class="md-6 submit right">
+		<div class="col-6 submit right">
 			<button type="button" on:click={deleteVisitor}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>
 		</div>
-		<!-- <div class="md-12">
+		<!-- <div class="col-12">
 			<br><br>
 			<div class="mini-header">
 				<h2>Rechnungsdaten</h2>
@@ -238,13 +238,13 @@
 	<form class="miventio row" on:submit|preventDefault={saveBooking}>
 
 
-	<div class="md-6">
+	<div class="col-6">
 		<label for="names">Rechnung für</label>
 		{#each booking.visitors as visitor}
 				<p class="visitor">{visitor.firstName} {visitor.lastName}</p>
 			{/each}
 	</div>
-	<div class="md-6">
+	<div class="col-6">
 		<label for="status">Rechnungsstatus</label>
 		<select name="status" id="status" bind:value={booking.status}>
 			{#each $bookingStatuses as status}
@@ -253,38 +253,38 @@
 		</select>
 	</div>
 
-	<div class="md-6">
+	<div class="col-6">
 		<label for="firstname">Vorname</label>
 		<input id="firstname" type="text" bind:value={booking.firstName} required />
 	</div>
-	<div class="md-6">
+	<div class="col-6">
 		<label for="lastname">Nachname</label>
 		<input id="lastname" type="text" bind:value={booking.lastName} required />
 	</div>
-	<div class="md-12">
+	<div class="col-12">
 		<label for="address">Adresse</label>
 		<input id="address" type="text" bind:value={booking.address} required />
 	</div>
-	<div class="md-4">
+	<div class="col-4">
 		<label for="postcode">Postleitzahl</label>
 		<input id="postcode" type="text" bind:value={booking.postcode} required />
 	</div>
-	<div class="md-8">
+	<div class="col-8">
 		<label for="city">Stadt</label>
 		<input id="city" type="text" bind:value={booking.city} required />
 	</div>
-	<div class="md-6">
+	<div class="col-6">
 		<label for="email">E-Mail</label>
 		<input id="email" type="email" bind:value={booking.email} required />
 	</div>
-	<div class="md-6">
+	<div class="col-6">
 		<label for="phone">Telefon</label>
 		<input id="phone" type="text" bind:value={booking.phone} />
 	</div>
-	<div class="md-6 submit">
+	<div class="col-6 submit">
 		<button type="submit">Speichern</button>
 	</div>
-	<div class="md-6 submit right">
+	<div class="col-6 submit right">
 		<button type="button" on:click={deleteBooking}>
 			<span class="material-symbols-outlined">delete</span>
 		</button>

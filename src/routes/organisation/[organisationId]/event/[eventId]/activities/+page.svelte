@@ -114,44 +114,44 @@
 <div class="page">
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="Name">Name</label>
 				<input id="name" type="text" bind:value={activity.name} required />
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="Name">Referent/Verantwortlicher</label>
 				<input id="name" type="text" bind:value={activity.speaker} />
 			</div>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="description">Beschreibung</label>
 				<input id="description" type="text" bind:value={activity.description} />
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="start">Datum</label>
 				<input id="start" type="date" bind:value={activity.date} required/>
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="start">Start</label>
 				<input id="start" type="time" bind:value={activity.start} required/>
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="end">Ende</label>
 				<input id="end" type="time" bind:value={activity.end}/>
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="location">Ort</label>
 				<input id="location" type="text" bind:value={activity.location} placeholder="Saal 1" />
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="type">Typ</label>
 				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." required/>
 			</div>
-			<div class="md-4">
+			<div class="col-4">
 				<label for="limit">Besucherlimit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
 			
-			<div class="md-12">
+			<div class="col-12">
 				<br><br>
 				<div class="mini-header">
 					<h2>Zutrittsbeschränkung</h2>
@@ -162,7 +162,7 @@
 				<div class="mini-content">
 					{#each activity.tickets as ticket}
 					<div class="row item">
-						<div class="md-12">
+						<div class="col-12">
 							<div class="mini-header">
 							<h3>Ticket</h3>
 							<button class="mini-icon" on:click|preventDefault={() => deleteTicket(ticket)}>
@@ -170,7 +170,7 @@
 							</button>
 							</div>
 						</div>
-						<div class="md-6">
+						<div class="col-6">
 							<label for="category">Teilnehmer-Kategorie</label>
 							<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
 								{#each $event.visitorCategories as category}
@@ -178,7 +178,7 @@
 								{/each}
 							</select>
 						</div>
-						<div class="md-6">
+						<div class="col-6">
 							<label for="price">Preis in Euro</label>
 							<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
 						</div>
@@ -187,10 +187,10 @@
 				</div>
 			</div>
 	
-			<div class="md-6 submit">
+			<div class="col-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
-			<div class="md-6 submit right">
+			<div class="col-6 submit right">
 				<button type="button" on:click={deleteActivity}>
 					<span class="material-symbols-outlined">delete</span>
 				</button>

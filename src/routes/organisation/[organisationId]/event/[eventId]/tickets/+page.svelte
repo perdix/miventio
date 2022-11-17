@@ -80,12 +80,12 @@
 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 	<form class="miventio row" on:submit|preventDefault={saveTicket}>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="name">Ticketname</label>
 			<input id="name" type="text" bind:value={ticket.name} required />
 		</div>
 
-		<div class="md-6">
+		<div class="col-6">
 			<label for="category">Teilnehmer-Kategorie</label>
 			<select name="category" id="category" bind:value={ticket.visitorCategoryId}>
 				{#each $event.visitorCategories as category}
@@ -94,28 +94,28 @@
 			</select>
 		</div>
 
-		<div class="md-6">
+		<div class="col-6">
 			<label for="price">Preis in Euro</label>
 			<input id="price" type="number" step="0.01" bind:value={ticket.price} required />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="end">Ist es ein Tagesticket?</label>
 			<input id="end" type="date" bind:value={ticket.dayTicketDate} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="start">Online verfügbar von</label>
 			<input id="start" type="date" bind:value={ticket.availableFrom}/>
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="end">Online verfügbar bis</label>
 			<input id="end" type="date" bind:value={ticket.availableTo} />
 		</div>
 
 
-		<div class="md-6 submit">
+		<div class="col-6 submit">
 			<button type="submit">Speichern</button>
 		</div>
-		<div class="md-6 submit right">
+		<div class="col-6 submit right">
 			<button type="button" on:click={deleteTicket}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>

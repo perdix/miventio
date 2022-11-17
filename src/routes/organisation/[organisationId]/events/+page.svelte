@@ -65,32 +65,32 @@
 <div class="page">
 	<Popup title="Neue Veranstaltung" show={showPopup} on:close={togglePopup}>
 		<form class="miventio row" on:submit|preventDefault={saveEvent}>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="Name">Name</label>
 				<input id="name" type="text" bind:value={event.name} required />
 			</div>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="description">Beschreibung</label>
 				<input id="description" type="text" bind:value={event.description} />
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="start">Startdatum</label>
 				<input id="start" type="date" bind:value={event.start} required/>
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="end">Enddatum</label>
 				<input id="end" type="date" bind:value={event.end} />
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="location">Location</label>
 				<input id="location" type="text" bind:value={event.location} required/>
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="city">Stadt</label>
 				<input id="city" type="text" bind:value={event.city} required/>
 			</div>
 
-			<div class="md-12 submit">
+			<div class="col-12 submit">
 				<button type="submit">Speichern</button>
 			</div>
 		</form>
