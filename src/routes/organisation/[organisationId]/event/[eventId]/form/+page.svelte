@@ -38,16 +38,16 @@
 	</div>
 
 	<form class="miventio row" on:submit|preventDefault={updateFormOptions}>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="von">Online-Anmeldung von</label>
 			<input id="von" type="date" bind:value={eventData.bookingStart} />
 		</div>
-		<div class="md-6">
+		<div class="col-6">
 			<label for="bis">Online-Anmeldung bis</label>
 			<input id="bis" type="date" bind:value={eventData.bookingEnd} />
 		</div>
 
-		<div class="md-12 submit">
+		<div class="col-12 submit">
 			<button type="submit">Speichern</button>
 		</div>
 	</form>

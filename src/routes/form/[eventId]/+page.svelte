@@ -84,7 +84,7 @@
 		<h3>Besucher</h3>
 		
 		<form class="register row" on:submit|preventDefault={saveAndNext}>			
-			<div class="md-12">
+			<div class="col-12">
 				<label for="category">Teilnahme als</label>
 				<select name="category" id="category" bind:value={visitor.categoryId} required>
 					{#each validVisitorCategories as category}
@@ -92,19 +92,19 @@
 					{/each}
 				</select>
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="firstname">Vorname</label>
 				<input id="firstname" type="text" bind:value={visitor.firstName} required />
 			</div>
-			<div class="md-6">
+			<div class="col-6">
 				<label for="lastname">Nachname</label>
 				<input id="lastname" type="text" bind:value={visitor.lastName} required />
 			</div>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="email">E-Mail</label>
 				<input id="email" type="email" bind:value={visitor.email} required />
 			</div>
-			<div class="md-12 right submit">
+			<div class="col-12 right submit">
 				<button type="submit">Weiter</button>
 			</div>
 		</form>
@@ -117,7 +117,7 @@
 		<h3>Programm</h3>
 		<form class="register row" on:submit|preventDefault={saveAndNext}>
 
-			<div class="md-12">
+			<div class="col-12">
 				<label for="ticket">Ticketauswahl</label>
 				<select name="ticket" id="ticket" bind:value={visitor.eventTicket} required>
 					{#each tickets as ticket}
@@ -126,7 +126,7 @@
 				</select>
 			</div>
 	
-			<div class="md-12">
+			<div class="col-12">
 				<label for="activity">Zusatzprogramm</label>
 				{#each activityTickets as activityTicket}
 					<label class="activity" class:disabled="{activityTicket._count.visitors >= activityTicket.activity.limit}">
@@ -135,10 +135,10 @@
 					</label>
 				{/each}
 			</div>
-			<div class="md-6 submit">
+			<div class="col-6 submit">
 				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
 			</div>
-			<div class="md-6 right submit">
+			<div class="col-6 right submit">
 				<button type="submit">Weiter</button>
 			</div>
 		</form>
@@ -153,27 +153,27 @@
 		<br>
 		<form class="register row" on:submit|preventDefault={submitOrder}>
 
-			<div class="md-12">
+			<div class="col-12">
 				<h4>{visitor.firstName || ''} {visitor.lastName || ''}</h4>
 			</div>
 
 			{#if Object.keys(visitor.eventTicket).length > 0}
-			<div class="md-6">
+			<div class="col-6">
 				<p><b>Veranstaltungsticket:</b> {visitor.eventTicket.name || ''}</p>
 			</div>
-			<div class="md-6 right">
+			<div class="col-6 right">
 				
 				<p>{visitor.eventTicket.price || ''}€</p>
 			</div>
 			{/if}
 			
-			<div class="md-6">
+			<div class="col-6">
 				{#each visitor.activityTickets as activityTicket}
 				<p><b>{activityTicket.activity.type}:</b> {activityTicket.activity.name}</p>
 				{/each}
 			</div>
 
-			<div class="md-6 right">
+			<div class="col-6 right">
 				<div>
 				{#each visitor.activityTickets as activityTicket}
 				<p>{activityTicket.price}€</p>
@@ -182,18 +182,18 @@
 			</div>
 
 			{#if total}
-			<div class="sum md-6">
+			<div class="sum col-6">
 				<p><b>Gesamtpreis</b></p>
 			</div>
-			<div class="sum md-6 right">
+			<div class="sum col-6 right">
 				<p><b>{total}€</b></p>
 			</div>
 			{/if}
 			
-			<div class="md-6 submit">
+			<div class="col-6 submit">
 				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
 			</div>
-			<div class="md-6 right submit">
+			<div class="col-6 right submit">
 				<button type="submit" disabled={wait}>Verbindlich teilnehmen</button>
 			</div>
 		</form>

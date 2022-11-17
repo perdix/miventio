@@ -38,18 +38,18 @@
 		<h1 class="logo">miventio</h1>
 		<h2>Event- und Organisationsplaner</h2>
 		<form class="miventio row" on:submit|preventDefault={handleLogin}>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="email">Email</label>
 				<input id="email" type="email" bind:value={email} />
 			</div>
-			<div class="md-12">
+			<div class="col-12">
 				<label for="password">Password</label>
 				<input id="password" type="password" bind:value={password} />
 			</div>
-			<div class="md-12 submit">
+			<div class="col-12 submit">
 				<button type="submit">Einloggen</button>
 			</div>
-			<div class="md-12">
+			<div class="col-12">
 				{#if error !== ''}
 					<p class="error-box">
 						{error}

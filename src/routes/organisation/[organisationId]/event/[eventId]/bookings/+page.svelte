@@ -138,25 +138,25 @@
 				<div class="scroll">
 					{#each booking.visitors as item}
 						<div class="row visit">
-							<div class="md-12 flex">
+							<div class="col-12 flex">
 								<h3>Besucher</h3>
 								<a class="delete" href="/" on:click|preventDefault={() => deleteVisit(item)}>
 									<span class="material-symbols-outlined">delete</span>
 								</a>
 							</div>
-							<div class="md-3">
+							<div class="col-3">
 								<label for="firstname">Vorname</label>
 								<input id="firstname" type="text" bind:value={item.user.firstName} required />
 							</div>
-							<div class="md-4">
+							<div class="col-4">
 								<label for="lastname">Nachname</label>
 								<input id="lastname" type="text" bind:value={item.user.lastName} required />
 							</div>
-							<div class="md-5">
+							<div class="col-5">
 								<label for="email">E-Mail</label>
 								<input id="email" type="email" bind:value={item.user.email} required />
 							</div>
-							<div class="md-12">
+							<div class="col-12">
 								<label for="ticket">Ticket</label>
 								<select id="ticket" bind:value={item.eventTicketId} required>
 									{#each $event.eventTickets as ticket}
@@ -166,7 +166,7 @@
 									{/each}
 								</select>
 							</div>
-							<div class="md-12">
+							<div class="col-12">
 								<fieldset>
 									{#each activityCategories as cat}
 										<h4>{cat}</h4>
@@ -207,10 +207,10 @@
 				<h2>Rechnungsdaten</h2>
 
 				<div class="bill-content row">
-					<!-- <div class="md-12">
+					<!-- <div class="col-12">
 					<h3>Rechnung</h3>
 				</div> -->
-					<!-- <div class="md-12">
+					<!-- <div class="col-12">
 					{#each booking.visits as visit}
 					<article>
 					<div>
@@ -227,7 +227,7 @@
 						Gesamtsumme: {booking.price} €
 					</div>
 				</div> -->
-					<div class="md-12">
+					<div class="col-12">
 						<label for="status">Status</label>
 						<select id="status" bind:value={booking.status} required>
 							{#each $bookingStatuses as status}
@@ -235,35 +235,35 @@
 							{/each}
 						</select>
 					</div>
-					<div class="md-12">
+					<div class="col-12">
 						<br /><br />
 						<h3>Rechnungsdaten</h3>
 					</div>
-					<div class="md-6">
+					<div class="col-6">
 						<label for="firstname">Vorname</label>
 						<input id="firstname" type="text" bind:value={booking.firstName} required />
 					</div>
-					<div class="md-6">
+					<div class="col-6">
 						<label for="lastname">Nachname</label>
 						<input id="lastname" type="text" bind:value={booking.lastName} required />
 					</div>
-					<div class="md-12">
+					<div class="col-12">
 						<label for="address">Adresse</label>
 						<input id="address" type="text" bind:value={booking.address} required />
 					</div>
-					<div class="md-4">
+					<div class="col-4">
 						<label for="postcode">Postleitzahl</label>
 						<input id="postcode" type="text" bind:value={booking.postcode} required />
 					</div>
-					<div class="md-8">
+					<div class="col-8">
 						<label for="city">Stadt</label>
 						<input id="city" type="text" bind:value={booking.city} required />
 					</div>
-					<div class="md-6">
+					<div class="col-6">
 						<label for="email">E-Mail</label>
 						<input id="email" type="email" bind:value={booking.email} required />
 					</div>
-					<div class="md-6">
+					<div class="col-6">
 						<label for="phone">Telefon</label>
 						<input id="phone" type="text" bind:value={booking.phone} />
 					</div>

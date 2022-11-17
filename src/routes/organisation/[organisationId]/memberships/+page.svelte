@@ -93,32 +93,32 @@
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveMembership}>
 
-			<div class="md-6">
+			<div class="col-6">
 				<label for="name">Name</label>
 				<input id="name" type="text" bind:value={membership.name} required />
 			</div>
 
-			<div class="md-6">
+			<div class="col-6">
 				<label for="color">Farbe</label>
 				<input id="color" type="color" bind:value={membership.color} />
 			</div>
 
-			<div class="md-6">
+			<div class="col-6">
 				<label for="description">Beschreibung</label>
 				<input id="description" type="text" bind:value={membership.description} />
 			</div>
 
-			<div class="md-6">
+			<div class="col-6">
 				<label for="price">Jahresbeitrag (€)</label>
 				<input id="price" type="number" bind:value={membership.price} />
 			</div>
 
 
 			
-			<div class="md-6 submit">
+			<div class="col-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
-			<div class="md-6 submit right">
+			<div class="col-6 submit right">
 				<button class="secondary" type="button" on:click={deleteMembership}>
 					<span class="material-symbols-outlined">delete</span>
 				</button>

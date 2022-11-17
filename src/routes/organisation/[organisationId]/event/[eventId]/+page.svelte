@@ -6,7 +6,7 @@
 
 
 	<div class="row">
-		<div class="md-6 col">
+		<div class="col-6 col">
 			<div>
 				<h3>Gesamtanmeldungen</h3>
 				<div class="count">
@@ -16,7 +16,7 @@
 		</div>
 
 		{#if $event.visitors.length > -1}
-		<div class="md-12 col">
+		<div class="col-12 col">
 			<div>
 				<h3>Die letzten 15 Anmeldungen</h3>
 				<table>

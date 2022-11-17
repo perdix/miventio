@@ -210,55 +210,68 @@ a:hover {
 /******************************* LAYOUT ********************************/
 
 .row {
-	width: 100%;
+	width: calc(100% + 16px);
+	padding: 4px;
+	margin-left: -8px;
 	display: flex;
 	justify-content: space-between;
 	align-items: stretch;
 	flex-wrap: wrap;
 }
 
-.md-12 {
+.col-12 {
 	width: calc(100%);
+	padding: 4px;
 }
 
-.md-10 {
+.col-10 {
 	width: calc((100% / 12) * 10);
+	padding: 4px;
 }
 
-.md-9 {
+.col-9 {
 	width: calc((100% / 12) * 9);
+	padding: 4px;
 }
 
-.md-8 {
+.col-8 {
 	width: calc((100% / 12) * 8);
+	padding: 4px;
 }
 
-.md-7 {
+.col-7 {
 	width: calc((100% / 12) * 7);
+	padding: 4px;
 }
 
-.md-6 {
+.col-6 {
 	width: calc(100% / 2);
+	padding: 4px;
 }
 
-.md-5 {
+.col-5 {
 	width: calc((100% / 12) * 5);
+	padding: 4px;
 }
 
-.md-4 {
+.col-4 {
 	width: calc((100% / 12) * 4);
+	padding: 4px;
 }
 
-.md-3 {
+.col-3 {
 	width: calc((100% / 12) * 3);
+	padding: 4px;
 }
 
-.md-2 {
+.col-2 {
 	width: calc(100% / 6);
+	padding: 4px;
 }
 
-.md-1 {
+.col-1 {
 	width: calc(100% / 12);
+	padding: 4px;
 }
 
 .right {
@@ -283,8 +296,8 @@ form input[type='file'] {
 	display: block;
 	outline: none;
 	background-color: white;
-	margin: 4px 0;
-	width: calc(100% - 8px);
+	margin: 0px 0;
+	width: calc(100% - 0px);
 }
 
 form input[type='radio'] {
@@ -298,8 +311,8 @@ form select:focus {
 	background-color: var(--white);
 	border-radius: 0.2rem;
 	border: none;
-	margin: 4px;
-	width: calc(100% - 8px);
+	/* margin: 4px; */
+	width: calc(100% - 0px);
 	appearance: none;
 	outline: none;
 }
