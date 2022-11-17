@@ -87,7 +87,7 @@
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveContact}>
 			<div class="col-6">
-				<label for="prefix">ID</label>
+				<label for="prefix">Mitglieds-ID</label>
 				<input id="prefix" type="text" bind:value={contact.identifier} />
 			</div>
 			<div class="col-6">
@@ -223,6 +223,9 @@
 
 
 <style>
+	hr {
+		height: 1px;
+	}
 
 	
 </style>

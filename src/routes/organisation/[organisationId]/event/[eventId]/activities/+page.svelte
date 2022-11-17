@@ -4,6 +4,7 @@
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
+	import { dataset_dev } from 'svelte/internal';
 
 	let activity = { tickets: [{}]};
 	let showPopup = false;
@@ -28,9 +29,9 @@
 		showPopup = !showPopup;
 	};
 
-	const newActivity = () => {
-		activity = {tickets: [{}]};
-		popupTitle = 'Neue Aktivität';
+	const newActivity = (day) => {
+		activity = {tickets: [], date: day};
+		popupTitle = 'Neuer Programmpunkt';
 		togglePopup();
 	};
 
@@ -41,7 +42,7 @@
 		if (activity.end != null) {
 			activity.end = activity.end.length > 5 ? activity.end.substring(11,16) : activity.end;
 		}
-		popupTitle = 'Aktivität bearbeiten';
+		popupTitle = 'Programmpunkt bearbeiten';
 		togglePopup();
 	};
 
@@ -114,11 +115,15 @@
 <div class="page">
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
-			<div class="col-6">
+			<div class="col-2">
+				<label for="Name">Programm-ID</label>
+				<input id="name" type="text" bind:value={activity.identifier} required />
+			</div>
+			<div class="col-5">
 				<label for="Name">Name</label>
 				<input id="name" type="text" bind:value={activity.name} required />
 			</div>
-			<div class="col-6">
+			<div class="col-5">
 				<label for="Name">Referent/Verantwortlicher</label>
 				<input id="name" type="text" bind:value={activity.speaker} />
 			</div>
@@ -127,8 +132,8 @@
 				<input id="description" type="text" bind:value={activity.description} />
 			</div>
 			<div class="col-4">
-				<label for="start">Datum</label>
-				<input id="start" type="date" bind:value={activity.date} required/>
+				<label for="date">Datum</label>
+				<input id="date" type="date" bind:value={activity.date} required/>
 			</div>
 			<div class="col-4">
 				<label for="start">Start</label>
@@ -138,15 +143,19 @@
 				<label for="end">Ende</label>
 				<input id="end" type="time" bind:value={activity.end}/>
 			</div>
-			<div class="col-4">
+			<div class="col-3">
 				<label for="location">Ort</label>
-				<input id="location" type="text" bind:value={activity.location} placeholder="Saal 1" />
+				<input id="location" type="text" bind:value={activity.location} />
 			</div>
-			<div class="col-4">
+			<div class="col-3">
+				<label for="location">Raum</label>
+				<input id="location" type="text" bind:value={activity.room} />
+			</div>
+			<div class="col-3">
 				<label for="type">Typ</label>
 				<input id="type" type="text" bind:value={activity.type} placeholder="Workshop / Vortrag ..." required/>
 			</div>
-			<div class="col-4">
+			<div class="col-3">
 				<label for="limit">Besucherlimit</label>
 				<input id="limit" type="number" bind:value={activity.limit} />
 			</div>
@@ -199,25 +208,28 @@
 	</Popup>
 
 	<Header title={'Programm'}>
-		<button on:click={newActivity}>
-			<span>Neue Aktivität</span>
-			<span class="material-symbols-outlined">add_circle</span>
-		</button>
+	
 	</Header>
 
 	<Content>
 
 		{#each days as day}
-		<h2>{weekdays[day.getDay()]}, {day.toLocaleDateString('de-AT')}</h2>
+		<div class="mini-header">
+			<h2>{weekdays[day.getDay()]}, {day.toLocaleDateString('de-AT')}</h2>
+
+			<button on:click={() => newActivity(day.toISOString().substring(0,10))}>
+				<span>Neuer Programmpunkt</span>
+				<span class="material-symbols-outlined">add_circle</span>
+			</button>
+		</div>
+		
 
 		{#if $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)).length > 0}
 			<table>
 				<thead>
 					<tr>
-						<th>Typ</th>
-						<th>Title</th>
-						<th>Referent</th>
-						<th>Datum</th>
+						<th>ID</th>
+						<th>Name</th>
 						<th>Zeit</th>
 						<th>Anmeldungen</th>
 						<th>Ticketvarianten</th>
@@ -226,10 +238,10 @@
 				<tbody>	
 				{#each $event.activities.filter(a => a.date.substring(0,10) == day.toISOString().substring(0,10)) as activity}
 					<tr on:click={() => editActivity(activity)}>
-						<td>{activity.type || ''}</td>
-						<td>{activity.name}</td>
-						<td>{activity.speaker || ''}</td>
-						<td>{activity.date.substring(0,10)}</td>
+						<td>{activity.identifier || ''}</td>
+						<td><b>{activity.type || ''}:</b> {activity.name}</td>
+						<!-- <td>{activity.speaker || ''}</td> -->
+						<!-- <td>{activity.date.substring(0,10)}</td> -->
 						<td>{(activity.start.length > 5) ? activity.start.substring(11,16): activity.start} - 
 							{#if activity.end}
 								{(activity.end.length > 5) ? activity.end.substring(11,16): activity.end}
@@ -244,7 +256,8 @@
 						<td>
 							{#each activity.tickets as ticket}
 								<span class="ticket">
-									{ticket.visitorCategory.name||''} | {ticket.price}€
+									<!-- {ticket.visitorCategory.name||''} | {ticket.price}€ -->
+									{ticket.price}€
 								</span>
 							{/each}
 						</td>
@@ -253,7 +266,7 @@
 				</tbody>
 			</table>
 		{:else}
-		<p class="info">Noch keine Aktivität vorhanden</p>
+		<p class="info">Noch kein Programm vorhanden</p>
 	   {/if}
 		<br>
 		<br>
@@ -267,7 +280,7 @@
 
 <style>
 	h2 {
-		font-size: 1.3rem;
+		font-size: 1.4rem;
 		font-weight: 300;
 		color: var(--black);
 	}
@@ -277,6 +290,7 @@
 		padding: 5px 8px;
 		display: inline-block;
 		margin-right: 2px;
+		margin-top: 2px;
 		font-size: 0.9rem;
 	}
 	.mini-header {
@@ -293,5 +307,8 @@
 	.info {
 		padding: var(--unit);
 		background-color: var(--white);
+	}
+	.mini-header button {
+		margin-bottom: 15px;
 	}
 </style>

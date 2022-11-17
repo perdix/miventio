@@ -59,29 +59,31 @@ export async function PUT({ locals, params, request }) {
 
 	// Update Activity
 	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start
-	let end = null;
+
+	let updateData = {
+		name: data.name,
+		start: new Date(Date.parse(data.start)),
+		date: new Date(Date.parse(data.date)),
+		description: data.description,
+		limit: data.limit,
+		identifier: data.identifier,
+		type: data.type,
+		speaker: data.speaker,
+		location: data.location,
+	}
 	if (data.end) {
-		data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
-		data.end = new Date(Date.parse(data.end));
+		const end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		updateData.end = new Date(Date.parse(end));
 	}
 
 	const activity = await locals.prisma.activity.update({
 		where: {
 			id: params.activityId
 		},
-		data: {
-			name: data.name,
-			start: new Date(Date.parse(data.start)),
-			end: end,
-			date: new Date(Date.parse(data.date)),
-			description: data.description,
-			limit: data.limit,
-			type: data.type,
-			speaker: data.speaker,
-			location: data.location,
-		},
+		data: updateData,
 		select: {
 			id: true,
+			identifier:true,
 			name: true,
 			description: true,
 			speaker: true,

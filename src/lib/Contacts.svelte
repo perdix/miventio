@@ -14,7 +14,7 @@
 <table>
 	<thead>
 		<tr>
-			<th>Id</th>
+			<th>ID</th>
 			<th>Name</th>
 			<th>Adresse</th>
 			<th>Kontaktdaten</th>
@@ -35,9 +35,9 @@
 					{contact.country || ''}
 				</td>
 				<td>
-					{#if contact.phone}{contact.phone} <br />{/if}
-					{#if contact.email} <a href="mailto:{contact.email}">{contact.email}</a><br />{/if}
-					{#if contact.website}<a href="{contact.website}" target="_blank" rel="noreferrer">{contact.website}</a>{/if}
+					{#if contact.phone}Tel: <a href="tel:{contact.phone}">{contact.phone} </a><br />{/if}
+					{#if contact.email}E-Mail: <a href="mailto:{contact.email}">{contact.email}</a><br />{/if}
+					{#if contact.website}Website: <a href="{contact.website}" target="_blank" rel="noreferrer">{contact.website}</a>{/if}
 				</td>
 				<td>
 					{#if contact.membership}
