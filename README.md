@@ -46,3 +46,29 @@ npx prisma studio
 
 ## Notes
 
+
+
+
+
+
+## Prisma
+
+* Create DB schema from schema file
+    npx prisma db push
+
+* Delete everything and create a new seed
+    npx prisma db seed
+
+* Create first migration
+    npx prisma migrate dev --name init
+
+* Add migration
+    npx prisma migrate dev --name <name>    
+
+
+* Apply migration
+    npx prisma migrate deploy
+
+
+* Generate E-R-D (With activated generator)
+    npx prisma generate
