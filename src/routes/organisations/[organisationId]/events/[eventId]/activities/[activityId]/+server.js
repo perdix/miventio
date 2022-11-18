@@ -69,6 +69,7 @@ export async function PUT({ locals, params, request }) {
 		identifier: data.identifier,
 		type: data.type,
 		speaker: data.speaker,
+		room: data.room,
 		location: data.location,
 	}
 	if (data.end) {
@@ -89,6 +90,7 @@ export async function PUT({ locals, params, request }) {
 			speaker: true,
 			limit: true,
 			location: true,
+			room:true,
 			date: true,
 			start: true,
 			end: true,
