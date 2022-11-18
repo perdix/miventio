@@ -19,8 +19,6 @@ export async function GET({ locals, params }) {
 	return new Response(toVisitorJSON(visitor));
 }
 
-
-
 export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
@@ -62,15 +60,15 @@ export async function PUT({ locals, params, request }) {
 			status: data.status,
 			price: data.price,
 			eventTicketPrice: eventTicket.price,
-			activityTicketsPrices: activityTickets.map(a => a.price),
+			activityTicketsPrices: activityTickets.map((a) => a.price),
 			activities: {
-				set:[],
-				connect: activityTickets.map(a => ({ id: a.activityId}))
+				set: [],
+				connect: activityTickets.map((a) => ({ id: a.activityId }))
 			},
 			activityTickets: {
-				set:[],
-				connect: activityTickets.map(a => ({ id: a.id}))
-			},
+				set: [],
+				connect: activityTickets.map((a) => ({ id: a.id }))
+			}
 		},
 		select: {
 			id: true,
@@ -88,7 +86,7 @@ export async function PUT({ locals, params, request }) {
 			category: {
 				select: {
 					id: true,
-					name: true,
+					name: true
 				}
 			},
 			activityTickets: {
@@ -111,19 +109,16 @@ export async function PUT({ locals, params, request }) {
 						select: {
 							id: true,
 							firstName: true,
-							lastName: true,
+							lastName: true
 						}
 					}
 				}
-			},
+			}
 		}
 	});
 
 	return new Response(toVisitorJSON(visitor), { status: 200 });
 }
-
-
-
 
 export async function DELETE({ locals, params }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {

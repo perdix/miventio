@@ -19,7 +19,9 @@
 <header>
 	<div class="left">
 		{#if organisation.role == 'ADMIN'}
-		<a href="/organisation/{organisation.id}/settings" class="settings"><span class="material-symbols-outlined">settings</span></a>
+			<a href="/organisation/{organisation.id}/settings" class="settings"
+				><span class="material-symbols-outlined">settings</span></a
+			>
 		{/if}
 
 		<a href="/organisation/{organisation.id}" class="organisation">
@@ -38,12 +40,14 @@
 		{/if}
 	</div>
 	<div>
-		<a href="/organisation/{organisation.id}/user/{$page.data.session.id}"><span class="material-symbols-outlined">account_circle</span></a>
+		<a href="/organisation/{organisation.id}/user/{$page.data.session.id}"
+			><span class="material-symbols-outlined">account_circle</span></a
+		>
 	</div>
 </header>
 
 <style>
-		.left {
+	.left {
 		display: flex;
 		justify-content: flex-start;
 		align-items: stretch;
@@ -79,7 +83,7 @@
 		font-size: 1.2rem;
 	}
 	.settings {
-		margin-right:10px;
+		margin-right: 10px;
 	}
 	.arrow {
 		margin-left: 8px;

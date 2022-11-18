@@ -7,7 +7,7 @@
 
 <div data-sveltekit-prefetch>
 	<div class="main-nav">
-		<Header organisations={$page.data.session.organisations} organisation={$organisation}/>
+		<Header organisations={$page.data.session.organisations} organisation={$organisation} />
 	</div>
 
 	<div class="placeholder" />
@@ -15,8 +15,6 @@
 	<div class="content">
 		<slot />
 	</div>
-
-
 </div>
 
 <style>

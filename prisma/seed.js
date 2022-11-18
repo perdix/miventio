@@ -55,7 +55,10 @@ async function main() {
 	});
 
 	// Create memberships
-	const membershipsWithOrganisationId = memberships.map((m) => ({ ...m, organisationId: zahn_orga.id }));
+	const membershipsWithOrganisationId = memberships.map((m) => ({
+		...m,
+		organisationId: zahn_orga.id
+	}));
 	await prisma.membership.createMany({
 		data: membershipsWithOrganisationId
 	});
@@ -66,34 +69,31 @@ async function main() {
 		data: contactsWithOrganisationId
 	});
 
-    // Get first contact
-	const firstContact = await prisma.contact.findFirst(
-		{
-			where: {
-				email: 'max1@hallo.io'
-			}
+	// Get first contact
+	const firstContact = await prisma.contact.findFirst({
+		where: {
+			email: 'max1@hallo.io'
 		}
-	);
+	});
 
 	// Get first membership
 	const firstMembership = await prisma.membership.findFirst({
 		where: {
 			name: 'Hauptmitglied'
 		}
-	});  
-	
+	});
+
 	// Add membership to first contact
 	const updatedContact = await prisma.contact.update({
 		where: {
-		  id: firstContact.id,
+			id: firstContact.id
 		},
 		data: {
 			membership: {
-				connect: { id: firstMembership.id },
-			  },
-		},
-	  })
-
+				connect: { id: firstMembership.id }
+			}
+		}
+	});
 
 	// Create some user with role
 	await prisma.user.createMany({

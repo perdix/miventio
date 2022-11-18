@@ -7,8 +7,6 @@
 	import Subnavigation from '$lib/Subnavigation.svelte';
 	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
 
-
-
 	export let sections = [
 		{ slug: 'info', title: 'Allgemeine Daten', icon: 'info' },
 		{ slug: 'categories', title: 'Teilnahmekategorien', icon: 'category' },
@@ -21,43 +19,43 @@
 	];
 
 	const subNavItems = [
-        {
-            name: 'Veranstaltungen',
-            slug: 'events',
+		{
+			name: 'Veranstaltungen',
+			slug: 'events',
 			status: 'active'
-        },
-        // {
-        //     name: 'Aussteller',
-        //     slug: "exhibitors"
-        // },
-        // 
-        //     name: 'Hotels',
-        //     slug: "hotels",
-        // },
-        {
-            name: 'Lieferanten',
-            slug: "contractors"
-        },
-        // {
-        //     name: 'Referenten',
-        //     slug: "speakers",
-        // },
-    ]
+		},
+		// {
+		//     name: 'Aussteller',
+		//     slug: "exhibitors"
+		// },
+		//
+		//     name: 'Hotels',
+		//     slug: "hotels",
+		// },
+		{
+			name: 'Lieferanten',
+			slug: 'contractors'
+		}
+		// {
+		//     name: 'Referenten',
+		//     slug: "speakers",
+		// },
+	];
 
 	let links = [
 		{
-            name: 'Veranstaltungen',
-            url: `/organisation/${$page.params.organisationId}/events`
-        },
+			name: 'Veranstaltungen',
+			url: `/organisation/${$page.params.organisationId}/events`
+		},
 		{
-            name: $event.name,
-            url: `/organisation/${$page.params.organisationId}/event/${$page.params.eventId}`
-        }
+			name: $event.name,
+			url: `/organisation/${$page.params.organisationId}/event/${$page.params.eventId}`
+		}
 	];
 </script>
 
 <!-- <Subnavigation items={subNavItems}></Subnavigation>	 -->
-<Breadcrumbs links={links}></Breadcrumbs>
+<Breadcrumbs {links} />
 
 <div class="wrapper">
 	<aside>
@@ -77,7 +75,8 @@
 					{#each sections as section}
 						<li>
 							<a
-								href="/organisation/{$page.params.organisationId}/event/{$page.params.eventId}/{section.slug}"
+								href="/organisation/{$page.params.organisationId}/event/{$page.params
+									.eventId}/{section.slug}"
 								class:active={$page.url.pathname.includes(section.slug)}
 							>
 								<span class="material-symbols-outlined">{section.icon}</span>

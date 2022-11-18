@@ -9,14 +9,13 @@ export async function GET({ locals, params }) {
 	const memberships = await locals.prisma.membership.findMany({
 		where: {
 			organisationId: params.organisationId
-		}, 
+		},
 
 		include: {
 			_count: {
-				select: { contacts: true },
-			},
+				select: { contacts: true }
+			}
 		}
-		
 	});
 	return new Response(toMembershipsJSON(memberships));
 }

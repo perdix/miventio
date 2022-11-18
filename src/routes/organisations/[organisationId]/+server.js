@@ -21,9 +21,9 @@ export async function GET({ locals, params }) {
 			events: {
 				include: {
 					_count: {
-					  select: { visitors: true },
-					},
-				  },
+						select: { visitors: true }
+					}
+				}
 			}
 		}
 	});
@@ -58,7 +58,7 @@ export async function PUT({ locals, params, request }) {
 		include: {
 			users: { include: { user: true } },
 			events: true,
-			contacts: {include: { membership: true } }
+			contacts: { include: { membership: true } }
 		}
 	});
 	return new Response(toOrganisationJSON(organisation));

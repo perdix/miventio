@@ -10,11 +10,10 @@ export async function GET({ locals, params }) {
 		where: { organisationId: params.organisationId },
 		include: {
 			_count: {
-			  select: { visitors: true },
-			},
-		  },
+				select: { visitors: true }
+			}
+		}
 	});
-
 
 	return new Response(toEventsJSON(events));
 }

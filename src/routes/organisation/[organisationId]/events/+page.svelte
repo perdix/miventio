@@ -9,30 +9,30 @@
 	import { goto } from '$app/navigation';
 
 	const subNavItems = [
-        {
-            name: 'Veranstaltungen',
-            slug: 'events',
+		{
+			name: 'Veranstaltungen',
+			slug: 'events',
 			status: 'active'
-        },
-        // {
-        //     name: 'Aussteller',
-        //     slug: "exhibitors"
-        // },
-        // {
-        //     name: 'Hotels',
-        //     slug: "hotels",
+		},
+		// {
+		//     name: 'Aussteller',
+		//     slug: "exhibitors"
+		// },
+		// {
+		//     name: 'Hotels',
+		//     slug: "hotels",
 		// 	status: 'disabled',
-        // },
-        {
-            name: 'Lieferanten',
-            slug: "contractors"
-        },
-        // {
-        //     name: 'Referenten',
-        //     slug: "speakers",
+		// },
+		{
+			name: 'Lieferanten',
+			slug: 'contractors'
+		}
+		// {
+		//     name: 'Referenten',
+		//     slug: "speakers",
 		// 	status: 'disabled',
-        // },
-    ]
+		// },
+	];
 
 	let event = {};
 	let showPopup = false;
@@ -52,15 +52,15 @@
 		}
 	};
 
-	let links = [        {
-            name: 'Veranstaltungen',
-            url: ''
-        }
+	let links = [
+		{
+			name: 'Veranstaltungen',
+			url: ''
+		}
 	];
-
 </script>
 
-<Breadcrumbs links={links}></Breadcrumbs>
+<Breadcrumbs {links} />
 
 <div class="page">
 	<Popup title="Neue Veranstaltung" show={showPopup} on:close={togglePopup}>
@@ -75,7 +75,7 @@
 			</div>
 			<div class="col-6">
 				<label for="start">Startdatum</label>
-				<input id="start" type="date" bind:value={event.start} required/>
+				<input id="start" type="date" bind:value={event.start} required />
 			</div>
 			<div class="col-6">
 				<label for="end">Enddatum</label>
@@ -83,11 +83,11 @@
 			</div>
 			<div class="col-6">
 				<label for="location">Location</label>
-				<input id="location" type="text" bind:value={event.location} required/>
+				<input id="location" type="text" bind:value={event.location} required />
 			</div>
 			<div class="col-6">
 				<label for="city">Stadt</label>
-				<input id="city" type="text" bind:value={event.city} required/>
+				<input id="city" type="text" bind:value={event.city} required />
 			</div>
 
 			<div class="col-12 submit">
@@ -110,7 +110,5 @@
 	</Main>
 </div>
 
-
 <style>
-
 </style>

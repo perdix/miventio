@@ -20,17 +20,15 @@
 			const updatedEvent = await res.json();
 			$event = updatedEvent;
 			saved = true;
-
 		}
-	}
+	};
 </script>
 
-<Notification bind:show={saved} message="Formulareinstellung wurde gespeichert!"></Notification>
+<Notification bind:show={saved} message="Formulareinstellung wurde gespeichert!" />
 
 <Header title={'Anmeldeformular'} />
 
 <Content>
-
 	<h3>Link zum Anmeldeformular</h3>
 
 	<div>
@@ -51,8 +49,6 @@
 			<button type="submit">Speichern</button>
 		</div>
 	</form>
-
-
 </Content>
 
 <style>

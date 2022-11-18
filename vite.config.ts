@@ -5,6 +5,10 @@ const config: UserConfig = {
 	plugins: [sveltekit()],
 	ssr: {
 		noExternal: ['devalue']
+	},
+	test: {
+		environment: 'jsdom',
+		globals: true
 	}
 };
 

@@ -42,7 +42,7 @@ export async function DELETE({ locals, params }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	const deletedMembership= await locals.prisma.membership.delete({
+	const deletedMembership = await locals.prisma.membership.delete({
 		where: {
 			id: params.membershipId
 		}

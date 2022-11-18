@@ -9,8 +9,8 @@ export async function GET({ locals, params }) {
 	const contacts = await locals.prisma.contact.findMany({
 		where: {
 			organisationId: params.organisationId
-		}, 
-		include: { membership: true } 
+		},
+		include: { membership: true }
 	});
 
 	return new Response(toContactsJSON(contacts));

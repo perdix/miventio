@@ -8,7 +8,7 @@ export async function GET({ locals, params }) {
 
 	const bookings = await locals.prisma.booking.findMany({
 		where: {
-			organisationId: params.organisationId,
+			organisationId: params.organisationId
 		},
 		include: {
 			visitors: {
@@ -20,7 +20,7 @@ export async function GET({ locals, params }) {
 					eventTicketPrice: true,
 					activityTicketsPrices: true,
 					price: true,
-					activities: true,
+					activities: true
 				}
 			}
 		}
@@ -37,8 +37,8 @@ export async function POST({ locals, params, request }) {
 	let visitorIds = [];
 	let totalPrice = 0;
 	if (data.visitors) {
-		visitorIds = data.visitors ? data.visitors.map(v => ({ id: v.id})) : [];
-		totalPrice = data.visitors.map(v => v.price).reduce((a,b) => a + b, 0)
+		visitorIds = data.visitors ? data.visitors.map((v) => ({ id: v.id })) : [];
+		totalPrice = data.visitors.map((v) => v.price).reduce((a, b) => a + b, 0);
 	}
 
 	const booking = await locals.prisma.booking.create({
@@ -54,7 +54,7 @@ export async function POST({ locals, params, request }) {
 			price: totalPrice,
 			event: {
 				connect: { id: params.eventId }
-			},	
+			},
 			visitors: {
 				connect: visitorIds
 			}
@@ -65,11 +65,11 @@ export async function POST({ locals, params, request }) {
 					id: true,
 					firstName: true,
 					lastName: true,
-					email: true,
+					email: true
 				}
 			}
 		}
 	});
-	
+
 	return new Response(toBookingJSON(booking), { status: 201 });
 }

@@ -20,11 +20,11 @@ export async function POST({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start;
+	data.start = data.start.length < 16 ? `${data.date.substring(0, 10)}T${data.start}Z` : data.start;
 
 	// Add eventId for tickets
 	if (data.tickets) {
-		for (let i=0; i< data.tickets.length; i++) {
+		for (let i = 0; i < data.tickets.length; i++) {
 			data.tickets[i].eventId = params.eventId;
 		}
 	}
@@ -51,13 +51,13 @@ export async function POST({ locals, params, request }) {
 		tickets: {
 			create: data.tickets
 		}
-	}
+	};
 	// Add end date if given
 	if (data.end) {
-		const end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		const end = data.end.length < 16 ? `${data.date.substring(0, 10)}T${data.end}Z` : data.end;
 		createData.end = new Date(Date.parse(end));
 	}
-	
+
 	const activity = await locals.prisma.activity.create({
 		data: createData,
 		select: {
@@ -68,7 +68,7 @@ export async function POST({ locals, params, request }) {
 			speaker: true,
 			limit: true,
 			location: true,
-			room:true,
+			room: true,
 			date: true,
 			start: true,
 			end: true,

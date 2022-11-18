@@ -2,20 +2,17 @@
 	import { event } from '$lib/store/event';
 </script>
 
-
-
-
-	<div class="row">
-		<div class="col-6 col">
-			<div>
-				<h3>Gesamtanmeldungen</h3>
-				<div class="count">
-					<p>{$event.visitors.length}</p>
-				</div>
+<div class="row">
+	<div class="col-6 col">
+		<div>
+			<h3>Gesamtanmeldungen</h3>
+			<div class="count">
+				<p>{$event.visitors.length}</p>
 			</div>
 		</div>
+	</div>
 
-		{#if $event.visitors.length > -1}
+	{#if $event.visitors.length > -1}
 		<div class="col-12 col">
 			<div>
 				<h3>Die letzten 15 Anmeldungen</h3>
@@ -36,16 +33,14 @@
 								<td>
 									{visitor.email}
 								</td>
-						
 							</tr>
 						{/each}
 					</tbody>
 				</table>
 			</div>
 		</div>
-		{/if}
-	</div>
-
+	{/if}
+</div>
 
 <style>
 	.row > div {

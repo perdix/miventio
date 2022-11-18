@@ -15,8 +15,9 @@
 	};
 </script>
 
-<div id="popup" class:visible={show} class:hidden={!show} >
-	<div class="background">"
+<div id="popup" class:visible={show} class:hidden={!show}>
+	<div class="background">
+		"
 		<div class="box" style="max-width:{maxWidth}">
 			<Main>
 				<Header {title}>

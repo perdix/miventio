@@ -35,37 +35,46 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-
-
 ## Notes
 
+## Tests
 
+Integrate into github actions?
 
+### Unit Tests
 
+Vitest
 
+### Component tests
+
+With Vitest
+Start with the registration form
+vitest + @testing-library/svelte
+or @playwright/experimental-ct-svelte
+
+### End-to-End Tests / API-Tests
+
+Playwright
 
 ## Prisma
 
-* Start Prisma Studio
-    npx prisma studio
+- Start Prisma Studio
+  npx prisma studio
 
+- Create DB schema from schema file
+  npx prisma db push
 
-* Create DB schema from schema file
-    npx prisma db push
+- Delete everything and create a new seed
+  npx prisma db seed
 
-* Delete everything and create a new seed
-    npx prisma db seed
+- Create first migration
+  npx prisma migrate dev --name init
 
-* Create first migration
-    npx prisma migrate dev --name init
+- Add migration
+  npx prisma migrate dev --name <name>
 
-* Add migration
-    npx prisma migrate dev --name <name>    
+- Apply migration
+  npx prisma migrate deploy
 
-
-* Apply migration
-    npx prisma migrate deploy
-
-
-* Generate E-R-D (With activated generator)
-    npx prisma generate
+- Generate E-R-D (With activated generator)
+  npx prisma generate

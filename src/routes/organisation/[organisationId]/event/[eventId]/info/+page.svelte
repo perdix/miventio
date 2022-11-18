@@ -37,7 +37,7 @@
 	};
 </script>
 
-<Notification bind:show={saved} message="Eventdaten wurden gespeichert"></Notification>
+<Notification bind:show={saved} message="Eventdaten wurden gespeichert" />
 
 <Header title={'Allgemeine Daten'}>
 	<span class="material-symbols-outlined delete" on:click={deleteEvent}>delete</span>
@@ -75,8 +75,6 @@
 		</div>
 	</form>
 </Content>
-
-
 
 <style>
 	h2 {

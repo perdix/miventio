@@ -40,11 +40,11 @@ export async function load(request) {
 					date: true,
 					start: true,
 					end: true,
-					type:true,
+					type: true,
 					visitors: true,
 					_count: {
-						select: { visitors: true },
-					  },
+						select: { visitors: true }
+					},
 					tickets: {
 						select: {
 							id: true,
@@ -67,7 +67,7 @@ export async function load(request) {
 					price: true,
 					visitorCategoryId: true,
 					_count: {
-						select: { visitors: true },
+						select: { visitors: true }
 					},
 					activity: {
 						select: {
@@ -79,7 +79,7 @@ export async function load(request) {
 							date: true,
 							start: true,
 							end: true,
-							type:true
+							type: true
 						}
 					}
 				}
@@ -88,7 +88,7 @@ export async function load(request) {
 				select: {
 					id: true,
 					name: true,
-					type: true,
+					type: true
 				}
 			}
 		}
@@ -97,7 +97,7 @@ export async function load(request) {
 	if (!event || !event.start) {
 		throw error(400, 'No valid event found!');
 	}
-	
+
 	return {
 		event
 	};

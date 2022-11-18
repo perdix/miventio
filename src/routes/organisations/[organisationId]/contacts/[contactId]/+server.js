@@ -11,7 +11,7 @@ export async function GET({ locals, params }) {
 			id: params.contactId,
 			organisationId: params.organisationId
 		},
-		include: { membership: true } 
+		include: { membership: true }
 	});
 
 	return new Response(toContactJSON(event));
@@ -24,7 +24,7 @@ export async function PUT({ locals, params, request }) {
 
 	const data = await request.json();
 	if ('membership' in data) {
-		delete data.membership
+		delete data.membership;
 	}
 	if ('membershipId' in data && data.membershipId == '') {
 		data.membershipId = null;
@@ -34,7 +34,7 @@ export async function PUT({ locals, params, request }) {
 			id: params.contactId
 		},
 		data: data,
-		include: { membership: true } 
+		include: { membership: true }
 	});
 
 	return new Response(toContactJSON(contact));
@@ -49,7 +49,7 @@ export async function DELETE({ locals, params }) {
 		where: {
 			id: params.contactId
 		},
-		include: { membership: true } 
+		include: { membership: true }
 	});
 
 	return new Response(JSON.stringify({ message: 'Contact successfully deleted!' }), {

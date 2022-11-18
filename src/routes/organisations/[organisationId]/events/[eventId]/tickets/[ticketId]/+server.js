@@ -29,12 +29,12 @@ export async function PUT({ locals, params, request }) {
 		data: {
 			name: data.name,
 			price: data.price,
-			availableFrom: data.availableFrom ? new Date(Date.parse(data.availableFrom)): null,
-			availableTo: data.availableTo ? new Date(Date.parse(data.availableTo)): null,
-			dayTicketDate: data.dayTicketDate ? new Date(Date.parse(data.dayTicketDate)): null,
+			availableFrom: data.availableFrom ? new Date(Date.parse(data.availableFrom)) : null,
+			availableTo: data.availableTo ? new Date(Date.parse(data.availableTo)) : null,
+			dayTicketDate: data.dayTicketDate ? new Date(Date.parse(data.dayTicketDate)) : null,
 			visitorCategoryId: data.visitorCategoryId
-		}, 
-		select: {	
+		},
+		select: {
 			id: true,
 			name: true,
 			price: true,

@@ -24,7 +24,7 @@ export async function POST({ locals, params, request }) {
 		// Get activities tickets
 		const activityTickets = await locals.prisma.activityTicket.findMany({
 			where: {
-				id: { in: visitor.activityTickets.map(a => a.id) }
+				id: { in: visitor.activityTickets.map((a) => a.id) }
 			}
 		});
 		// Get category
@@ -35,7 +35,8 @@ export async function POST({ locals, params, request }) {
 		});
 
 		// Calculate prices and statuses
-		const visitorPrice = eventTicket.price + activityTickets.map((a) => a.price).reduce((a, b) => a + b, 0);
+		const visitorPrice =
+			eventTicket.price + activityTickets.map((a) => a.price).reduce((a, b) => a + b, 0);
 		totalPrice += visitorPrice;
 
 		const newVisitor = {
@@ -58,16 +59,16 @@ export async function POST({ locals, params, request }) {
 				}
 			},
 			type: category.type,
-			status: "ANGEMELDET",
+			status: 'ANGEMELDET',
 			price: visitorPrice,
 			eventTicketPrice: eventTicket.price,
-			activityTicketsPrices: activityTickets.map(a => a.price),
+			activityTicketsPrices: activityTickets.map((a) => a.price),
 			activities: {
-				connect: activityTickets.map(a => ({ id: a.activityId}))
+				connect: activityTickets.map((a) => ({ id: a.activityId }))
 			},
 			activityTickets: {
-				connect: activityTickets.map(a => ({ id: a.id}))
-			},	
+				connect: activityTickets.map((a) => ({ id: a.id }))
+			},
 			contact: {
 				connectOrCreate: {
 					where: {

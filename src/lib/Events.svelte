@@ -19,9 +19,8 @@
 					<p class="location">{event.location} in {event.city}</p>
 				</div>
 				<div class="bottom">
-			
 					<p class="count">{event.numberOfVisitors} Teilnehmer</p>
-				
+
 					<p class="visibility">
 						<!-- {#if !(event.status == 'OPEN')}
 							<span class="material-symbols-outlined">visibility_off</span>

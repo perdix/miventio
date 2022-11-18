@@ -26,7 +26,9 @@
 		{#each contacts as contact}
 			<tr on:click={() => edit(contact)}>
 				<td>{contact.identifier || ''}</td>
-				<td>{contact.prefix || ''} {contact.firstName} {contact.lastName} {contact.postfix || ''}</td>
+				<td
+					>{contact.prefix || ''} {contact.firstName} {contact.lastName} {contact.postfix || ''}</td
+				>
 				<td>
 					{#if contact.company}{contact.company} <br />{/if}
 					{#if contact.address}{contact.address} <br />{/if}
@@ -37,20 +39,26 @@
 				<td>
 					{#if contact.phone}Tel: <a href="tel:{contact.phone}">{contact.phone} </a><br />{/if}
 					{#if contact.email}E-Mail: <a href="mailto:{contact.email}">{contact.email}</a><br />{/if}
-					{#if contact.website}Website: <a href="{contact.website}" target="_blank" rel="noreferrer">{contact.website}</a>{/if}
+					{#if contact.website}Website: <a href={contact.website} target="_blank" rel="noreferrer"
+							>{contact.website}</a
+						>{/if}
 				</td>
 				<td>
 					{#if contact.membership}
-					<span class="membership" style="background-color:{contact.membership.color};">
-						{contact.membership.name}
-					</span>
+						<span class="membership" style="background-color:{contact.membership.color};">
+							{contact.membership.name}
+						</span>
 					{/if}
 				</td>
 				<td>
 					{#if contact.status}
-					<span class="status" class:active={contact.status=="AKTIV"} class:inactive={contact.status=="INAKTIV"}>
-						{contact.status}
-					</span>
+						<span
+							class="status"
+							class:active={contact.status == 'AKTIV'}
+							class:inactive={contact.status == 'INAKTIV'}
+						>
+							{contact.status}
+						</span>
 					{/if}
 				</td>
 			</tr>
@@ -59,7 +67,6 @@
 </table>
 
 <style>
-
 	.membership {
 		padding: 5px 10px;
 		font-size: 16px;
@@ -78,8 +85,7 @@
 	}
 	.inactive {
 		border: 1px solid gray;
-		color:rgb(68, 68, 68);
+		color: rgb(68, 68, 68);
 		background-color: var(--lightgrey);
 	}
-	
 </style>

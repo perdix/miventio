@@ -10,7 +10,7 @@ export const toOrganisationJSON = (organisation) => {
 		});
 	}
 	if ('events' in organisation) {
-		organisation.events = organisation.events.map(e => cleanEvent(e))
+		organisation.events = organisation.events.map((e) => cleanEvent(e));
 	}
 	return JSON.stringify(organisation);
 };
@@ -18,7 +18,6 @@ export const toOrganisationJSON = (organisation) => {
 export const toOrganisationsJSON = (organisations) => {
 	return JSON.stringify(organisations);
 };
-
 
 // User
 
@@ -37,10 +36,9 @@ export const toUserJSON = (user) => {
 	return JSON.stringify(user);
 };
 
-
 export const toUsersJSON = (users) => {
 	return JSON.stringify(users);
-}
+};
 
 // Event
 
@@ -49,24 +47,26 @@ const cleanEvent = (event) => {
 	delete event.createdAt;
 	event.start = event.start ? event.start.toISOString().substring(0, 10) : null;
 	event.end = event.end ? event.end.toISOString().substring(0, 10) : null;
-	event.bookingStart = event.bookingStart ? event.bookingStart.toISOString().substring(0, 10) : null;
+	event.bookingStart = event.bookingStart
+		? event.bookingStart.toISOString().substring(0, 10)
+		: null;
 	event.bookingEnd = event.bookingEnd ? event.bookingEnd.toISOString().substring(0, 10) : null;
-	
-	if (('_count' in event) && ('visitors' in event._count)) {
+
+	if ('_count' in event && 'visitors' in event._count) {
 		event.numberOfVisitors = event._count.visitors;
 	}
 	delete event._count;
 	if (event.activities) {
-		event.activities.forEach(a => {
-			if (('_count' in a) && ('visitors' in a._count)) {
+		event.activities.forEach((a) => {
+			if ('_count' in a && 'visitors' in a._count) {
 				a.numberOfVisitors = a._count.visitors;
 			}
 			delete a._count;
 		});
 	}
 	if (event.activityTickets) {
-		event.activityTickets.forEach(a => {
-			if (('_count' in a) && ('visitors' in a._count)) {
+		event.activityTickets.forEach((a) => {
+			if ('_count' in a && 'visitors' in a._count) {
 				a.numberOfVisitors = a._count.visitors;
 			}
 			delete a._count;
@@ -104,7 +104,7 @@ export const toContactsJSON = (contacts) => {
 const cleanActivity = (activity) => {
 	delete activity.updateAt;
 	delete activity.createdAt;
-	if (('_count' in activity) && ('visitors' in activity._count)) {
+	if ('_count' in activity && 'visitors' in activity._count) {
 		activity.numberOfVisitors = activity._count.visitors;
 	}
 	delete activity._count;
@@ -168,13 +168,12 @@ export const toVisitorsJSON = (visitors) => {
 	return JSON.stringify(cleanedVisitors);
 };
 
-
 // Membership
 const cleanMembership = (membership) => {
 	delete membership.updatedAt;
 	delete membership.createdAt;
 	if ('_count' in membership) {
-		membership.numberOfContacts= membership._count.contacts;
+		membership.numberOfContacts = membership._count.contacts;
 		delete membership._count;
 	}
 	return membership;
@@ -188,7 +187,6 @@ export const toMembershipsJSON = (memberships) => {
 	const cleanedMemberships = memberships.map((m) => cleanMembership(m));
 	return JSON.stringify(cleanedMemberships);
 };
-
 
 // VisitorCategory
 const cleanCategory = (category) => {

@@ -56,26 +56,26 @@ export const users = [
 
 export const memberships = [
 	{
-		name: "Hauptmitglied"
+		name: 'Hauptmitglied'
 	},
 	{
-		name: "Partner"
+		name: 'Partner'
 	},
 	{
-		name: "Ehrenmitglied"
+		name: 'Ehrenmitglied'
 	}
-]
+];
 
 export const visitorCategories = [
 	{
-		name: "Student",
-		type: "Teilnehmer"
+		name: 'Student',
+		type: 'Teilnehmer'
 	},
 	{
-		name: "Gast",
-		type: "Teilnehmer"
+		name: 'Gast',
+		type: 'Teilnehmer'
 	}
-]
+];
 
 export const contacts = [
 	{
@@ -102,7 +102,7 @@ export const contacts = [
 		email: 'max3@hallo.io',
 		address: 'musterplatz 2',
 		city: 'Wien',
-		postcode: '1010',
+		postcode: '1010'
 	}
 ];
 

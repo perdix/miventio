@@ -7,8 +7,6 @@
 	import Time from 'svelte-time';
 	import { bookingStatuses } from '$lib/store/constants';
 
-
-
 	$: activityCategories = [...new Set($event.activities.map((a) => a.category))];
 
 	let booking = {
@@ -160,9 +158,7 @@
 								<label for="ticket">Ticket</label>
 								<select id="ticket" bind:value={item.eventTicketId} required>
 									{#each $event.eventTickets as ticket}
-										<option value={ticket.id}
-											> {ticket.name} ({ticket.price}€)</option
-										>
+										<option value={ticket.id}> {ticket.name} ({ticket.price}€)</option>
 									{/each}
 								</select>
 							</div>

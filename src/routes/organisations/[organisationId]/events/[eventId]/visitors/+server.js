@@ -26,7 +26,7 @@ export async function GET({ locals, params }) {
 			category: {
 				select: {
 					id: true,
-					name: true,
+					name: true
 				}
 			},
 			activityTickets: {
@@ -53,12 +53,11 @@ export async function GET({ locals, params }) {
 						}
 					}
 				}
-			},
+			}
 		}
 	});
 	return new Response(toVisitorsJSON(visitors));
 }
-
 
 export async function POST({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
@@ -99,13 +98,13 @@ export async function POST({ locals, params, request }) {
 			status: data.status,
 			price: data.price,
 			eventTicketPrice: eventTicket.price,
-			activityTicketsPrices: activityTickets.map(a => a.price),
+			activityTicketsPrices: activityTickets.map((a) => a.price),
 			activities: {
-				connect: activityTickets.map(a => ({ id: a.activityId}))
+				connect: activityTickets.map((a) => ({ id: a.activityId }))
 			},
 			activityTickets: {
-				connect: activityTickets.map(a => ({ id: a.id}))
-			},	
+				connect: activityTickets.map((a) => ({ id: a.id }))
+			}
 		},
 		select: {
 			id: true,
@@ -123,7 +122,7 @@ export async function POST({ locals, params, request }) {
 			category: {
 				select: {
 					id: true,
-					name: true,
+					name: true
 				}
 			},
 			activityTickets: {
@@ -146,7 +145,7 @@ export async function POST({ locals, params, request }) {
 						select: {
 							id: true,
 							firstName: true,
-							lastName: true,
+							lastName: true
 						}
 					}
 				}
@@ -164,7 +163,7 @@ export async function POST({ locals, params, request }) {
 			}
 		},
 		update: {
-			type: category.type,
+			type: category.type
 		},
 		create: {
 			firstName: data.firstName,
@@ -176,7 +175,7 @@ export async function POST({ locals, params, request }) {
 					id: params.organisationId
 				}
 			}
-		},
+		}
 	});
 
 	return new Response(toVisitorJSON(visitor), { status: 201 });

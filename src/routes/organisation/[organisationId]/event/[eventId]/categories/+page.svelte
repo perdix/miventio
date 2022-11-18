@@ -4,14 +4,13 @@
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
-	import { visitorTypes } from '$lib/store/constants'
+	import { visitorTypes } from '$lib/store/constants';
 
-	let category = { };
+	let category = {};
 	let showPopup = false;
 	let popupTitle = '';
 
-
-	console.log($event.visitorCategories)
+	console.log($event.visitorCategories);
 
 	const togglePopup = () => {
 		showPopup = !showPopup;
@@ -44,7 +43,6 @@
 	};
 
 	const saveCategory = async () => {
-
 		if ('id' in category) {
 			const res = await fetch(
 				`/organisations/${$page.data.organisation.id}/events/${$page.params.eventId}/categories/${category.id}`,
@@ -55,7 +53,9 @@
 			);
 			if (res.status === 200) {
 				const updatedCategory = await res.json();
-				$event.visitorCategories = $event.visitorCategories.map((c) => (c.id == updatedCategory.id ? updatedCategory : c));
+				$event.visitorCategories = $event.visitorCategories.map((c) =>
+					c.id == updatedCategory.id ? updatedCategory : c
+				);
 				togglePopup();
 			}
 		} else {
@@ -77,7 +77,6 @@
 </script>
 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup}>
-	
 	<form class="miventio row" on:submit|preventDefault={saveCategory}>
 		<div class="col-6">
 			<label for="name">Name</label>
@@ -97,13 +96,11 @@
 		</div>
 		<div class="col-6 submit">
 			<button type="submit">Speichern</button>
-
 		</div>
 		<div class="col-6 submit right">
 			<button type="button" on:click={deleteCategory}>
 				<span class="material-symbols-outlined">delete</span>
 			</button>
-
 		</div>
 	</form>
 </Popup>
@@ -124,7 +121,6 @@
 					<th>Typ</th>
 					<th>Bechreibung</th>
 				</tr>
-			
 			</thead>
 			<tbody>
 				{#each $event.visitorCategories as category}
@@ -143,10 +139,11 @@
 			</tbody>
 		</table>
 	{:else}
-		<p>Veranstaltungsteilnehmer werden in Kategorien unterteilt (z.B. Student, Ehrengast, Allgemein, ...). </p>
-	
+		<p>
+			Veranstaltungsteilnehmer werden in Kategorien unterteilt (z.B. Student, Ehrengast, Allgemein,
+			...).
+		</p>
 	{/if}
-
 </Content>
 
 <style>

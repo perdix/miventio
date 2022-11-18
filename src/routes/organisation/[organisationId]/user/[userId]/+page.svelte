@@ -9,7 +9,7 @@
 	let status;
 
 	const updateUser = async () => {
-		console.log(user)
+		console.log(user);
 		const res = await fetch(`/users/${$page.data.user.id}`, {
 			method: 'PUT',
 			body: JSON.stringify(user)
@@ -47,14 +47,25 @@
 					</div>
 					<div class="col-6">
 						<label for="password-repeat">Neues Passwort</label>
-						<input id="password-repeat" type="password" bind:value={user.newPassword} minlength="5" />
+						<input
+							id="password-repeat"
+							type="password"
+							bind:value={user.newPassword}
+							minlength="5"
+						/>
 					</div>
 					<div class="col-12 submit">
 						<button type="submit">Speichern</button>
 					</div>
 					{#if message}
 						<div class="col-12">
-							<div class="message-box" class:error={status==404} class:confirmation={status==200}>{message || ''}</div>
+							<div
+								class="message-box"
+								class:error={status == 404}
+								class:confirmation={status == 200}
+							>
+								{message || ''}
+							</div>
 						</div>
 					{/if}
 				</form>

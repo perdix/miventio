@@ -8,13 +8,10 @@
 		// { slug: 'contractors', title: 'Lieferantenmanagement', icon: 'handshake' },
 		{ slug: 'contacts', title: 'Mitgliederverwaltung', icon: 'group' }
 	];
-
 </script>
 
 <nav>
-	<div class="left">
-		
-	</div>
+	<div class="left" />
 
 	<ul>
 		{#each tabs as tab}
@@ -39,12 +36,9 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: stretch;
-		padding: calc(var(--unit) / 2) calc(var(--unit) / 2 );
+		padding: calc(var(--unit) / 2) calc(var(--unit) / 2);
 		width: 100%;
 	}
-
-
-	
 
 	ul {
 		list-style-type: none;

@@ -13,7 +13,7 @@ const config = {
 		adapter: adapter({ out: 'build' }),
 		env: {
 			dir: process.cwd(),
-			publicPrefix: 'PUBLIC_',
+			publicPrefix: 'PUBLIC_'
 		}
 	}
 };

@@ -1,4 +1,3 @@
-
 import { isOrganisationAdmin, isOrganisationMember } from '$lib/server/authorization';
 import { toActivityJSON } from '$lib/server/serialization';
 
@@ -16,13 +15,11 @@ export async function GET({ locals, params }) {
 	return new Response(toActivityJSON(activity));
 }
 
-
-
 export async function PUT({ locals, params, request }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
-	
+
 	const data = await request.json();
 
 	// Delete activityTickets which are not given anymore
@@ -36,7 +33,6 @@ export async function PUT({ locals, params, request }) {
 			}
 		}
 	});
-
 
 	// Override other activityTickets
 	for (const ticket of data.tickets) {
@@ -58,7 +54,7 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	// Update Activity
-	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start
+	data.start = data.start.length < 16 ? `${data.date.substring(0, 10)}T${data.start}Z` : data.start;
 
 	let updateData = {
 		name: data.name,
@@ -70,10 +66,10 @@ export async function PUT({ locals, params, request }) {
 		type: data.type,
 		speaker: data.speaker,
 		room: data.room,
-		location: data.location,
-	}
+		location: data.location
+	};
 	if (data.end) {
-		const end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		const end = data.end.length < 16 ? `${data.date.substring(0, 10)}T${data.end}Z` : data.end;
 		updateData.end = new Date(Date.parse(end));
 	}
 
@@ -84,20 +80,20 @@ export async function PUT({ locals, params, request }) {
 		data: updateData,
 		select: {
 			id: true,
-			identifier:true,
+			identifier: true,
 			name: true,
 			description: true,
 			speaker: true,
 			limit: true,
 			location: true,
-			room:true,
+			room: true,
 			date: true,
 			start: true,
 			end: true,
 			type: true,
 			_count: {
-				select: { visitors: true },
-			  },
+				select: { visitors: true }
+			},
 			tickets: {
 				select: {
 					id: true,
@@ -116,7 +112,6 @@ export async function PUT({ locals, params, request }) {
 	});
 	return new Response(toActivityJSON(activity), { status: 200 });
 }
-
 
 export async function DELETE({ locals, params }) {
 	if (!isOrganisationAdmin(locals, params.organisationId)) {

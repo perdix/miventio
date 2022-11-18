@@ -21,7 +21,7 @@ export async function PUT({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	
+
 	// Update booking
 	const updatedBooking = await locals.prisma.booking.update({
 		where: {
@@ -35,7 +35,7 @@ export async function PUT({ locals, params, request }) {
 			address: data.address,
 			postcode: data.postcode,
 			city: data.city,
-			status: data.status,
+			status: data.status
 		},
 		select: {
 			visitors: {
@@ -43,7 +43,7 @@ export async function PUT({ locals, params, request }) {
 					id: true,
 					firstName: true,
 					lastName: true,
-					email: true,
+					email: true
 				}
 			}
 		}

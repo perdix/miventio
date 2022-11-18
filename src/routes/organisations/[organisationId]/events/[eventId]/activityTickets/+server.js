@@ -24,7 +24,7 @@ export async function GET({ locals, params }) {
 					date: true,
 					start: true,
 					end: true,
-					type:true
+					type: true
 				}
 			}
 		}

@@ -49,7 +49,7 @@
 	const newContact = () => {
 		contact = {};
 		togglePopup();
-	}
+	};
 
 	const deleteContact = async () => {
 		const res = await fetch(`/organisations/${$page.data.organisation.id}/contacts/${contact.id}`, {
@@ -62,27 +62,21 @@
 		}
 	};
 
-
 	const subNavItems = [
 		{
-			name: "Mitglieder & Kontakte",
-			slug: "contacts",
+			name: 'Mitglieder & Kontakte',
+			slug: 'contacts',
 			status: 'active'
 		},
 		{
-			name: "Mitgliedskategorien",
-			slug: "memberships"
+			name: 'Mitgliedskategorien',
+			slug: 'memberships'
 		}
-	]
+	];
 </script>
 
 <div class="page">
-
-
-
-	<Subnavigation items={subNavItems}></Subnavigation>
-
-
+	<Subnavigation items={subNavItems} />
 
 	<Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 		<form class="miventio row" on:submit|preventDefault={saveContact}>
@@ -93,7 +87,7 @@
 			<div class="col-6">
 				<label for="gender">Geschlecht</label>
 				<select name="gender" id="gender">
-					<option value=""></option>
+					<option value="" />
 					<option value="female">weiblich</option>
 					<option value="male">männlich</option>
 					<option value="diverse">divers</option>
@@ -118,7 +112,7 @@
 
 			<div class="col-5">
 				<label for="email">E-Mail</label>
-				<input id="email" type="email" bind:value={contact.email} required/>
+				<input id="email" type="email" bind:value={contact.email} required />
 			</div>
 			<div class="col-5">
 				<label for="phone">Telefon</label>
@@ -132,32 +126,34 @@
 
 			<div class="col-1">
 				<label for="gdpr-confirmation">Newsletter</label>
-				<input id="gdpr-confirmation" type="checkbox" bind:checked={contact.newsletterConfirmation} />
+				<input
+					id="gdpr-confirmation"
+					type="checkbox"
+					bind:checked={contact.newsletterConfirmation}
+				/>
 			</div>
 
-
-			<hr class="col-12">
+			<hr class="col-12" />
 			<div class="col-6">
 				<label for="category">Kategorie</label>
 				<select name="category" id="category" bind:value={contact.membershipId}>
-					<option value=""></option>
+					<option value="" />
 					{#each $page.data.memberships as membership}
-						<option value="{membership.id}">{membership.name}</option>
+						<option value={membership.id}>{membership.name}</option>
 					{/each}
-
 				</select>
 			</div>
 
 			<div class="col-6">
 				<label for="status">Mitgliedsstatus</label>
 				<select name="status" id="status" bind:value={contact.status}>
-					<option value=""></option>
+					<option value="" />
 					<option value="AKTIV">AKTIV</option>
 					<option value="INAKTIV">INAKTIV</option>
 				</select>
 			</div>
-	
-			<hr class="col-12">
+
+			<hr class="col-12" />
 			<div class="col-6">
 				<label for="company">Praxis/Firmenname</label>
 				<input id="company" type="text" bind:value={contact.company} />
@@ -167,7 +163,6 @@
 				<label for="website">Website</label>
 				<input id="website" type="url" bind:value={contact.website} />
 			</div>
-
 
 			<div class="col-12">
 				<label for="address">Straße</label>
@@ -186,14 +181,13 @@
 				<input id="country" type="text" bind:value={contact.country} />
 			</div>
 
-			<hr class="col-12">
+			<hr class="col-12" />
 
 			<div class="col-12">
 				<label for="notes">Notizen</label>
-				<textarea id="notes" rows="5" bind:value={contact.notes}></textarea>
+				<textarea id="notes" rows="5" bind:value={contact.notes} />
 			</div>
-			
-	
+
 			<div class="col-6 submit">
 				<button type="submit">Speichern</button>
 			</div>
@@ -205,27 +199,22 @@
 		</form>
 	</Popup>
 
-
 	<div class="main">
+		<Main>
+			<Header title={'Mitglieder & Kontakte'}>
+				<button on:click={newContact}>
+					<span>Neuer Kontakt</span>
+					<span class="material-symbols-outlined">add_circle</span>
+				</button>
+			</Header>
 
-	<Main>
-		<Header title={'Mitglieder & Kontakte'}>
-			<button on:click={newContact}>
-				<span>Neuer Kontakt</span>
-				<span class="material-symbols-outlined">add_circle</span>
-			</button>
-		</Header>
-
-		<Contacts contacts={contacts} on:edit={openContact} />
-	</Main>
+			<Contacts {contacts} on:edit={openContact} />
+		</Main>
+	</div>
 </div>
-</div>
-
 
 <style>
 	hr {
 		height: 1px;
 	}
-
-	
 </style>

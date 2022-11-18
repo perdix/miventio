@@ -115,7 +115,7 @@ h2 {
 button,
 .button {
 	text-transform: uppercase;
-	padding: 0.6rem 1.0rem;
+	padding: 0.6rem 1rem;
 	color: var(--white);
 	border: none;
 	border-radius: var(--corner);
@@ -140,49 +140,52 @@ button:hover,
 	box-shadow: var(--shadow-light);
 }
 
-
-button.secondary, .button.secondary {
+button.secondary,
+.button.secondary {
 	background: var(--white);
 	color: var(--black);
 }
-button.secondary span, .button.secondary span {
+button.secondary span,
+.button.secondary span {
 	margin-right: 10px;
 	display: inline-block;
 }
 
-button.secondary:hover, .button.secondary:hover {
+button.secondary:hover,
+.button.secondary:hover {
 	cursor: pointer;
 	box-shadow: var(--shadow-light);
 }
 
-button.icon, .button.icon {
+button.icon,
+.button.icon {
 	background: var(--grey);
 	color: var(--color-1-dark);
 	padding: 8px 12px;
 	border-radius: var(--corner);
 }
-button.icon:hover, .button.icon:hover {
+button.icon:hover,
+.button.icon:hover {
 	cursor: pointer;
 	background: var(--grey);
 	box-shadow: var(--shadow-light);
 }
 
-button.mini-icon, .button.mini-icon {
+button.mini-icon,
+.button.mini-icon {
 	background: var(--lightgrey);
 	color: var(--color-1-dark);
 	padding: 5px 10px;
 	border-radius: var(--corner);
 }
-button.mini-icon:hover, .button.mini-icon:hover {
+button.mini-icon:hover,
+.button.mini-icon:hover {
 	background: var(--lightgrey);
 	box-shadow: var(--shadow-light);
 }
 .mini-icon span {
 	font-size: 16px !important;
 }
-
-
-
 
 a {
 	color: var(--color-1);
@@ -351,11 +354,9 @@ form input:focus {
 	box-shadow: var(--shadow-light);
 }
 
-
-
 form .message-box {
 	padding: 20px;
-	margin-top:20px;
+	margin-top: 20px;
 	display: block;
 }
 
@@ -382,7 +383,8 @@ form hr {
 form.miventio {
 	/* max-width: 800px; */
 }
-form.miventio input, form.miventio textarea {
+form.miventio input,
+form.miventio textarea {
 	padding: 0.6rem 0.7rem;
 	border-radius: var(--corner);
 }
@@ -391,7 +393,8 @@ form.miventio input:active {
 	box-shadow: var(--shadow-light);
 }
 
-form.miventio input[type='checkbox']:active, input[type='checkbox']:focus {
+form.miventio input[type='checkbox']:active,
+input[type='checkbox']:focus {
 	box-shadow: none;
 }
 

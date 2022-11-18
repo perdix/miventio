@@ -40,7 +40,7 @@ export async function GET({ locals, params }) {
 							eventTicketPrice: true,
 							activityTicketsPrices: true,
 							price: true,
-							activities: true,
+							activities: true
 						}
 					}
 				}
@@ -58,11 +58,11 @@ export async function GET({ locals, params }) {
 					date: true,
 					start: true,
 					end: true,
-					type:true,
+					type: true,
 					visitors: true,
 					_count: {
-						select: { visitors: true },
-					  },
+						select: { visitors: true }
+					},
 					tickets: {
 						select: {
 							id: true,
@@ -94,12 +94,12 @@ export async function GET({ locals, params }) {
 							date: true,
 							start: true,
 							end: true,
-							type:true
+							type: true
 						}
 					}
 				}
 			},
-			visitors: {	
+			visitors: {
 				select: {
 					id: true,
 					firstName: true,
@@ -116,7 +116,7 @@ export async function GET({ locals, params }) {
 					category: {
 						select: {
 							id: true,
-							name: true,
+							name: true
 						}
 					},
 					activityTickets: {
@@ -139,11 +139,11 @@ export async function GET({ locals, params }) {
 								select: {
 									id: true,
 									firstName: true,
-									lastName: true,
+									lastName: true
 								}
 							}
 						}
-					},
+					}
 				}
 			},
 			visitorCategories: {
@@ -151,7 +151,7 @@ export async function GET({ locals, params }) {
 					id: true,
 					name: true,
 					type: true,
-					description: true,
+					description: true
 				}
 			}
 		}
@@ -164,7 +164,6 @@ export async function PUT({ locals, params, request }) {
 		return new Response(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
 	}
 
-	
 	// Prepare data
 	const data = await request.json();
 
@@ -175,7 +174,7 @@ export async function PUT({ locals, params, request }) {
 		city: data.city,
 		start: new Date(data.start),
 		end: new Date(data.end)
-	}
+	};
 	if (data.bookingStart) {
 		updateData.bookingStart = new Date(data.bookingStart);
 	} else if (data.bookingStart == '') {
@@ -186,7 +185,7 @@ export async function PUT({ locals, params, request }) {
 	} else if (data.bookingEnd == '') {
 		updateData.bookingEnd = null;
 	}
-	
+
 	const event = await locals.prisma.event.update({
 		where: {
 			id: params.eventId
@@ -221,7 +220,7 @@ export async function PUT({ locals, params, request }) {
 							eventTicketPrice: true,
 							activityTicketsPrices: true,
 							price: true,
-							activities: true,
+							activities: true
 						}
 					}
 				}
@@ -239,11 +238,11 @@ export async function PUT({ locals, params, request }) {
 					date: true,
 					start: true,
 					end: true,
-					type:true,
+					type: true,
 					visitors: true,
 					_count: {
-						select: { visitors: true },
-					  },
+						select: { visitors: true }
+					},
 					tickets: {
 						select: {
 							id: true,
@@ -275,12 +274,12 @@ export async function PUT({ locals, params, request }) {
 							date: true,
 							start: true,
 							end: true,
-							type:true
+							type: true
 						}
 					}
 				}
 			},
-			visitors: {	
+			visitors: {
 				select: {
 					id: true,
 					firstName: true,
@@ -297,7 +296,7 @@ export async function PUT({ locals, params, request }) {
 					category: {
 						select: {
 							id: true,
-							name: true,
+							name: true
 						}
 					},
 					activityTickets: {
@@ -324,7 +323,7 @@ export async function PUT({ locals, params, request }) {
 								}
 							}
 						}
-					},
+					}
 				}
 			},
 			visitorCategories: {
@@ -332,7 +331,7 @@ export async function PUT({ locals, params, request }) {
 					id: true,
 					name: true,
 					type: true,
-					description: true,
+					description: true
 				}
 			}
 		}

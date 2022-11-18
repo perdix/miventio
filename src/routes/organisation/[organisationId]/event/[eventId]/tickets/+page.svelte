@@ -12,7 +12,6 @@
 		showPopup = !showPopup;
 	};
 
-
 	const newTicket = () => {
 		ticket = {};
 		popupTitle = 'Neues Ticket';
@@ -21,9 +20,15 @@
 
 	const editTicket = (editTicket) => {
 		ticket = editTicket;
-		ticket.dayTicketDate = ticket.dayTicketDate ? ticket.dayTicketDate.substring(0,10) : ticket.dayTicketDate;
-		ticket.availableFrom = ticket.availableFrom ? ticket.availableFrom.substring(0,10) : ticket.availableFrom;
-		ticket.availableTo = ticket.availableTo ? ticket.availableTo.substring(0,10) : ticket.availableTo;
+		ticket.dayTicketDate = ticket.dayTicketDate
+			? ticket.dayTicketDate.substring(0, 10)
+			: ticket.dayTicketDate;
+		ticket.availableFrom = ticket.availableFrom
+			? ticket.availableFrom.substring(0, 10)
+			: ticket.availableFrom;
+		ticket.availableTo = ticket.availableTo
+			? ticket.availableTo.substring(0, 10)
+			: ticket.availableTo;
 		popupTitle = 'Ticket bearbeiten';
 		togglePopup();
 	};
@@ -55,7 +60,6 @@
 				const updatedTicket = await res.json();
 				let updatedTickets = $event.tickets.map((t) => {
 					return t.id == updatedTicket.id ? updatedTicket : t;
-					
 				});
 				$event.tickets = updatedTickets;
 				togglePopup();
@@ -104,13 +108,12 @@
 		</div>
 		<div class="col-6">
 			<label for="start">Online verfügbar von</label>
-			<input id="start" type="date" bind:value={ticket.availableFrom}/>
+			<input id="start" type="date" bind:value={ticket.availableFrom} />
 		</div>
 		<div class="col-6">
 			<label for="end">Online verfügbar bis</label>
 			<input id="end" type="date" bind:value={ticket.availableTo} />
 		</div>
-
 
 		<div class="col-6 submit">
 			<button type="submit">Speichern</button>
@@ -122,8 +125,6 @@
 		</div>
 	</form>
 </Popup>
-
-
 
 <Header title={'Ticketvarianten'}>
 	<button on:click={newTicket}>
@@ -149,18 +150,25 @@
 				<td>
 					{ticket.name}
 				</td>
-				<td>{#if ticket.visitorCategory}{ticket.visitorCategory.name}{/if} </td>
-				<td>{#if ticket.price}{ticket.price} €{/if}</td>
-				<td>{#if ticket.dayTicketDate}{ticket.dayTicketDate.substring(0,10)} {/if}</td>
-				<td>{#if ticket.availableFrom}{ticket.availableFrom.substring(0,10)} {/if}</td>
-				<td>{#if ticket.availableTo}{ticket.availableTo.substring(0,10)} {/if}</td>
-				
+				<td
+					>{#if ticket.visitorCategory}{ticket.visitorCategory.name}{/if}
+				</td>
+				<td
+					>{#if ticket.price}{ticket.price} €{/if}</td
+				>
+				<td
+					>{#if ticket.dayTicketDate}{ticket.dayTicketDate.substring(0, 10)} {/if}</td
+				>
+				<td
+					>{#if ticket.availableFrom}{ticket.availableFrom.substring(0, 10)} {/if}</td
+				>
+				<td
+					>{#if ticket.availableTo}{ticket.availableTo.substring(0, 10)} {/if}</td
+				>
 			</tr>
 		{/each}
 	</tbody>
 </table>
 
-
 <style>
-
 </style>

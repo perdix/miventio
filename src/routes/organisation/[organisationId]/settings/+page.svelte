@@ -20,7 +20,7 @@
 		if (res.status === 200) {
 			const updatedOrganisation = await res.json();
 			// Merge updated organisation into old one, keeping the role attribute!
-		    $organisation = { ...$organisation, ...updatedOrganisation};
+			$organisation = { ...$organisation, ...updatedOrganisation };
 			message = 'Die Organisation wurde upgedated';
 			status = res.status;
 		} else {
@@ -90,8 +90,8 @@
 	// 		}
 	// 	}
 	// };
-
 </script>
+
 <!-- 
 <Popup title={popupTitle} show={showPopup} on:close={togglePopup} maxWidth={'900px'}>
 	<form class="miventio row" on:submit|preventDefault={saveUser}>
@@ -126,45 +126,50 @@
 <Main>
 	<Header title={'Organisationseinstellungen'}>
 		<a href="javascript:history.back()" class="close"
-		><span class="material-symbols-outlined">close</span></a
-	>
+			><span class="material-symbols-outlined">close</span></a
+		>
 	</Header>
 
-
-		<div class="row">
-			<div class="col-12 col">
-				<h1>Allgemein</h1>
-				<form class="miventio row" on:submit|preventDefault={saveOrganisation} data-sveltekit-prefetch="off">
+	<div class="row">
+		<div class="col-12 col">
+			<h1>Allgemein</h1>
+			<form
+				class="miventio row"
+				on:submit|preventDefault={saveOrganisation}
+				data-sveltekit-prefetch="off"
+			>
+				<div class="col-12">
+					<label for="Name">Name der Organisation</label>
+					<input id="name" type="text" bind:value={editOrganisation.name} />
+				</div>
+				<div class="col-12">
+					<label for="description">Beschreibung</label>
+					<input id="description" type="text" bind:value={editOrganisation.description} />
+				</div>
+				<div class="col-12">
+					<label for="color">Organisationsfarbe</label>
+					<input id="color" type="color" bind:value={editOrganisation.color} />
+				</div>
+				<div class="col-12 submit">
+					<button type="submit">Speichern</button>
+				</div>
+				{#if message}
 					<div class="col-12">
-						<label for="Name">Name der Organisation</label>
-						<input id="name" type="text" bind:value={editOrganisation.name} />
-					</div>
-					<div class="col-12">
-						<label for="description">Beschreibung</label>
-						<input id="description" type="text" bind:value={editOrganisation.description} />
-					</div>
-					<div class="col-12">
-						<label for="color">Organisationsfarbe</label>
-						<input id="color" type="color" bind:value={editOrganisation.color} />
-					</div>
-					<div class="col-12 submit">
-						<button type="submit">Speichern</button>
-					</div>
-					{#if message}
-					<div class="col-12">
-						<div class="message-box" class:error={status==404} class:confirmation={status==200}>{message || ''}</div>
+						<div class="message-box" class:error={status == 404} class:confirmation={status == 200}>
+							{message || ''}
+						</div>
 					</div>
 				{/if}
-				</form>
-			</div>
-			<!-- <div class="col-6 col">
+			</form>
+		</div>
+		<!-- <div class="col-6 col">
 				<h1>Subscription</h1>
 				<div class="abo">
 					<p>Welches Abo wurde gegewählt?</p>
 				</div>
 			</div> -->
 
-			<!-- <div class="col-12 col">
+		<!-- <div class="col-12 col">
 				
 				
 
@@ -199,8 +204,8 @@
 				</div>
 			</div>
 		</div> -->
-
-</Main>
+	</div></Main
+>
 
 <style>
 	.col {
