@@ -120,7 +120,7 @@
 		<form class="miventio row" on:submit|preventDefault={saveActivity}>
 			<div class="col-2">
 				<label for="Name">Programm-ID</label>
-				<input id="name" type="text" bind:value={activity.identifier} required />
+				<input id="name" type="text" bind:value={activity.identifier} />
 			</div>
 			<div class="col-5">
 				<label for="Name">Name</label>

@@ -35,9 +35,10 @@
 	$: {
 		if (visitor.categoryId) {
 			tickets = event.tickets.filter(t => t.visitorCategoryId == visitor.categoryId);
-			activityTickets = event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId);
 			if (visitor.eventTicket && visitor.eventTicket.dayTicketDate) {
-				activityTickets = event.activityTickets.filter(a => a.activity.date.toISOString().slice(0,10) == visitor.eventTicket.dayTicketDate.toISOString().slice(0,10))
+				activityTickets = event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId).filter(a => a.activity.date.toISOString().slice(0,10) == visitor.eventTicket.dayTicketDate.toISOString().slice(0,10))
+			} else {
+				activityTickets = event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId);
 			}
 		}
 	}
@@ -179,22 +180,22 @@
 			</div>
 
 			{#if Object.keys(visitor.eventTicket).length > 0}
-			<div class="col-6">
+			<div class="col-9">
 				<p><b>Veranstaltungsticket:</b> {visitor.eventTicket.name || ''}</p>
 			</div>
-			<div class="col-6 right">
+			<div class="col-3 right">
 				
 				<p>{visitor.eventTicket.price || ''}€</p>
 			</div>
 			{/if}
 			
-			<div class="col-6">
+			<div class="col-9">
 				{#each visitor.activityTickets as activityTicket}
 				<p><b>{activityTicket.activity.type}:</b> {activityTicket.activity.name}</p>
 				{/each}
 			</div>
 
-			<div class="col-6 right">
+			<div class="col-3 right">
 				<div>
 				{#each visitor.activityTickets as activityTicket}
 				<p>{activityTicket.price}€</p>
@@ -203,10 +204,10 @@
 			</div>
 
 			{#if total}
-			<div class="sum col-6">
+			<div class="sum col-9">
 				<p><b>Gesamtpreis</b></p>
 			</div>
-			<div class="sum col-6 right">
+			<div class="sum col-3 right">
 				<p><b>{total}€</b></p>
 			</div>
 			{/if}
