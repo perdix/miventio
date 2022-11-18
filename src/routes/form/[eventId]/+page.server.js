@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import { toEventJSON } from '$lib/server/serialization';
 
 export async function load(request) {
 	const eventId = request.params.eventId;

@@ -95,7 +95,7 @@ export async function POST({ locals, params, request }) {
 		createVisitors.push(newVisitor);
 	}
 
-	const booking = await locals.prisma.booking.create({
+	await locals.prisma.booking.create({
 		data: {
 			status: 'OFFEN',
 			firstName: data.firstName || '',

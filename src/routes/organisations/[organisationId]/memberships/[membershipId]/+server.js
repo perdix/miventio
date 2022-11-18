@@ -48,7 +48,7 @@ export async function DELETE({ locals, params }) {
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'Membership successfully deleted!' }), {
+	return new Response(toMembershipJSON(deletedMembership), {
 		status: 200
 	});
 }

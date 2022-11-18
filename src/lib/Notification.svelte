@@ -20,6 +20,7 @@
 {#if show}
 	<div class="notification" transition:slide>
 		<p>{message}</p>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<span class="material-symbols-outlined close" on:click={close}>close</span>
 	</div>
 {/if}

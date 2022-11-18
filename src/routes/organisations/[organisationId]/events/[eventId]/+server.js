@@ -350,5 +350,5 @@ export async function DELETE({ locals, params }) {
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'Event successfully deleted!' }), { status: 200 });
+	return new Response(toEventJSON(deletedEvent), { status: 200 });
 }

@@ -334,9 +334,6 @@
 		font-size: 20px;
 		font-family: var(--font-1);
 	}
-	h4 {
-		font-size: 18px;
-	}
 	button {
 		margin-top: 20px;
 	}

@@ -31,7 +31,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedEvent = await res.json();
 			goto(`/organisation/${$page.data.organisation.id}/events`);
 		}
 	};
@@ -40,6 +39,7 @@
 <Notification bind:show={saved} message="Eventdaten wurden gespeichert" />
 
 <Header title={'Allgemeine Daten'}>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<span class="material-symbols-outlined delete" on:click={deleteEvent}>delete</span>
 </Header>
 
@@ -77,7 +77,4 @@
 </Content>
 
 <style>
-	h2 {
-		font-size: 20px;
-	}
 </style>

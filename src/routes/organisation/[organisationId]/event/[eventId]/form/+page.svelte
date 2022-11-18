@@ -32,7 +32,7 @@
 	<h3>Link zum Anmeldeformular</h3>
 
 	<div>
-		<a href={url} target="_blank">{url}</a>
+		<a href={url} target="_blank" rel="noreferrer">{url}</a>
 	</div>
 
 	<form class="miventio row" on:submit|preventDefault={updateFormOptions}>

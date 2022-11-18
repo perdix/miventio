@@ -4,7 +4,6 @@
 	import { page } from '$app/stores';
 	import { event } from '$lib/store/event';
 	import Popup from '$lib/Popup.svelte';
-	import { dataset_dev } from 'svelte/internal';
 
 	let activity = { tickets: [{}] };
 	let showPopup = false;
@@ -60,7 +59,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedActivity = await res.json();
 			$event.activities = $event.activities.filter((a) => a.id != activity.id);
 			refreshActivityTickets();
 			togglePopup();

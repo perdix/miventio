@@ -21,6 +21,7 @@
 		<div class="box" style="max-width:{maxWidth}">
 			<Main>
 				<Header {title}>
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<span class="material-symbols-outlined close" on:click={close}>close</span>
 				</Header>
 				<Content>

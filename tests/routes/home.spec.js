@@ -26,5 +26,5 @@ describe('basic', async () => {
 		const h1 = page.locator('h1');
 		await expect(h1).toBeDefined();
 		await expect(h1).toHaveText('Prototyp Miventio');
-	}, 60_000);
+	});
 });

@@ -4,7 +4,6 @@
 	import Time from 'svelte-time';
 	import { event } from '$lib/store/event';
 	$event = { ...$page.data.event };
-	import Subnavigation from '$lib/Subnavigation.svelte';
 	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
 
 	export let sections = [
@@ -18,29 +17,29 @@
 		{ slug: 'visitors', title: 'Teilnehmer', icon: 'badge' }
 	];
 
-	const subNavItems = [
-		{
-			name: 'Veranstaltungen',
-			slug: 'events',
-			status: 'active'
-		},
-		// {
-		//     name: 'Aussteller',
-		//     slug: "exhibitors"
-		// },
-		//
-		//     name: 'Hotels',
-		//     slug: "hotels",
-		// },
-		{
-			name: 'Lieferanten',
-			slug: 'contractors'
-		}
-		// {
-		//     name: 'Referenten',
-		//     slug: "speakers",
-		// },
-	];
+	// const subNavItems = [
+	// 	{
+	// 		name: 'Veranstaltungen',
+	// 		slug: 'events',
+	// 		status: 'active'
+	// 	},
+	// 	{
+	// 	    name: 'Aussteller',
+	// 	    slug: "exhibitors"
+	// 	},
+
+	// 	    name: 'Hotels',
+	// 	    slug: "hotels",
+	// 	},
+	// 	{
+	// 		name: 'Lieferanten',
+	// 		slug: 'contractors'
+	// 	}
+	// 	{
+	// 	    name: 'Referenten',
+	// 	    slug: "speakers",
+	// 	},
+	// ];
 
 	let links = [
 		{
@@ -168,7 +167,6 @@
 		background-color: var(--grey);
 		color: var(--color-1-dark);
 		transition: 0.1s;
-		/* border-right: 5px solid var(--color-1); */
 		border-left: 10px solid var(--color-1);
 	}
 </style>

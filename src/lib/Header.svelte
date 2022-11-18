@@ -29,11 +29,13 @@
 
 			<div class="organisations" style:visibility={isDropdownOpen ? 'visible' : 'hidden'}>
 				{#each organisations as org}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<h2 on:click|preventDefault={() => changeOrganisation(org)}>{org.name}</h2>
 				{/each}
 			</div>
 		</a>
 		{#if organisations.length > 1}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div class="arrow" on:click={showOrganisations}>
 				<span class="material-symbols-outlined"> keyboard_arrow_down </span>
 			</div>

@@ -23,7 +23,7 @@ export async function PUT({ locals, params, request }) {
 	const data = await request.json();
 
 	// Delete activityTickets which are not given anymore
-	const deletedTickets = await locals.prisma.activityTicket.deleteMany({
+	await locals.prisma.activityTicket.deleteMany({
 		where: {
 			activityId: params.activityId,
 			id: {
@@ -36,7 +36,7 @@ export async function PUT({ locals, params, request }) {
 
 	// Override other activityTickets
 	for (const ticket of data.tickets) {
-		const updatedTicket = await locals.prisma.activityTicket.upsert({
+		await locals.prisma.activityTicket.upsert({
 			where: { id: ticket.id || '' },
 			update: {
 				name: ticket.name,
@@ -124,7 +124,7 @@ export async function DELETE({ locals, params }) {
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'Activity successfully deleted!' }), {
+	return new Response(toActivityJSON(deletedActivity), {
 		status: 200
 	});
 }

@@ -41,7 +41,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedTicket = await res.json();
 			$event.tickets = $event.tickets.filter((t) => t.id != ticket.id);
 			togglePopup();
 		}

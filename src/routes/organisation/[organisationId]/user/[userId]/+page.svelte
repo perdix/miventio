@@ -27,6 +27,7 @@
 
 <Main>
 	<Header title="Persönlicher Account">
+		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="javascript:history.back()" class="close"
 			><span class="material-symbols-outlined">close</span></a
 		>
@@ -71,17 +72,6 @@
 				</form>
 			</Box>
 		</div>
-		<!-- <div class="col-12 col">
-			<Box>
-				<h2>Meine Organisationen</h2>
-
-				{#each $page.data.user.organisations as organisation}
-					<div class="organisation">
-						{organisation.name}
-					</div>
-				{/each}
-			</Box>
-		</div> -->
 	</div>
 </Main>
 
@@ -90,12 +80,5 @@
 		font-weight: 300;
 		font-size: 25px;
 		margin-bottom: 20px;
-	}
-	.organisation {
-		background-color: white;
-		padding: var(--unit);
-		border-radius: var(--corner);
-		margin-bottom: 5px;
-		/* cursor: pointer; */
 	}
 </style>

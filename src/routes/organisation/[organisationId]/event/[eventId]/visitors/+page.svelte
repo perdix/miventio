@@ -22,6 +22,7 @@
 		bookingTitle = 'Rechnungsdaten';
 		booking = {
 			visitors: [
+				// @ts-ignore
 				{
 					firstName: visitor.firstName,
 					lastName: visitor.lastName,
@@ -46,7 +47,6 @@
 				}
 			);
 			if (res.status === 200) {
-				const updatedBooking = await res.json();
 				refreshVisitors();
 				toggleBooking();
 			}
@@ -59,7 +59,6 @@
 				}
 			);
 			if (res.status === 201) {
-				const newBooking = await res.json();
 				refreshVisitors();
 				toggleBooking();
 			}
@@ -74,7 +73,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedBooking = await res.json();
 			refreshVisitors();
 			toggleBooking();
 		}
@@ -135,7 +133,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedVisitor = await res.json();
 			$event.visitors = $event.visitors.filter((a) => a.id != visitor.id);
 			togglePopup();
 		}
@@ -244,15 +241,6 @@
 				<span class="material-symbols-outlined">delete</span>
 			</button>
 		</div>
-		<!-- <div class="col-12">
-			<br><br>
-			<div class="mini-header">
-				<h2>Rechnungsdaten</h2>
-				<button class="icon" on:click|preventDefault={editBooking}>
-					<span class="material-symbols-outlined">receipt</span>
-				</button>
-			</div>
-		</div> -->
 	</form>
 </Popup>
 
@@ -350,7 +338,7 @@
 					<td>
 						{#if visitor.booking}
 							<a
-								href=""
+								href="/"
 								on:click|preventDefault|stopPropagation={() => editBooking(visitor.booking)}
 							>
 								<span
@@ -363,7 +351,7 @@
 								</span>
 							</a>
 						{:else}
-							<a href="" on:click|preventDefault|stopPropagation={() => createBooking(visitor)}>
+							<a href="/" on:click|preventDefault|stopPropagation={() => createBooking(visitor)}>
 								<span class="status">
 									<span class="material-symbols-outlined">receipt</span>
 									Rechnung erstellen?
@@ -382,22 +370,6 @@
 		background-color: var(--white);
 		padding: 10px;
 	}
-	h2 {
-		font-size: 1.3rem;
-		font-weight: 300;
-		color: var(--black);
-	}
-	.mini-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	/* .booking {
-		background-color: var(--grey);
-		padding: 10px;
-		margin-top: 10px;
-		border-radius: var(--corner);
-	} */
 	.status {
 		padding: 5px 10px;
 		border-radius: 15px;

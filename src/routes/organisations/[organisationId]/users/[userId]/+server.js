@@ -40,7 +40,7 @@ export async function DELETE({ locals, params }) {
 		}
 	});
 
-	return new Response(JSON.stringify({ message: 'User successfully deleted!' }), {
+	return new Response(toUserJSON(deletedUser), {
 		status: 200
 	});
 }

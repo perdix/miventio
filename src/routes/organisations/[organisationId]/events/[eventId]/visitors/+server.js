@@ -154,7 +154,7 @@ export async function POST({ locals, params, request }) {
 	});
 
 	// Create connected contact
-	const contact = await locals.prisma.contact.upsert({
+	await locals.prisma.contact.upsert({
 		where: {
 			firstName_lastName_email: {
 				firstName: data.firstName,

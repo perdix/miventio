@@ -36,7 +36,6 @@
 			}
 		);
 		if (res.status === 200) {
-			const deletedCategory = await res.json();
 			$event.visitorCategories = $event.visitorCategories.filter((c) => c.id != category.id);
 			togglePopup();
 		}

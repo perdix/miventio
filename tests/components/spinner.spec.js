@@ -1,16 +1,12 @@
 import Spinner from '$lib/Spinner.svelte';
+import { render } from '@testing-library/svelte';
 
-describe('Spinner Component', () => {
-	test('should render the component', () => {
-		// Create a new container for the test
-		const host = document.createElement('div');
-		// Append the new container in the HTML body
-		document.body.appendChild(host);
-		// Create an instance of the vertical tab
-		const instance = new Spinner({ target: host });
-		// Check if the instance has value
-		expect(instance).toBeTruthy();
-		// Test if we can find the class .spin
-		expect(host.innerHTML).toContain('spin');
+import { describe, expect, it } from 'vitest';
+
+describe('Spinner Test', () => {
+	it('sample test which should be true', () => {
+		const { container } = render(Spinner);
+		expect(container).toBeTruthy();
+		expect(container.innerHTML).toContain('spin');
 	});
 });

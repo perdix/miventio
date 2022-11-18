@@ -52,7 +52,7 @@ export async function DELETE({ locals, params }) {
 		include: { membership: true }
 	});
 
-	return new Response(JSON.stringify({ message: 'Contact successfully deleted!' }), {
+	return new Response(toContactJSON(deletedContact), {
 		status: 200
 	});
 }

@@ -1,10 +1,8 @@
 <script>
 	import Header from '$lib/blocks/Header.svelte';
 	import Main from '$lib/blocks/Main.svelte';
-	import { page } from '$app/stores';
 	import { organisation } from '$lib/store/organisation';
 	import { goto } from '$app/navigation';
-	import Popup from '$lib/Popup.svelte';
 
 	if ($organisation.role != 'ADMIN') {
 		goto(`/organisation/${$organisation.id}`);
@@ -29,7 +27,6 @@
 		}
 	};
 
-	let user = {};
 	let message = '';
 	let status;
 
@@ -125,6 +122,7 @@
 
 <Main>
 	<Header title={'Organisationseinstellungen'}>
+		<!-- svelte-ignore a11y-invalid-attribute -->
 		<a href="javascript:history.back()" class="close"
 			><span class="material-symbols-outlined">close</span></a
 		>
@@ -216,7 +214,7 @@
 		font-weight: 300;
 		margin-bottom: calc(var(--unit) / 2);
 	}
-	.box {
+	/* .box {
 		margin-top: var(--unit);
 	}
 	.abo {
@@ -236,5 +234,5 @@
 	}
 	.flex button {
 		margin-bottom: 20px;
-	}
+	} */
 </style>

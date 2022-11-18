@@ -1,4 +1,4 @@
-export async function GET({ url }) {
+export async function GET() {
 	const check = {
 		message: 'Service is working!'
 	};

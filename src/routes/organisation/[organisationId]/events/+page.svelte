@@ -5,34 +5,34 @@
 	import Breadcrumbs from '$lib/blocks/Breadcrumbs.svelte';
 	import Main from '$lib/blocks/Main.svelte';
 	import Popup from '$lib/Popup.svelte';
-	import Subnavigation from '$lib/Subnavigation.svelte';
+	// import Subnavigation from '$lib/Subnavigation.svelte';
 	import { goto } from '$app/navigation';
 
-	const subNavItems = [
-		{
-			name: 'Veranstaltungen',
-			slug: 'events',
-			status: 'active'
-		},
-		// {
-		//     name: 'Aussteller',
-		//     slug: "exhibitors"
-		// },
-		// {
-		//     name: 'Hotels',
-		//     slug: "hotels",
-		// 	status: 'disabled',
-		// },
-		{
-			name: 'Lieferanten',
-			slug: 'contractors'
-		}
-		// {
-		//     name: 'Referenten',
-		//     slug: "speakers",
-		// 	status: 'disabled',
-		// },
-	];
+	// const subNavItems = [
+	// 	{
+	// 		name: 'Veranstaltungen',
+	// 		slug: 'events',
+	// 		status: 'active'
+	// 	},
+	// 	{
+	// 	    name: 'Aussteller',
+	// 	    slug: "exhibitors"
+	// 	},
+	// 	{
+	// 	    name: 'Hotels',
+	// 	    slug: "hotels",
+	// 		status: 'disabled',
+	// 	},
+	// 	{
+	// 		name: 'Lieferanten',
+	// 		slug: 'contractors'
+	// 	}
+	// 	{
+	// 	    name: 'Referenten',
+	// 	    slug: "speakers",
+	// 		status: 'disabled',
+	// 	},
+	// ];
 
 	let event = {};
 	let showPopup = false;
