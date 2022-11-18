@@ -35,14 +35,7 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
 
-Adapt DB Structure to models
-npx prisma db push
 
-Load Seed from File
-npx prisma db seed
-
-// Start Prisma Studio
-npx prisma studio
 
 ## Notes
 
@@ -52,6 +45,10 @@ npx prisma studio
 
 
 ## Prisma
+
+* Start Prisma Studio
+    npx prisma studio
+
 
 * Create DB schema from schema file
     npx prisma db push
