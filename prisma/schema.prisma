@@ -162,6 +162,7 @@ model Activity {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name       String
+  identifier String?
   description String?
   date DateTime
   start DateTime?

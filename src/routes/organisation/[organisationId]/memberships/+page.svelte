@@ -10,6 +10,8 @@
 	let showPopup = false;
 	let popupTitle = 'Neue Mitgliedskategorie';
 
+	console.log(memberships)
+
 	const togglePopup = () => {
 		showPopup = !showPopup;
 	};
@@ -142,8 +144,8 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Jahresbeitrag</th>
 					<th>Beschreibung</th>
+					<th>Jahresbeitrag</th>
 					<th>Mitgliederanzahl</th>
 				</tr>
 			</thead>

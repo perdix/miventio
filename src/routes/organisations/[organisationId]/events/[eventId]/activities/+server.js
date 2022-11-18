@@ -20,44 +20,49 @@ export async function POST({ locals, params, request }) {
 	}
 
 	const data = await request.json();
-	
 	data.start = (data.start.length < 16) ? `${data.date.substring(0,10)}T${data.start}Z` : data.start;
-	let end = null;
-	if (data.end) {
-		data.end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
-		data.end = new Date(Date.parse(data.end));
-	}
-	// add eventId
+
+	// Add eventId for tickets
 	if (data.tickets) {
 		for (let i=0; i< data.tickets.length; i++) {
 			data.tickets[i].eventId = params.eventId;
 		}
 	}
-	const activity = await locals.prisma.activity.create({
-		data: {
-			name: data.name,
-			start: new Date(Date.parse(data.start)),
-			end: end,
-			date: new Date(Date.parse(data.date)),
-			description: data.description,
-			limit: data.limit,
-			speaker: data.speaker,
-			type: data.type,
-			location: data.location,
-			author: data.author,
-			status: data.status,
-			event: {
-				connect: {
-					id: params.eventId
-				}
-			},
-			tickets: {
-				create: data.tickets
+
+	// Generate create data object
+	let createData = {
+		name: data.name,
+		start: new Date(Date.parse(data.start)),
+		date: new Date(Date.parse(data.date)),
+		description: data.description,
+		limit: data.limit,
+		speaker: data.speaker,
+		type: data.type,
+		identifier: data.identifier,
+		location: data.location,
+		author: data.author,
+		status: data.status,
+		event: {
+			connect: {
+				id: params.eventId
 			}
 		},
+		tickets: {
+			create: data.tickets
+		}
+	}
+	// Add end date if given
+	if (data.end) {
+		const end = (data.end.length < 16) ? `${data.date.substring(0,10)}T${data.end}Z` : data.end;
+		createData.end = new Date(Date.parse(end));
+	}
+	
+	const activity = await locals.prisma.activity.create({
+		data: createData,
 		select: {
 			id: true,
 			name: true,
+			identifier: true,
 			description: true,
 			speaker: true,
 			limit: true,
@@ -65,6 +70,7 @@ export async function POST({ locals, params, request }) {
 			date: true,
 			start: true,
 			end: true,
+			type: true,
 			tickets: {
 				select: {
 					id: true,

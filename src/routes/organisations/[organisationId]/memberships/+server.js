@@ -16,7 +16,7 @@ export async function GET({ locals, params }) {
 				select: { contacts: true },
 			},
 		}
-	
+		
 	});
 	return new Response(toMembershipsJSON(memberships));
 }

@@ -49,6 +49,7 @@ export async function GET({ locals, params }) {
 				select: {
 					id: true,
 					name: true,
+					identifier: true,
 					description: true,
 					speaker: true,
 					limit: true,
@@ -165,7 +166,6 @@ export async function PUT({ locals, params, request }) {
 	
 	// Prepare data
 	const data = await request.json();
-	console.log(data)
 
 	const updateData = {
 		name: data.name,
@@ -228,6 +228,7 @@ export async function PUT({ locals, params, request }) {
 			activities: {
 				select: {
 					id: true,
+					identifier: true,
 					name: true,
 					description: true,
 					speaker: true,
