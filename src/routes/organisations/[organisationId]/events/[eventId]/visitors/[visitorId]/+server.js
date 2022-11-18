@@ -95,7 +95,27 @@ export async function PUT({ locals, params, request }) {
 				select: {
 					id: true
 				}
-			}
+			},
+			booking: {
+				select: {
+					id: true,
+					firstName: true,
+					lastName: true,
+					email: true,
+					address: true,
+					postcode: true,
+					city: true,
+					phone: true,
+					status: true,
+					visitors: {
+						select: {
+							id: true,
+							firstName: true,
+							lastName: true,
+						}
+					}
+				}
+			},
 		}
 	});
 

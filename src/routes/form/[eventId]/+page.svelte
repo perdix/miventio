@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { slide, fly, fade } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	import Spinner from '$lib/Spinner.svelte';
 
 	let event = $page.data.event;
@@ -34,8 +34,11 @@
 
 	$: {
 		if (visitor.categoryId) {
-			tickets = event.tickets.filter(t => t.visitorCategory == null || t.visitorCategoryId == visitor.categoryId);
+			tickets = event.tickets.filter(t => t.visitorCategoryId == visitor.categoryId);
 			activityTickets = event.activityTickets.filter(a => a.visitorCategoryId == visitor.categoryId);
+			if (visitor.eventTicket && visitor.eventTicket.dayTicketDate) {
+				activityTickets = event.activityTickets.filter(a => a.activity.date.toISOString().slice(0,10) == visitor.eventTicket.dayTicketDate.toISOString().slice(0,10))
+			}
 		}
 	}
 
@@ -46,9 +49,15 @@
 	const previous = () => {
 		step--;
 	}
+	const goToBooking = () => {
+		step++;
+		booking.visitors.push(visitor);
+		booking.firstName = visitor.firstName;
+		booking.lastName = visitor.lastName;
+		booking.email = visitor.email;
+	}
 	const submitOrder = async () => {
 		wait = true;
-		booking.visitors.push(visitor);
 		step++;
 		const res = await fetch(`/form/${event.id}/register`, {
 			method: 'POST',
@@ -129,9 +138,18 @@
 			<div class="col-12">
 				<label for="activity">Zusatzprogramm</label>
 				{#each activityTickets as activityTicket}
-					<label class="activity" class:disabled="{activityTicket._count.visitors >= activityTicket.activity.limit}">
-							<input type="checkbox" bind:group={visitor.activityTickets} value={activityTicket} disabled='{activityTicket._count.visitors >= activityTicket.activity.limit}'>
-							<b>{activityTicket.activity.type}</b> {activityTicket.activity.name} ({activityTicket.activity.speaker || 'K. Referent'}) | {activityTicket.price}€
+					<label class="activity" class:disabled="{activityTicket.activity.limit && activityTicket._count.visitors >= activityTicket.activity.limit}">
+							<input type="checkbox" bind:group={visitor.activityTickets} value={activityTicket} disabled='{activityTicket.activity.limit && activityTicket._count.visitors >= activityTicket.activity.limit}'>
+							
+							{#if activityTicket.activity.identifier}
+								<b>{activityTicket.activity.identifier} </b> 
+							{/if}
+							{activityTicket.activity.type} <b>{activityTicket.activity.name}</b>
+			
+							 {#if activityTicket.activity.speaker}
+							 	({activityTicket.activity.speaker}) |
+						 	{/if}
+							 {activityTicket.price}€
 					</label>
 				{/each}
 			</div>
@@ -151,10 +169,13 @@
 		<h3>Gesamtüberblick</h3>
 		<br>
 		<br>
-		<form class="register row" on:submit|preventDefault={submitOrder}>
+		<form class="register row" on:submit|preventDefault={goToBooking}>
 
 			<div class="col-12">
-				<h4>{visitor.firstName || ''} {visitor.lastName || ''}</h4>
+				<br>
+				<p><b>Name:</b> {visitor.firstName || ''} {visitor.lastName || ''}</p>
+				<p><b>Teilnahme als:</b> {visitor.eventTicket.visitorCategory.name || ''}</p>
+				<br>
 			</div>
 
 			{#if Object.keys(visitor.eventTicket).length > 0}
@@ -194,13 +215,53 @@
 				<button type="submit" on:click|preventDefault={previous}>Zurück</button>
 			</div>
 			<div class="col-6 right submit">
+				<button type="submit">Rechnungsdaten eingeben</button>
+			</div>
+		</form>
+	</section>
+	{/if}
+
+
+	{#if step == 4}
+	<section class="confirmation" in:fly="{{ x: 300, duration: 700 }}">
+		
+		<h3>Rechnungsdaten</h3>
+		<br>
+		<br>
+		<form class="register row" on:submit|preventDefault={submitOrder} >
+			<div class="col-6">
+				<label for="firstname">Vorname</label>
+				<input id="firstname" type="text" bind:value={booking.firstName} required />
+			</div>
+			<div class="col-6">
+				<label for="lastname">Nachname</label>
+				<input id="lastname" type="text" bind:value={booking.lastName} required />
+			</div>
+			<div class="col-12">
+				<label for="email">E-Mail</label>
+				<input id="email" type="email" bind:value={booking.email} required />
+			</div>
+			<div class="col-12">
+				<label for="address">Adresse</label>
+				<input id="address" type="text" bind:value={booking.address} required />
+			</div>
+			<div class="col-6">
+				<label for="postcode">Postleitzahl</label>
+				<input id="postcode" type="text" bind:value={booking.postcode} required />
+			</div>
+			<div class="col-6">
+				<label for="city">Stadt</label>
+				<input id="city" type="text" bind:value={booking.city} required />
+			</div>
+
+			<div class="col-6 submit">
 				<button type="submit" disabled={wait}>Verbindlich teilnehmen</button>
 			</div>
 		</form>
 	</section>
 	{/if}
 
-	{#if step == 4}
+	{#if step == 5}
 	<section class="confirmation" in:fade>
 		<div class="check">
 			<Spinner/>
@@ -210,7 +271,7 @@
 	</section>
 	{/if}
 
-	{#if step == 5}
+	{#if step == 6}
 	<section class="confirmation" in:fade>
 		<div class="check">
 			<span class="material-symbols-outlined">

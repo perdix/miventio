@@ -103,12 +103,15 @@
 	}
 
 	const addTicket = () => {
-		activity.tickets.push({});
+		activity.tickets.push({ clientId: crypto.randomUUID()});
 		activity = activity;
 	}
 	const deleteTicket = (ticket) => {
-		let filtered = activity.tickets.filter(a => ((a.name != ticket.name) || (a.visitorCategoryId != ticket.visitorCategoryId)));
-		activity.tickets = filtered;
+		if (ticket.id) {
+			activity.tickets = activity.tickets.filter(a => a.id != ticket.id);
+		} else {
+			activity.tickets = activity.tickets.filter(a => a.clientId != ticket.clientId);
+		}
 	}
 </script>
 
@@ -256,8 +259,8 @@
 						<td>
 							{#each activity.tickets as ticket}
 								<span class="ticket">
-									<!-- {ticket.visitorCategory.name||''} | {ticket.price}€ -->
-									{ticket.price}€
+									{ticket.visitorCategory.name||''} | {ticket.price}€
+									<!-- {ticket.price}€ -->
 								</span>
 							{/each}
 						</td>
