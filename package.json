@@ -45,7 +45,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"pg": "^8.8.0",
 		"prisma": "^4.3.1",
-		"sequelize": "^6.21.6",
+		"sequelize": "^6.29.0",
 		"svelte-time": "^0.7.1"
 	},
 	"prisma": {
